@@ -1,0 +1,35 @@
+<resources>
+
+    <string name="app_name">Detective</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="label_status_gps">Status GPS:</string>
+    <string name="label_nombre_usuario">User name:</string>
+    <string name="label_posiciones">Positions:</string>
+    <string name="label_estado_wifi_3g">Wifi state/3G:</string>
+    <string name="label_pendientes">To upload:</string>
+    <string name="label_tipo_cuenta">Account type:</string>
+    <string name="label_solo_wifi">Only wifi</string>
+    <string name="label_solo_3g">Only 3G</string>
+    <string name="label_enviar_datos">Send data</string>
+    <string name="variable_status_gps">progress...</string>
+    <string name="variable_nombre_usuario">progress...</string>
+    <string name="variable_posiciones">progress...</string>
+    <string name="variable_estado_wifi_3g">progress...</string>
+    <string name="variable_pendientes">progress...</string>
+    <string name="variable_tipo_cuenta">progress...</string>
+    <string name="label_creador">Jhonny Juncal Gonzalez</string>
+    <string name="label_desarrollado_por">Development by:</string>
+    <string name="title_activity_posiciones">PosicionesActivity</string>
+    <string name="title_activity_inicio">InicioActivity</string>
+    <string name="label_usuario">User:</string>
+    <string name="label_contrasena">Password:</string>
+    <string name="label_acceso_aplicacion">Access</string>
+    <string name="label_registro_nuevo">New user</string>
+    <string name="label_recordar_pass">forget password</string>
+    <string name="msg_usuario_contrasena_obligatorios">The username and password are required</string>
+    <string name="label_mostrar_mapa">Show positions in map</string>
+    <string name="title_activity_mapa">MapaActivity</string>
+    <string name="mapa_ubicacion_inicial">"geo:0,0?q=Spain"</string>
+
+</resources>
