@@ -1,12 +1,14 @@
 <resources>
 
     <string name="app_name">Detective</string>
-    <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="menu_settings1">Settings</string>
+    <string name="menu_settings2">Change password</string>
+    <string name="menu_legalnotices">Legal Notices</string>
+    <string name="title_activity_main">Main</string>
     <string name="label_status_gps">Status GPS:</string>
     <string name="label_nombre_usuario">User name:</string>
     <string name="label_posiciones">Positions:</string>
-    <string name="label_estado_wifi_3g">Wifi state/3G:</string>
+    <string name="label_estado_wifi_3g">Wifi state:</string>
     <string name="label_pendientes">To upload:</string>
     <string name="label_tipo_cuenta">Account type:</string>
     <string name="label_solo_wifi">Only wifi</string>
@@ -20,8 +22,8 @@
     <string name="variable_tipo_cuenta">progress...</string>
     <string name="label_creador">Jhonny Juncal Gonzalez</string>
     <string name="label_desarrollado_por">Development by:</string>
-    <string name="title_activity_posiciones">PosicionesActivity</string>
-    <string name="title_activity_inicio">InicioActivity</string>
+    <string name="title_activity_posiciones">Positions</string>
+    <string name="title_activity_inicio">Begin</string>
     <string name="label_usuario">User:</string>
     <string name="label_contrasena">Password:</string>
     <string name="label_acceso_aplicacion">Access</string>
@@ -29,7 +31,9 @@
     <string name="label_recordar_pass">forget password</string>
     <string name="msg_usuario_contrasena_obligatorios">The username and password are required</string>
     <string name="label_mostrar_mapa">Show positions in map</string>
-    <string name="title_activity_mapa">MapaActivity</string>
-    <string name="mapa_ubicacion_inicial">"geo:0,0?q=Spain"</string>
-
+    <string name="title_activity_mapa">Map</string>
+	<string name="txt_encendida">On</string>
+	<string name="txt_apagada">Off</string>
+	<string name="txt_debe_introducir">The password is required</string>
+	<string name="txt_datos_incorrectos">Incorrect data entered</string>
 </resources>

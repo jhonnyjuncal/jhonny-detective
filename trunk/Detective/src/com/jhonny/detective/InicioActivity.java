@@ -3,23 +3,21 @@ package com.jhonny.detective;
 import java.io.InputStream;
 import java.util.Properties;
 import android.os.Bundle;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
 
-public class InicioActivity extends FragmentActivity {
+public class InicioActivity extends Activity {
 	
-	public static String USUARIO = null;
-	public static String CONTRASENA = null;
+	public static String PASS = null;
 	private static final String FICHERO_CONFIGURACION = "config.properties";
 	
 	
@@ -28,8 +26,6 @@ public class InicioActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
         
-        EditText textoUsuario = (EditText) findViewById(R.id.editText1);
-        textoUsuario.setText("");
 		EditText passUsuario = (EditText) findViewById(R.id.editText2);
 		passUsuario.setText("");
     }
@@ -42,23 +38,12 @@ public class InicioActivity extends FragmentActivity {
     }
     
     
-    public void nuevoUsuarioLink(View view){
-    	
-    }
-    
-    
-    public void recordarContrasenaLink(View view){
-    	
-    }
-    
-    
     public void accesoUsuarioRegistrado(View view){
     	try{
-    		EditText textoUsuario = (EditText) findViewById(R.id.editText1);
     		EditText passUsuario = (EditText) findViewById(R.id.editText2);
     		
-    		if(textoUsuario == null || passUsuario == null){
-    			String text = "debe introducir el usuario y la contraseña";
+    		if(passUsuario == null || passUsuario.length() <= 0){
+    			String text = getResources().getString(R.string.txt_debe_introducir);
     			Toast.makeText(InicioActivity.this, text, Toast.LENGTH_LONG).show();
     		}else{
     			Resources resources = this.getResources();
@@ -69,20 +54,24 @@ public class InicioActivity extends FragmentActivity {
     		    properties.load(inputStream);
     			
     		    if(properties != null){
-    		    	String usuario = (String)properties.get("usuario");
-    		    	if(usuario != null && usuario.length() > 0)
-        				USUARIO = usuario;
-    		    	
     		    	String contrasena = (String)properties.get("contrasena");
-    		    	if(contrasena != null && contrasena.length() > 0)
-        				CONTRASENA = contrasena;
+    		    	if(contrasena != null){
+    		    		if(contrasena.length() > 0 && contrasena.equals("null")){
+    		    			// contraseña sin establecer
+    		    			PASS = passUsuario.getText().toString();
+    		    			guardaNuevaContrasena();
+    		    		}else{
+    		    			PASS = contrasena;
+    		    		}
+    		    	}
     		    	
-    		    	if(textoUsuario.getText().toString().equals(USUARIO) && passUsuario.getText().toString().equals(CONTRASENA)){
+    		    	if(passUsuario.getText().toString().equals(PASS)){
         				// usuario y contraseña corrrectos
         				Intent intent = new Intent(this, PrincipalActivity.class);
         				startActivity(intent);
+        				this.finish();
         			}else{
-        				String text = "Los datos introducidos son incorrectos";
+        				String text = getResources().getString(R.string.txt_datos_incorrectos);
             			Toast.makeText(InicioActivity.this, text, Toast.LENGTH_LONG).show();
             			passUsuario.setText("");
         			}
@@ -94,13 +83,20 @@ public class InicioActivity extends FragmentActivity {
     }
     
     
-    /* Add a class to handle fragment */
-//    public static class SSFFragment extends Fragment {
-//       @Override
-//       public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//          // Inflate the layout for this fragment
-//          View v = inflater.inflate(R.layout.activity_mapa, container, false);
-//          return v;
-//       }
-//    }
+    private void guardaNuevaContrasena(){
+    	try{
+    		// lectura del fichero de configuracion
+    		SharedPreferences prefs = getSharedPreferences(FICHERO_CONFIGURACION, Context.MODE_WORLD_WRITEABLE);
+    		SharedPreferences.Editor editor = prefs.edit();
+    		
+    		if(prefs != null){
+    			// hay que recoger los datos introducidos por el usuario en la configuracion
+    			editor.putString("contrasena", PASS);
+    			editor.commit();
+    			finish();
+    		}
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    	}
+    }
 }
