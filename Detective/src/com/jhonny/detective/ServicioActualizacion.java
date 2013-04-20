@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.IBinder;
@@ -70,10 +69,10 @@ public class ServicioActualizacion extends Service{
 				public void run(){
 					System.out.println(new DateTime().toString());
 					
-					if(!PrincipalActivity.locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-						for(String prov : PrincipalActivity.locationManager.getAllProviders()){
+					if(!FileUtil.getLocationManager().isProviderEnabled(LocationManager.GPS_PROVIDER)){
+						for(String prov : FileUtil.getLocationManager().getAllProviders()){
 							System.out.println("- provider: " + prov);
-							Location location = PrincipalActivity.locationManager.getLastKnownLocation(prov);
+							Location location = FileUtil.getLocationManager().getLastKnownLocation(prov);
 							
 							if(location != null){
 								System.out.println("- latitud: " + location.getLatitude() + 

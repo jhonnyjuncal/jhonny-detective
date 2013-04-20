@@ -1,39 +1,68 @@
 <resources>
-
     <string name="app_name">Detective</string>
     <string name="menu_settings1">Settings</string>
     <string name="menu_settings2">Change password</string>
+	<string name="menu_settings3">Delete locations</string>
+	<string name="menu_settings4">About Detective</string>
     <string name="menu_legalnotices">Legal Notices</string>
-    <string name="title_activity_main">Main</string>
     <string name="label_status_gps">Status GPS:</string>
     <string name="label_nombre_usuario">User name:</string>
     <string name="label_posiciones">Positions:</string>
     <string name="label_estado_wifi_3g">Wifi state:</string>
     <string name="label_pendientes">To upload:</string>
     <string name="label_tipo_cuenta">Account type:</string>
-    <string name="label_solo_wifi">Only wifi</string>
-    <string name="label_solo_3g">Only 3G</string>
-    <string name="label_enviar_datos">Send data</string>
-    <string name="variable_status_gps">progress...</string>
-    <string name="variable_nombre_usuario">progress...</string>
-    <string name="variable_posiciones">progress...</string>
-    <string name="variable_estado_wifi_3g">progress...</string>
-    <string name="variable_pendientes">progress...</string>
-    <string name="variable_tipo_cuenta">progress...</string>
+    <string name="variable_progreso">progress...</string>
     <string name="label_creador">Jhonny Juncal Gonzalez</string>
-    <string name="label_desarrollado_por">Development by:</string>
-    <string name="title_activity_posiciones">Positions</string>
-    <string name="title_activity_inicio">Begin</string>
+    <string name="label_desarrollado_por">Developed by:</string>
+    <string name="title_activity_posiciones">Locations</string>
     <string name="label_usuario">User:</string>
     <string name="label_contrasena">Password:</string>
     <string name="label_acceso_aplicacion">Access</string>
     <string name="label_registro_nuevo">New user</string>
     <string name="label_recordar_pass">forget password</string>
-    <string name="msg_usuario_contrasena_obligatorios">The username and password are required</string>
     <string name="label_mostrar_mapa">Show positions in map</string>
+    <string name="label_mostrar_posiciones">Show positions in list</string>
     <string name="title_activity_mapa">Map</string>
 	<string name="txt_encendida">On</string>
 	<string name="txt_apagada">Off</string>
 	<string name="txt_debe_introducir">The password is required</string>
 	<string name="txt_datos_incorrectos">Incorrect data entered</string>
+	<string name="txt_titulo_coordenada">location:</string>
+	<string name="label_fecha">Date:</string>
+	<string name="label_hora">Time:</string>
+	<string name="label_contrasena_anterior">Old password:</string>
+	<string name="label_contrasena_nueva1">New password:</string>
+	<string name="label_contrasena_nueva2">Repeat password:</string>
+	<string name="label_cambio_contrasena">Change password</string>
+	<string name="title_activity_contrasena">Change password</string>
+	<string name="txt_nuevos_pass_incorrectos">New passwords do not match</string>
+	<string name="txt_cambio_pass_ok">Password changed correctly</string>
+	<string name="version_app">Version:</string>
+	<string name="title_activity_acerca">About Detective</string>
+	<string name="fecha_creacion">Creation:</string>
+	<string name="pais_creacion">Country:</string>
+	<string name="pais">Spain</string>
+	<string name="txt_coordenadas_borradas_ok">Locations deleted correctly</string>
+	<string name="title_activity_configuracion">Configuration</string>
+	<string name="txt_passViejo_incorrecto">You must enter the old password</string>
+	<string name="txt_passNuevo_incorrecto">New password can not be empty</string>
+	<string name="txt_sin_posiciones">No locations to display</string>
+	<string name="label_dist_minima_act">Minimum distance to update position:</string>
+	<string name="label_tmpo_minimo_act">Minimum time to update position:</string>
+	<string-array name="lista_distancias">
+		<item>9 Miles</item>
+		<item>18 Miles</item>
+		<item>27 Miles</item>
+		<item>36 Miles</item>
+	</string-array>
+	<string-array name="lista_tiempos">
+		<item>30 minutes</item>
+		<item>60 minutes</item>
+		<item>90 minutes</item>
+		<item>120 minutes</item>
+	</string-array>
+	<string name="label_selecciona_dist">Select distance:</string>
+	<string name="label_selecciona_tmpo">Select time:</string>
+	<string name="label_latitud">Latitude:</string>
+	<string name="label_longitud">Longitude:</string>
 </resources>

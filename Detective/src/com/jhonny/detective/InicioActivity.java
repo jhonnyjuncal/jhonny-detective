@@ -1,33 +1,30 @@
 package com.jhonny.detective;
 
-import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 
-public class InicioActivity extends Activity {
+public class InicioActivity extends FragmentActivity {
 	
-	public static String PASS = null;
-	private static final String FICHERO_CONFIGURACION = "config.properties";
+	private String PASS;
+	private String DIST_MIN_ACTUALIZACIONES;
+	private String TMP_MIN_ACTUALIZACIONES;
+	private String TIPO_CUENTA;
 	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
-        
-		EditText passUsuario = (EditText) findViewById(R.id.editText2);
-		passUsuario.setText("");
     }
     
     
@@ -38,63 +35,68 @@ public class InicioActivity extends Activity {
     }
     
     
-    public void accesoUsuarioRegistrado(View view){
+    @Override
+    protected void onResume(){
+    	super.onResume();
+    	
     	try{
-    		EditText passUsuario = (EditText) findViewById(R.id.editText2);
+        	EditText et = (EditText)findViewById(R.id.editText1);
+        	et.setText("");
+        }catch(Exception ex){
+        	ex.printStackTrace();
+        }
+    }
+    
+    
+    public void accesoUsuarioRegistrado(View view){
+    	Properties prop = new Properties();
+    	Context ctx = this;
+    	
+    	try{
+    		EditText passUsuario = (EditText)findViewById(R.id.editText1);
+    		prop = FileUtil.getFicheroAssetConfiguracion(ctx);
+    		
+    		if(prop != null){
+    			// carga los datos de la configuracion guardados
+    			if(prop.containsKey(Constantes.PROP_PASSWORD))
+    				PASS = (String)prop.get(Constantes.PROP_PASSWORD);
+    			if(prop.containsKey(Constantes.PROP_DISTANCIA_MINIMA_ACTUALIZACIONES))
+    				DIST_MIN_ACTUALIZACIONES = (String)prop.get(Constantes.PROP_DISTANCIA_MINIMA_ACTUALIZACIONES);
+    			if(prop.containsKey(Constantes.PROP_TIEMPO_MINIMO_ACTUALIZACIONES))
+    				TMP_MIN_ACTUALIZACIONES = (String)prop.get(Constantes.PROP_TIEMPO_MINIMO_ACTUALIZACIONES);
+    			if(prop.containsKey(Constantes.PROP_TIPO_CUENTA))
+    				TIPO_CUENTA = (String)prop.get(Constantes.PROP_TIPO_CUENTA);
+    		}
     		
     		if(passUsuario == null || passUsuario.length() <= 0){
     			String text = getResources().getString(R.string.txt_debe_introducir);
     			Toast.makeText(InicioActivity.this, text, Toast.LENGTH_LONG).show();
     		}else{
-    			Resources resources = this.getResources();
-    			AssetManager assetManager = resources.getAssets();
+    			Map <String, String> valores = new HashMap<String, String>();
     			
-    			InputStream inputStream = assetManager.open(FICHERO_CONFIGURACION);
-    		    Properties properties = new Properties();
-    		    properties.load(inputStream);
-    			
-    		    if(properties != null){
-    		    	String contrasena = (String)properties.get("contrasena");
-    		    	if(contrasena != null){
-    		    		if(contrasena.length() > 0 && contrasena.equals("null")){
-    		    			// contraseña sin establecer
-    		    			PASS = passUsuario.getText().toString();
-    		    			guardaNuevaContrasena();
-    		    		}else{
-    		    			PASS = contrasena;
-    		    		}
-    		    	}
-    		    	
-    		    	if(passUsuario.getText().toString().equals(PASS)){
-        				// usuario y contraseña corrrectos
-        				Intent intent = new Intent(this, PrincipalActivity.class);
-        				startActivity(intent);
-        				this.finish();
-        			}else{
-        				String text = getResources().getString(R.string.txt_datos_incorrectos);
-            			Toast.makeText(InicioActivity.this, text, Toast.LENGTH_LONG).show();
-            			passUsuario.setText("");
-        			}
-    		    }
-    		}
-    	}catch(Exception ex){
-    		ex.printStackTrace();
-    	}
-    }
-    
-    
-    private void guardaNuevaContrasena(){
-    	try{
-    		// lectura del fichero de configuracion
-    		SharedPreferences prefs = getSharedPreferences(FICHERO_CONFIGURACION, Context.MODE_WORLD_WRITEABLE);
-    		SharedPreferences.Editor editor = prefs.edit();
-    		
-    		if(prefs != null){
-    			// hay que recoger los datos introducidos por el usuario en la configuracion
-    			editor.putString("contrasena", PASS);
-    			editor.commit();
-    			finish();
-    		}
+				if(PASS == null || PASS.toString().equals("null")){
+					// contraseña sin establecer
+					PASS = passUsuario.getText().toString();
+					
+					valores.put(Constantes.PROP_PASSWORD, PASS);
+					valores.put(Constantes.PROP_DISTANCIA_MINIMA_ACTUALIZACIONES, DIST_MIN_ACTUALIZACIONES);
+					valores.put(Constantes.PROP_TIEMPO_MINIMO_ACTUALIZACIONES, TMP_MIN_ACTUALIZACIONES);
+					valores.put(Constantes.PROP_TIPO_CUENTA, TIPO_CUENTA);
+					
+					FileUtil.guardaDatosConfiguracion(valores, InicioActivity.this);
+				}
+				
+				if(passUsuario.getText().toString().equals(PASS)){
+					// contraseña corrrecta
+					Intent intent = new Intent(this, PrincipalActivity.class);
+					startActivity(intent);
+				}else{
+					// contraseña incorrecta
+					String text = getResources().getString(R.string.txt_datos_incorrectos);
+					Toast.makeText(InicioActivity.this, text, Toast.LENGTH_LONG).show();
+					passUsuario.setText("");
+				}
+			}
     	}catch(Exception ex){
     		ex.printStackTrace();
     	}

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#009999" >
+    tools:context=".InicioActivity" >
 
     <TextView
         android:id="@+id/textView1"
@@ -15,7 +15,7 @@
         android:text="@string/label_contrasena" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -24,6 +24,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="90dp"
         android:ems="10"
+        android:saveEnabled="false"
         android:inputType="textPassword" />
 
     <Button
