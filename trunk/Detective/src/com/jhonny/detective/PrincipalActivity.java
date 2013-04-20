@@ -1,38 +1,35 @@
 package com.jhonny.detective;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class PrincipalActivity extends Activity implements LocationListener{
+public class PrincipalActivity extends FragmentActivity {
 	
-	protected static Integer DISTANCIA_MINIMA_PARA_ACTUALIZACIONES;
-	protected static Integer TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES;
+	protected static String PASS;
+	protected static float DISTANCIA_MINIMA_PARA_ACTUALIZACIONES;
+	protected static long TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES;
 	protected static Integer TIPO_CUENTA;
 	protected static final String FICHERO_CONFIGURACION = "config.properties";
-	public static LocationManager locationManager;
 	
 	WifiManager wifi = null;
 	AdView adView = null;
@@ -48,21 +45,16 @@ public class PrincipalActivity extends Activity implements LocationListener{
     		// se inicia el servicio de actualizacion de coordenadas
     		iniciaServicio();
     		
-    		
     		wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
     		
     		// se crea la vista
     		adView = new AdView(this, AdSize.BANNER, "a1513f4a3b63be1");
-    		
     		// se obtiene el layout para el banner
     		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
-    	    
     		// se añade la vista
     		layout.addView(adView);
-    		
     		// se inicia la solicitud para cargar el anuncio
     		adView.loadAd(new AdRequest());
-    		
     		
     		// carga los datos de la configuracion
     		cargaDatosConfiguracion();
@@ -73,6 +65,11 @@ public class PrincipalActivity extends Activity implements LocationListener{
     		// posiciones almacenadas
     		cargaPosicionesAlmacenadas();
     		
+    		if(listaPosiciones != null){
+    			TextView textoPosiciones = (TextView)findViewById(R.id.textView6);
+    			textoPosiciones.setText(String.valueOf(listaPosiciones.size()));
+    		}
+			
     		// informa estado de la wifi/3G
     		informaEstadoActualInternet();
     	}catch(Exception ex){
@@ -84,7 +81,7 @@ public class PrincipalActivity extends Activity implements LocationListener{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	try{
-	        getMenuInflater().inflate(R.menu.activity_mapa, menu);
+	        getMenuInflater().inflate(R.menu.activity_principal, menu);
     	}catch(Exception ex){
     		ex.printStackTrace();
     	}
@@ -93,9 +90,54 @@ public class PrincipalActivity extends Activity implements LocationListener{
     
     
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	Intent intent;
+    	
+    	try{
+	    	switch(item.getItemId()){
+	    		case R.id.ppal_menu_settings1:
+	    			// Configuracion
+	    			intent = new Intent(this, ConfiguracionActivity.class);
+					startActivity(intent);
+	    			return true;
+	    		case R.id.ppal_menu_settings2:
+	    			// Cambiar contraseña
+	    			intent = new Intent(this, ContrasenaActivity.class);
+					startActivity(intent);
+	    			return true;
+	    		case R.id.ppal_menu_settings3:
+	    			// Borrar posiciones almacenadas
+	    			FileUtil.borraFicheroActualDePosiciones(this);
+	    			cargaPosicionesAlmacenadas();
+	    			Toast.makeText(this, getResources().getString(R.string.txt_coordenadas_borradas_ok)
+	    					, Toast.LENGTH_LONG).show();
+	    			return true;
+	    		case R.id.ppal_menu_settings4:
+	    			// Acerca de...
+	    			intent = new Intent(this, AcercaActivity.class);
+					startActivity(intent);
+	    			return true;
+	    		default:
+	    			return super.onOptionsItemSelected(item);
+	        }
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    	}
+    	return false;
+    }
+    
+    
+    @Override
     public void onDestroy(){
     	try{
-    		guardaDatosConfiguracion();
+    		Map<String, String> valores = new HashMap<String, String>();
+    		
+    		valores.put(Constantes.PROP_PASSWORD, PASS);
+    		valores.put(Constantes.PROP_TIEMPO_MINIMO_ACTUALIZACIONES, String.valueOf(TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES));
+    		valores.put(Constantes.PROP_DISTANCIA_MINIMA_ACTUALIZACIONES, String.valueOf(DISTANCIA_MINIMA_PARA_ACTUALIZACIONES));
+    		valores.put(Constantes.PROP_TIPO_CUENTA, String.valueOf(TIPO_CUENTA));
+    		
+    		FileUtil.guardaDatosConfiguracion(valores, (Context)this);
     		adView.destroy();
     		super.onDestroy();
     	}catch(Exception ex){
@@ -106,27 +148,27 @@ public class PrincipalActivity extends Activity implements LocationListener{
     
     public void muestraMapa(View view){
     	try{
-    		if(R.id.button4 == view.getId()){
-//    			String geoUriString = getResources().getString(R.string.mapa_ubicacion_inicial);
-//    			if(listaPosiciones != null && listaPosiciones.size() > 0){
-//    				ObjetoPosicion obj = listaPosiciones.get(0);
-//    				String geoUriString = "geo:" + obj.getLatitud() + "," + obj.getLongitud();
-//    				Uri geoUri = Uri.parse(geoUriString);
-//    				Intent intent = new Intent(Intent.ACTION_VIEW, geoUri);
-//    				startActivity(intent);
-//    			}
-    			
-    			
-    			// no funciona
+    		if(R.id.button1 == view.getId()){
     			if(listaPosiciones != null && listaPosiciones.size() > 0){
-//    				ObjetoPosicion obj = listaPosiciones.get(0);
-//    				Intent intent = new Intent("com.jhonny.detective.MapaActivity.class");
     				Intent intent = new Intent(this, MapaActivity.class);
-//    				intent.setAction(Intent.ACTION_VIEW);
-//    				intent.putExtra("lat", obj.getLatitud());
-//    				intent.putExtra("long", obj.getLongitud());
     				startActivity(intent);
-    			}
+    			}else
+    				Toast.makeText(this, getResources().getString(R.string.txt_sin_posiciones), Toast.LENGTH_LONG).show();
+	    	}
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    	}
+    }
+    
+    
+    public void muestraPosiciones(View view){
+    	try{
+    		if(R.id.button2 == view.getId()){
+    			if(listaPosiciones != null && listaPosiciones.size() > 0){
+    				Intent intent = new Intent(this, PosicionesActivity.class);
+    				startActivity(intent);
+    			}else
+    				Toast.makeText(this, getResources().getString(R.string.txt_sin_posiciones), Toast.LENGTH_LONG).show();
 	    	}
     	}catch(Exception ex){
     		ex.printStackTrace();
@@ -138,24 +180,33 @@ public class PrincipalActivity extends Activity implements LocationListener{
      * muestra el estado actual del GPS
      */
     private void informaEstadoActualGPS(){
+    	Localizador localizador = null;
+    	boolean enabled = false;
+    	
     	try{
-    		estadoActualGPS();
-    		
     		// listener del GPS
-    		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 
-    				TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES,
-    				DISTANCIA_MINIMA_PARA_ACTUALIZACIONES, 
-    				this);
-    	}catch(Exception ex){
-    		ex.printStackTrace();
-    	}
-    }
-    
-    private void estadoActualGPS(){
-    	try{
-    		// obtiene el objeto GPS
-    		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-    		boolean enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    		LocationManager locationManager = FileUtil.getLocationManager();
+    		
+    		if(locationManager == null){
+    			localizador = FileUtil.getLocalizador();
+    			
+    			if(localizador == null){
+    				localizador = new Localizador();
+    				localizador.view = getWindow().getDecorView();
+    				localizador.contexto = (Context)this;
+    				
+    				FileUtil.setLocalizador(localizador);
+    			}
+    			
+    			locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+    			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+    					TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES, DISTANCIA_MINIMA_PARA_ACTUALIZACIONES, 
+    					localizador);
+    			FileUtil.setLocationManager(locationManager);
+    		}
+    		
+    		if(locationManager != null)
+    			enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     		
     		if(enabled == false){
     			TextView textoStatus = (TextView) findViewById(R.id.textView2);
@@ -177,9 +228,10 @@ public class PrincipalActivity extends Activity implements LocationListener{
     	try{
     		// lectura del fichero de configuracion
     		Properties prefs = new Properties();
+    		Context ctx = this;
     		
     		try{
-    			prefs = FileUtil.getFicheroAssetConfiguracion(this.getResources());
+    			prefs = FileUtil.getFicheroAssetConfiguracion(ctx);
     		}catch(IOException io){
     			String mensaje = io.getMessage();
     			io.printStackTrace();
@@ -190,12 +242,12 @@ public class PrincipalActivity extends Activity implements LocationListener{
     			/* TIEMPO PARA ACTUALIZACIONES */
     			String tiempo = (String) prefs.get(Constantes.PROP_TIEMPO_MINIMO_ACTUALIZACIONES);
     			if(tiempo != null && tiempo.length() > 0)
-    				TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES = Integer.parseInt(tiempo);
+    				TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES = Long.parseLong(tiempo);
     			
     			/* DISTANCIA PARA ACTUALIZACIONES */
     			String distancia = (String) prefs.get(Constantes.PROP_DISTANCIA_MINIMA_ACTUALIZACIONES);
     			if(distancia != null && distancia.length() > 0)
-    				DISTANCIA_MINIMA_PARA_ACTUALIZACIONES = Integer.parseInt(distancia);
+    				DISTANCIA_MINIMA_PARA_ACTUALIZACIONES = Float.parseFloat(distancia);
     			
     			/* TIPO DE CUENTA */
     			String tipoCuenta = (String) prefs.get(Constantes.PROP_TIPO_CUENTA);
@@ -211,45 +263,17 @@ public class PrincipalActivity extends Activity implements LocationListener{
     }
     
     
-    private void guardaDatosConfiguracion(){
-    	try{
-    		// lectura del fichero de configuracion
-    		SharedPreferences prefs = getSharedPreferences(FICHERO_CONFIGURACION, Context.MODE_WORLD_WRITEABLE);
-    		SharedPreferences.Editor editor = prefs.edit();
-    		
-    		if(prefs != null){
-    			// hay que recoger los datos introducidos por el usuario en la configuracion
-    			editor.putInt("tiempoMinimoActualizacion", TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES);
-    			editor.putInt("distanciaMinimaActualizacion", DISTANCIA_MINIMA_PARA_ACTUALIZACIONES);
-    			editor.commit();
-    			finish();
-    		}
-    	}catch(Exception ex){
-    		ex.printStackTrace();
-    	}
-    }
-    
-    
     public void cargaPosicionesAlmacenadas(){
-    	int contador = 0;
     	try{
     		Context ctx = this;
     		
     		// lectura del fichero de configuracion
     		Properties prefs = new Properties();
-    		prefs = FileUtil.getFicheroAssetConfiguracion(this.getResources());
+    		prefs = FileUtil.getFicheroAssetConfiguracion(ctx);
     		
     		String tipoCuenta = (String) prefs.get(Constantes.PROP_TIPO_CUENTA);
     		
-    		List<ObjetoPosicion> lista = new ArrayList<ObjetoPosicion>();
-			if(lista != null){
-				lista = FileUtil.getListaAssetPosiciones(ctx, Integer.parseInt(tipoCuenta));
-				listaPosiciones = lista;
-				contador = lista.size();
-			}
-			
-			TextView textoPosiciones = (TextView) findViewById(R.id.textView6);
-			textoPosiciones.setText(String.valueOf(contador));
+			listaPosiciones = FileUtil.getListaAssetPosiciones(ctx, Integer.parseInt(tipoCuenta));
 		}catch(IOException e){
 			e.printStackTrace();
 		}catch(Exception ex){
@@ -275,7 +299,10 @@ public class PrincipalActivity extends Activity implements LocationListener{
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
       if(keyCode == KeyEvent.KEYCODE_BACK) {
-    	  this.finish();
+    	  Intent intent = new Intent(Intent.ACTION_MAIN);
+    	  intent.addCategory(Intent.CATEGORY_HOME);
+    	  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    	  startActivity(intent);
       }
       
       //para las demas cosas, se reenvia el evento al listener habitual
@@ -285,44 +312,15 @@ public class PrincipalActivity extends Activity implements LocationListener{
     
     private void iniciaServicio(){
     	try{
-    		ServicioActualizacion.establecerActividadPrincipal(this);
-    		Intent servicio = new Intent(this, ServicioActualizacion.class);
-    		
-    		// se ejecuta el servicio
-    		if(startService(servicio) != null){
-    			System.out.println("Servicio iniciado correctamente");
-    		}
+//    		ServicioActualizacion.establecerActividadPrincipal(this);
+//    		Intent servicio = new Intent(this, ServicioActualizacion.class);
+//    		
+//    		// se ejecuta el servicio
+//    		startService(servicio);
     	}catch(Exception ex){
     		ex.printStackTrace();
     	}
     }
-    
-    
-    /* CUANDO LA POSICION GPS CAMBIA SEGUN EL CONSTRUCTOR DE DISTANCIA Y TIEMPO */
-	public void onLocationChanged(Location location) {
-		ObjetoPosicion pos = new ObjetoPosicion();
-		pos.setFecha(new Date());
-		pos.setLatitud(location.getLatitude());
-		pos.setLongitud(location.getLongitude());
-		
-		System.out.println("-- " + pos.toString());
-		FileUtil.almacenaPosicionesAlFinalEnFichero(pos, PrincipalActivity.this);
-		cargaPosicionesAlmacenadas();
-	}
-	
-	/* CUANDO EL ESTADO DEL GPS CAMBIA */
-	public void onStatusChanged(String s, int i, Bundle b) {
-	}
-	
-	/* AL APAGAR EL GPS */
-	public void onProviderDisabled(String s) {
-		estadoActualGPS();
-	}
-	
-	/* AL ENCENDER EL GPS */
-	public void onProviderEnabled(String s) {
-		estadoActualGPS();
-	}
 }
 
 

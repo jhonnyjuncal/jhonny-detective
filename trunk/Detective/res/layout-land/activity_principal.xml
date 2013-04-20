@@ -22,7 +22,7 @@
         android:layout_alignBottom="@+id/textView1"
         android:layout_marginLeft="60dp"
         android:layout_toRightOf="@+id/textView1"
-        android:text="@string/variable_status_gps" />
+        android:text="@string/variable_progreso" />
 
     <TextView
         android:id="@+id/textView5"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView5"
         android:layout_alignLeft="@+id/textView2"
-        android:text="@string/variable_posiciones" />
+        android:text="@string/variable_progreso" />
 
     <TextView
         android:id="@+id/textView7"
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView7"
         android:layout_alignLeft="@+id/textView6"
-        android:text="@string/variable_estado_wifi_3g" />
+        android:text="@string/variable_progreso" />
 
     <TextView
         android:id="@+id/textView11"
@@ -71,7 +71,8 @@
         android:layout_below="@+id/textView7"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="90dp"
-        android:text="@string/label_tipo_cuenta" />
+        android:text="@string/label_tipo_cuenta"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/textView12"
@@ -80,21 +81,36 @@
         android:layout_alignBaseline="@+id/textView11"
         android:layout_alignBottom="@+id/textView11"
         android:layout_alignLeft="@+id/textView8"
-        android:text="@string/variable_tipo_cuenta" />
+        android:text="@string/variable_progreso"
+        android:visibility="invisible" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_below="@+id/textView11"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="100dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="120dp"
         android:onClick="muestraMapa"
         android:text="@string/label_mostrar_mapa" />
+    
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/button1"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="170dp"
+        android:onClick="muestraPosiciones"
+        android:text="@string/label_mostrar_posiciones" />
 	
 	<LinearLayout
 	    android:id="@+id/linearLayout2"
