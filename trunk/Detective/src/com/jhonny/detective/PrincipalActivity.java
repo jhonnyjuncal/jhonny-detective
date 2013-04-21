@@ -33,7 +33,7 @@ public class PrincipalActivity extends FragmentActivity {
 	
 	WifiManager wifi = null;
 	AdView adView = null;
-	List<ObjetoPosicion> listaPosiciones = null;
+	static List<ObjetoPosicion> listaPosiciones = null;
 	
 	
     @Override
@@ -63,12 +63,7 @@ public class PrincipalActivity extends FragmentActivity {
     		informaEstadoActualGPS();
     		
     		// posiciones almacenadas
-    		cargaPosicionesAlmacenadas();
-    		
-    		if(listaPosiciones != null){
-    			TextView textoPosiciones = (TextView)findViewById(R.id.textView6);
-    			textoPosiciones.setText(String.valueOf(listaPosiciones.size()));
-    		}
+    		FileUtil.cargaPosicionesAlmacenadas((Context)this, getWindow().getDecorView());
 			
     		// informa estado de la wifi/3G
     		informaEstadoActualInternet();
@@ -108,7 +103,7 @@ public class PrincipalActivity extends FragmentActivity {
 	    		case R.id.ppal_menu_settings3:
 	    			// Borrar posiciones almacenadas
 	    			FileUtil.borraFicheroActualDePosiciones(this);
-	    			cargaPosicionesAlmacenadas();
+	    			FileUtil.cargaPosicionesAlmacenadas((Context)this, getWindow().getDecorView());
 	    			Toast.makeText(this, getResources().getString(R.string.txt_coordenadas_borradas_ok)
 	    					, Toast.LENGTH_LONG).show();
 	    			return true;
@@ -260,25 +255,6 @@ public class PrincipalActivity extends FragmentActivity {
     	}catch(Exception ex){
     		ex.printStackTrace();
     	}
-    }
-    
-    
-    public void cargaPosicionesAlmacenadas(){
-    	try{
-    		Context ctx = this;
-    		
-    		// lectura del fichero de configuracion
-    		Properties prefs = new Properties();
-    		prefs = FileUtil.getFicheroAssetConfiguracion(ctx);
-    		
-    		String tipoCuenta = (String) prefs.get(Constantes.PROP_TIPO_CUENTA);
-    		
-			listaPosiciones = FileUtil.getListaAssetPosiciones(ctx, Integer.parseInt(tipoCuenta));
-		}catch(IOException e){
-			e.printStackTrace();
-		}catch(Exception ex){
-			ex.printStackTrace();
-		}
     }
     
     
