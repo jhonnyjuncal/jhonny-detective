@@ -466,6 +466,8 @@ public class FileUtil implements Serializable{
 			
 			TextView textoPosiciones = (TextView)view.findViewById(R.id.textView6);
 			textoPosiciones.setText(String.valueOf(contador));
+			
+			PrincipalActivity.listaPosiciones = lista;
 		}catch(IOException e){
 			e.printStackTrace();
 		}catch(Exception ex){
