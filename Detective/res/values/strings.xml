@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">Detective</string>
+    <string name="menu_settings1">Configuración</string>
+    <string name="menu_settings2">Cambiar contraseña</string>
+	<string name="menu_settings3">Borrar coordenadas</string>
+	<string name="menu_settings4">Acerca de Detective</string>
+    <string name="menu_legalnotices">Información legal</string>
+    <string name="label_status_gps">Estado del GPS:</string>
+    <string name="label_nombre_usuario">Nombre de usuario:</string>
+    <string name="label_posiciones">Posiciones:</string>
+    <string name="label_estado_wifi_3g">Estado del Wifi:</string>
+    <string name="label_pendientes">Pendientes:</string>
+    <string name="label_tipo_cuenta">Tipo de cuenta:</string>
+    <string name="variable_progreso">progreso...</string>
+    <string name="label_creador">Jhonny Juncal Gonzalez</string>
+    <string name="label_desarrollado_por">Desarrollado por:</string>
+    <string name="title_activity_posiciones">Posiciones</string>
+    <string name="label_usuario">Usuario:</string>
+    <string name="label_contrasena">Contraseña:</string>
+    <string name="label_acceso_aplicacion">Acceso</string>
+    <string name="label_registro_nuevo">Usuario nuevo</string>
+    <string name="label_recordar_pass">Recordar contraseña</string>
+    <string name="label_mostrar_mapa">Mostrar posiciones en mapa</string>
+    <string name="label_mostrar_posiciones">Mostrar posiciones en lista</string>
+    <string name="title_activity_mapa">Mapa</string>
+	<string name="txt_encendida">Encendida</string>
+	<string name="txt_apagada">Apagada</string>
+	<string name="txt_debe_introducir">Debe introducir la contraseña</string>
+	<string name="txt_datos_incorrectos">Los datos introducidos son incorrectos</string>
+	<string name="txt_titulo_coordenada">posición:</string>
+	<string name="label_fecha">Fecha:</string>
+	<string name="label_hora">Hora:</string>
+	<string name="label_contrasena_anterior">Contraseña actual:</string>
+	<string name="label_contrasena_nueva1">Nueva contraseña:</string>
+	<string name="label_contrasena_nueva2">Confirme contraseña:</string>
+	<string name="label_cambio_contrasena">Cambiar contraseña</string>
+	<string name="title_activity_contrasena">Cambio de contraseña</string>
+	<string name="txt_nuevos_pass_incorrectos">Las nuevas contraseñas no coinciden</string>
+	<string name="txt_cambio_pass_ok">Contraseña modificada correctamente</string>
+	<string name="version_app">Versión:</string>
+	<string name="title_activity_acerca">Acerca de Detective</string>
+	<string name="fecha_creacion">Creación:</string>
+	<string name="pais_creacion">País:</string>
+	<string name="pais">España</string>
+	<string name="txt_coordenadas_borradas_ok">Posiciones eliminadas correctamente</string>
+	<string name="title_activity_configuracion">Configuración</string>
+	<string name="txt_passViejo_incorrecto">Debe introducir la contraseña anterior</string>
+	<string name="txt_passNuevo_incorrecto">La nueva contraseña no puede estar vacia</string>
+	<string name="txt_sin_posiciones">No hay posiciones que mostrar</string>
+	<string name="label_dist_minima_act">Distancia mínima para actualizar posición:</string>
+	<string name="label_tmpo_minimo_act">Tiempo mínimo para actualizar posición:</string>
+	<string-array name="lista_distancias">
+		<item>15 Kilómetros</item>
+		<item>30 Kilómetros</item>
+		<item>45 Kilómetros</item>
+		<item>60 Kilómetros</item>
+	</string-array>
+	<string-array name="lista_tiempos">
+		<item>30 minutos</item>
+		<item>60 minutos</item>
+		<item>90 minutos</item>
+		<item>120 minutos</item>
+	</string-array>
+	<string name="label_selecciona_dist">Selecciona distancia:</string>
+	<string name="label_selecciona_tmpo">Selecciona tiempo:</string>
+	<string name="label_latitud">Latitud:</string>
+	<string name="label_longitud">Longitud:</string>
+</resources>
