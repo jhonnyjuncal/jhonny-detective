@@ -13,6 +13,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -31,9 +32,10 @@ public class PrincipalActivity extends FragmentActivity {
 	protected static Integer TIPO_CUENTA;
 	protected static final String FICHERO_CONFIGURACION = "config.properties";
 	
-	WifiManager wifi = null;
 	AdView adView = null;
 	static List<ObjetoPosicion> listaPosiciones = null;
+	public static View viewPrincipal = null;
+	public static Resources resourcesPrincipal = null;
 	
 	
     @Override
@@ -45,7 +47,7 @@ public class PrincipalActivity extends FragmentActivity {
     		// se inicia el servicio de actualizacion de coordenadas
     		iniciaServicio();
     		
-    		wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+    		FileUtil.setWifiManager((WifiManager)getSystemService(Context.WIFI_SERVICE));
     		
     		// se crea la vista
     		adView = new AdView(this, AdSize.BANNER, "a1513f4a3b63be1");
@@ -203,13 +205,12 @@ public class PrincipalActivity extends FragmentActivity {
     		if(locationManager != null)
     			enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     		
-    		if(enabled == false){
-    			TextView textoStatus = (TextView) findViewById(R.id.textView2);
+    		TextView textoStatus = (TextView) findViewById(R.id.textView2);
+    		if(enabled == false)
     			textoStatus.setText(getResources().getString(R.string.txt_apagada));
-    		}else{
-    			TextView textoStatus = (TextView) findViewById(R.id.textView2);
+    		else
     			textoStatus.setText(getResources().getString(R.string.txt_encendida));
-    		}
+    		
     	}catch(Exception ex){
     		ex.printStackTrace();
     	}
@@ -248,7 +249,7 @@ public class PrincipalActivity extends FragmentActivity {
     			String tipoCuenta = (String) prefs.get(Constantes.PROP_TIPO_CUENTA);
     			if(tipoCuenta != null && tipoCuenta.length() > 0){
     				TIPO_CUENTA = Integer.parseInt(tipoCuenta);
-    				TextView textoCuenta = (TextView) findViewById(R.id.textView12);
+    				TextView textoCuenta = (TextView) findViewById(R.id.textView8);
     				textoCuenta.setText(tipoCuenta);
     			}
     		}
@@ -258,11 +259,13 @@ public class PrincipalActivity extends FragmentActivity {
     }
     
     
-    private void informaEstadoActualInternet(){
+    protected void informaEstadoActualInternet(){
     	try{
-    		TextView textoWifi = (TextView) findViewById(R.id.textView8);
+    		PrincipalActivity.viewPrincipal = getWindow().getDecorView();
+    		PrincipalActivity.resourcesPrincipal = getResources();
+    		TextView textoWifi = (TextView)findViewById(R.id.textView6);
     		
-    		if(wifi.isWifiEnabled())
+    		if(FileUtil.getWifiManager().isWifiEnabled())
     			textoWifi.setText(getResources().getString(R.string.txt_encendida));
     		else
     			textoWifi.setText(getResources().getString(R.string.txt_apagada));

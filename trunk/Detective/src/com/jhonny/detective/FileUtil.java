@@ -21,6 +21,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import android.content.Context;
 import android.location.LocationManager;
+import android.net.wifi.WifiManager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class FileUtil implements Serializable{
 	private static final long serialVersionUID = -3721769765641235234L;
 	private static LocationManager locationManager;
 	private static Localizador localizador;
+	private static WifiManager wifi = null;
 	
 	
 	public static LocationManager getLocationManager(){
@@ -49,6 +51,16 @@ public class FileUtil implements Serializable{
 	
 	public static void setLocalizador(Localizador localizador){
 		FileUtil.localizador = localizador;
+	}
+	
+	
+	public static WifiManager getWifiManager(){
+		return FileUtil.wifi;
+	}
+	
+	
+	public static void setWifiManager(WifiManager wifi){
+		FileUtil.wifi = wifi;
 	}
 	
 	
@@ -170,9 +182,8 @@ public class FileUtil implements Serializable{
 			borraFicheroActualDePosiciones(ctx);
 			almacenaPosicionesActualesEnFichero(listaPosiciones, ctx);
 		}catch(FileNotFoundException e){
-			e.printStackTrace();
-//			FileOutputStream out = ctx.openFileOutput(Constantes.FICHERO_POSICIONES, Context.MODE_PRIVATE);
-//			out.close();
+			FileOutputStream out = ctx.openFileOutput(Constantes.FICHERO_POSICIONES, Context.MODE_PRIVATE);
+			out.close();
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}finally{
@@ -464,7 +475,7 @@ public class FileUtil implements Serializable{
 			if(lista != null && lista.size() > 0)
 				contador = lista.size();
 			
-			TextView textoPosiciones = (TextView)view.findViewById(R.id.textView6);
+			TextView textoPosiciones = (TextView)view.findViewById(R.id.textView4);
 			textoPosiciones.setText(String.valueOf(contador));
 			
 			PrincipalActivity.listaPosiciones = lista;

@@ -6,6 +6,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 
 public class Localizador implements LocationListener {
@@ -29,13 +30,25 @@ public class Localizador implements LocationListener {
 	
 	@Override
 	public void onProviderDisabled(String arg0) {
-		/* AL APAGAR EL GPS */
+		try{
+			/* AL APAGAR EL GPS */
+			TextView tv2 = (TextView)view.findViewById(R.id.textView2);
+			tv2.setText(contexto.getResources().getString(R.string.txt_apagada));
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 	}
 	
 	
 	@Override
 	public void onProviderEnabled(String arg0) {
-		/* AL ENCENDER EL GPS */
+		try{
+			/* AL ENCENDER EL GPS */
+			TextView tv2 = (TextView)view.findViewById(R.id.textView2);
+			tv2.setText(contexto.getResources().getString(R.string.txt_encendida));
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 	}
 	
 	

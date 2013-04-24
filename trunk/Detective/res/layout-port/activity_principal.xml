@@ -8,8 +8,6 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:text="@string/label_status_gps" />
@@ -18,69 +16,58 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView1"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_marginLeft="60dp"
-        android:layout_toRightOf="@+id/textView1"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/variable_progreso" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/label_posiciones" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="40dp"
         android:text="@string/variable_progreso" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/label_posiciones" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView5"
-        android:layout_alignLeft="@+id/textView2"
-        android:text="@string/variable_progreso" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:layout_marginBottom="47dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="65dp"
         android:text="@string/label_estado_wifi_3g" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView7"
-        android:layout_alignLeft="@+id/textView6"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="65dp"
         android:text="@string/variable_progreso" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView7"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_below="@+id/textView7"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="90dp"
         android:text="@string/label_tipo_cuenta"
         android:visibility="invisible" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView11"
-        android:layout_alignBottom="@+id/textView11"
-        android:layout_alignLeft="@+id/textView8"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="90dp"
         android:text="@string/variable_progreso"
         android:visibility="invisible" />
 
@@ -91,7 +78,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_below="@+id/textView11"
+        android:layout_below="@+id/textView8"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginTop="130dp"
