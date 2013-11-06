@@ -6,12 +6,16 @@ import java.util.Locale;
 import java.util.Properties;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
@@ -32,13 +36,16 @@ import com.google.android.gms.maps.Projection;
 
 public class MapaActivity extends FragmentActivity {
 	
-	GoogleMap mapa = null;
+	private GoogleMap mapa = null;
+	private int contSalida = 0;
+	private View view;
 	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mapa);
+		contSalida = 0;
 		
 		Properties prefs = new Properties();
 		Context ctx = this;
@@ -113,6 +120,34 @@ public class MapaActivity extends FragmentActivity {
 	}
 	
 	
+	@Override
+	public void onResume(){
+		super.onResume();
+		contSalida = 0;
+		reiniciarFondoOpciones();
+	}
+	
+	
+	@Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	if(keyCode == KeyEvent.KEYCODE_BACK) {
+    		if(contSalida == 0){
+    			contSalida++;
+    			Toast.makeText(this, getResources().getString(R.string.txt_salir_1_aviso), Toast.LENGTH_SHORT).show();
+    			return true;
+    		}else{
+    			contSalida = 0;
+    			Intent intent = new Intent();
+    			intent.setAction(Intent.ACTION_MAIN);
+    			intent.addCategory(Intent.CATEGORY_HOME);
+    			startActivity(intent);
+    		}
+    	}
+    	//para las demas cosas, se reenvia el evento al listener habitual
+    	return super.onKeyDown(keyCode, event);
+    }
+	
+	
 	private void agregarMarcador(double latitud, double longitud, Date fecha){
 		try{
 			if(mapa != null){
@@ -152,22 +187,12 @@ public class MapaActivity extends FragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		try{
-	        getMenuInflater().inflate(R.menu.activity_mapa, menu);
+	        getMenuInflater().inflate(R.menu.menu_mapa, menu);
 		}catch(Exception ex){
     		ex.printStackTrace();
 		}
 		return true;
 	}
-	
-	
-//	@Override
-//	public void onDestroy(){
-//		try{
-//			adView.destroy();
-//		}catch(Exception ex){
-//    		ex.printStackTrace();
-//		}
-//	}
 	
 	
 	@Override
@@ -182,5 +207,30 @@ public class MapaActivity extends FragmentActivity {
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	
+	private void reiniciarFondoOpciones(){
+		try{
+			LinearLayout layout_inicio = (LinearLayout)findViewById(R.id.opc_layout_inicio);
+			layout_inicio.setBackgroundResource(R.color.gris_claro);
+			
+			LinearLayout layout_redes = (LinearLayout)findViewById(R.id.opc_layout_conf);
+			layout_redes.setBackgroundResource(R.color.gris_claro);
+			
+			LinearLayout layout_conf = (LinearLayout)findViewById(R.id.opc_layout_pass);
+			layout_conf.setBackgroundResource(R.color.gris_claro);
+			
+			LinearLayout layout_acerca = (LinearLayout)findViewById(R.id.opc_layout_borra);
+			layout_acerca.setBackgroundResource(R.color.gris_claro);
+			
+			LinearLayout layout_terminos = (LinearLayout)findViewById(R.id.opc_layout_about);
+			layout_terminos.setBackgroundResource(R.color.gris_claro);
+			
+			if(this.view != null)
+				this.view.buildDrawingCache(true);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 	}
 }

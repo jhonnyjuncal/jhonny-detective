@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jhonny.detective"
-    android:installLocation="preferExternal"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:installLocation="auto"
+    android:versionCode="2"
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="17" >
+    </uses-sdk>
+
+    <supports-screens
+        android:anyDensity="false"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true">
+    </supports-screens>
 
     <permission
         android:name="com.jhonny.detective.permission.MAPS_RECEIVE"
-        android:protectionLevel="normal" />
+        android:protectionLevel="normal">
+    </permission>
 
     <uses-permission android:name="com.jhonny.detective.permission.MAPS_RECEIVE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -25,16 +35,19 @@
 
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true" />
+        android:required="true">
+    </uses-feature>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:logo="@drawable/private_detective_icon"
+        android:theme="@style/Theme.Sherlock.Light" >
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBDNF5zHJyTx3tGQxm5fSiEeMz-tvU7__Y" />
+            android:value="AIzaSyBDNF5zHJyTx3tGQxm5fSiEeMz-tvU7__Y">
+        </meta-data>
 
         <activity
             android:name="com.jhonny.detective.InicioActivity"
@@ -46,19 +59,19 @@
         </activity>
         <activity
             android:name="com.jhonny.detective.PrincipalActivity"
-            android:launchMode="singleInstance"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleInstance" >
         </activity>
         <activity
             android:name="com.jhonny.detective.PosicionesActivity"
+            android:label="@string/title_activity_posiciones"
             android:launchMode="singleInstance"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:label="@string/title_activity_posiciones" >
+            android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
             android:name="com.jhonny.detective.MapaActivity"
-            android:launchMode="singleInstance"
-            android:label="@string/title_activity_mapa" >
+            android:label="@string/title_activity_mapa"
+            android:launchMode="singleInstance" >
         </activity>
         <activity
             android:name="com.google.ads.AdActivity"
@@ -66,21 +79,35 @@
         </activity>
         <activity
             android:name="com.jhonny.detective.ContrasenaActivity"
+            android:label="@string/title_activity_contrasena"
             android:launchMode="singleInstance"
-            android:label="@string/title_activity_contrasena" >
+            android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
             android:name="com.jhonny.detective.AcercaActivity"
-            android:launchMode="singleInstance"
-            android:label="@string/title_activity_acerca" >
+            android:label="@string/title_activity_acerca"
+            android:launchMode="singleInstance" >
         </activity>
         <activity
             android:name="com.jhonny.detective.ConfiguracionActivity"
-            android:launchMode="singleInstance"
-            android:label="@string/title_activity_configuracion" >
+            android:label="@string/title_activity_configuracion"
+            android:launchMode="singleInstance" >
         </activity>
-
+        <activity
+            android:name="com.jhonny.detective.OpcionesActivity"
+            android:label="@string/title_activity_opciones" >
+        </activity>
+        <activity
+            android:name="com.jhonny.detective.BorrarPosicionesActivity"
+            android:label="@string/title_activity_borrar_posiciones" >
+        </activity>
+		
+        <receiver android:name="com.jhonny.detective.WifiListener" >
+            <intent-filter>
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+            </intent-filter>
+        </receiver>
         <service android:name="com.jhonny.detective.ServicioActualizacion" />
     </application>
-
 </manifest>
