@@ -1,114 +1,132 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-	
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:focusable="true"
-        android:text="@string/label_latitud" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PosicionesActivity" >
 
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="95dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="57dp"
-        android:layout_marginTop="5dp"
-        android:inputType="text"
-        android:paddingBottom="0dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="0dp"
-        android:paddingTop="0dp"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="160dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/label_longitud" />
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="95dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="222dp"
-        android:layout_marginTop="5dp"
-        android:inputType="text"
-        android:paddingBottom="0dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="0dp"
-        android:paddingTop="0dp"
-        android:textSize="12sp" />
-    
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/label_fecha" />
-
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="95dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="57dp"
-        android:layout_marginTop="38dp"
-        android:inputType="text"
-        android:paddingBottom="0dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="0dp"
-        android:paddingTop="0dp"
-        android:textSize="12sp" />
-    
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="160dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/label_hora" />
-
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="95dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="222dp"
-        android:layout_marginTop="38dp"
-        android:inputType="text"
-        android:paddingBottom="0dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="0dp"
-        android:paddingTop="0dp"
-        android:textSize="12sp" />
-    
-    <ListView
-        android:id="@+id/listView1"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="50dp"
-        android:layout_marginTop="80dp"
-        android:background="#D1C8C8"
-        android:clickable="true"
-        android:fadingEdge="vertical|horizontal"
-        android:fadingEdgeLength="1dp" />
+        android:contentDescription="@string/variable_progreso"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_fondo3" />
     
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:weightSum="1" />
-    
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+	    <TextView
+	        android:id="@+id/textView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginTop="10dp"
+	        android:focusable="true"
+	        android:text="@string/label_latitud"
+	        android:textColor="@color/blanco" />
+	
+	    <EditText
+	        android:id="@+id/editText1"
+	        android:layout_width="95dp"
+	        android:layout_height="30dp"
+	        android:layout_marginLeft="57dp"
+	        android:layout_marginTop="5dp"
+	        android:inputType="text"
+	        android:paddingBottom="0dp"
+	        android:paddingLeft="5dp"
+	        android:paddingRight="0dp"
+	        android:paddingTop="0dp"
+	        android:textSize="12sp" />
+	
+	    <TextView
+	        android:id="@+id/textView2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="160dp"
+	        android:layout_marginTop="10dp"
+	        android:text="@string/label_longitud"
+	        android:textColor="@color/blanco" />
+	
+	    <EditText
+	        android:id="@+id/editText2"
+	        android:layout_width="95dp"
+	        android:layout_height="30dp"
+	        android:layout_marginLeft="222dp"
+	        android:layout_marginTop="5dp"
+	        android:inputType="text"
+	        android:paddingBottom="0dp"
+	        android:paddingLeft="5dp"
+	        android:paddingRight="0dp"
+	        android:paddingTop="0dp"
+	        android:textSize="12sp" />
+	    
+	    <TextView
+	        android:id="@+id/textView3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginTop="40dp"
+	        android:text="@string/label_fecha"
+	        android:textColor="@color/blanco" />
+	
+	    <EditText
+	        android:id="@+id/editText3"
+	        android:layout_width="95dp"
+	        android:layout_height="30dp"
+	        android:layout_marginLeft="57dp"
+	        android:layout_marginTop="38dp"
+	        android:inputType="text"
+	        android:paddingBottom="0dp"
+	        android:paddingLeft="5dp"
+	        android:paddingRight="0dp"
+	        android:paddingTop="0dp"
+	        android:textSize="12sp" />
+	    
+	    <TextView
+	        android:id="@+id/textView4"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="160dp"
+	        android:layout_marginTop="40dp"
+	        android:text="@string/label_hora"
+	        android:textColor="@color/blanco" />
+	
+	    <EditText
+	        android:id="@+id/editText4"
+	        android:layout_width="95dp"
+	        android:layout_height="30dp"
+	        android:layout_marginLeft="222dp"
+	        android:layout_marginTop="38dp"
+	        android:inputType="text"
+	        android:paddingBottom="0dp"
+	        android:paddingLeft="5dp"
+	        android:paddingRight="0dp"
+	        android:paddingTop="0dp"
+	        android:textSize="12sp" />
+	    
+	    <ListView
+	        android:id="@+id/listView1"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_alignParentBottom="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginBottom="50dp"
+	        android:layout_marginTop="80dp"
+	        android:background="#D1C8C8"
+	        android:clickable="true"
+	        android:fadingEdge="vertical|horizontal"
+	        android:fadingEdgeLength="1dp" />
+	    
+	    <LinearLayout
+	        android:id="@+id/linearLayout2"
+	        android:layout_width="fill_parent"
+	        android:layout_height="50dp"
+	        android:layout_alignParentBottom="true"
+	        android:orientation="vertical"
+	        android:weightSum="1" />
+	    
+	</RelativeLayout>
+	
+</FrameLayout>

@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Detective</string>
+    <string name="menu_settings0">Principal</string>
     <string name="menu_settings1">Configuración</string>
     <string name="menu_settings2">Cambiar contraseña</string>
 	<string name="menu_settings3">Borrar coordenadas</string>
@@ -12,9 +14,10 @@
     <string name="label_pendientes">Pendientes:</string>
     <string name="label_tipo_cuenta">Tipo de cuenta:</string>
     <string name="variable_progreso">progreso...</string>
-    <string name="label_creador">Jhonny Juncal Gonzalez</string>
+    <string name="label_creador"><a href="https://plus.google.com/u/0/115840161297230406504/posts">Jhonny Juncal Gonzalez</a></string>
     <string name="label_desarrollado_por">Desarrollado por:</string>
     <string name="title_activity_posiciones">Posiciones</string>
+    <string name="title_activity_opciones">Opciones</string>
     <string name="label_usuario">Usuario:</string>
     <string name="label_contrasena">Contraseña:</string>
     <string name="label_acceso_aplicacion">Acceso</string>
@@ -65,4 +68,10 @@
 	<string name="label_selecciona_tmpo">Selecciona tiempo:</string>
 	<string name="label_latitud">Latitud:</string>
 	<string name="label_longitud">Longitud:</string>
+	<string name="label_datos_coordenadas">Datos actuales de las coordenadas</string>
+	<string name="title_activity_borrar_posiciones">Borrar Posiciones</string>
+	<string name="label_cantidad_coord">Cantidad de coordenadas:</string>
+	<string name="txt_advertencia_borrar">Advertencia. No se podra recuperar la información después de ser borrada</string>
+	<string name="txt_salir_1_aviso">Pulse de nuevo para salir</string>
+	<string name="label_fondo_pantalla">Fondo de pantalla</string>
 </resources>

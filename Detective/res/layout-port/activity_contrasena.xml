@@ -1,105 +1,121 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".ContrasenaActivity" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/variable_progreso"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_fondo3" />
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 	
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/label_contrasena_anterior" />
-    
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="150dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:paddingBottom="0dp"
-        android:paddingTop="0dp"
-        android:textSize="12sp" />
-    
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="60dp"
-        android:text="@string/label_contrasena_nueva1" />
-    
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="150dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="54dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:paddingBottom="0dp"
-        android:paddingTop="0dp"
-        android:textSize="12sp" />
-    
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="90dp"
-        android:text="@string/label_contrasena_nueva2" />
-    
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="150dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="85dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:paddingBottom="0dp"
-        android:paddingTop="0dp"
-        android:textSize="12sp" />
-    
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"
-        android:layout_marginTop="130dp"
-        android:onClick="cambiarContrasena"
-        android:text="@string/label_cambio_contrasena" />
-    
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:orientation="vertical"
-        android:weightSum="1" />
-    
-    <LinearLayout
-	    android:id="@+id/linearLayout3"
-	    android:layout_width="fill_parent"
-	    android:layout_height="50dp"
-	    android:layout_alignParentBottom="true"
-	    android:orientation="vertical"
-	    android:weightSum="1" />
-    
-</RelativeLayout>
+	    <TextView
+	        android:id="@+id/textView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginTop="10dp"
+	        android:text="@string/label_contrasena_anterior"
+	        android:textColor="@color/blanco" />
+	    
+	    <EditText
+	        android:id="@+id/editText1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="30dp"
+	        android:layout_alignParentLeft="true"
+	        android:layout_marginLeft="150dp"
+	        android:layout_marginRight="5dp"
+	        android:layout_marginTop="5dp"
+	        android:ems="10"
+	        android:inputType="textPassword"
+	        android:paddingBottom="0dp"
+	        android:paddingTop="0dp"
+	        android:textSize="12sp" />
+	    
+	    <TextView
+	        android:id="@+id/textView2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginTop="60dp"
+	        android:text="@string/label_contrasena_nueva1"
+	        android:textColor="@color/blanco" />
+	    
+	    <EditText
+	        android:id="@+id/editText2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="30dp"
+	        android:layout_alignParentLeft="true"
+	        android:layout_marginLeft="150dp"
+	        android:layout_marginRight="5dp"
+	        android:layout_marginTop="54dp"
+	        android:ems="10"
+	        android:inputType="textPassword"
+	        android:paddingBottom="0dp"
+	        android:paddingTop="0dp"
+	        android:textSize="12sp" />
+	    
+	    <TextView
+	        android:id="@+id/textView3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_marginTop="90dp"
+	        android:text="@string/label_contrasena_nueva2"
+	        android:textColor="@color/blanco" />
+	    
+	    <EditText
+	        android:id="@+id/editText3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="30dp"
+	        android:layout_alignParentLeft="true"
+	        android:layout_marginLeft="150dp"
+	        android:layout_marginRight="5dp"
+	        android:layout_marginTop="85dp"
+	        android:ems="10"
+	        android:inputType="textPassword"
+	        android:paddingBottom="0dp"
+	        android:paddingTop="0dp"
+	        android:textSize="12sp" />
+	    
+	    <Button
+	        android:id="@+id/button1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginLeft="70dp"
+	        android:layout_marginRight="70dp"
+	        android:layout_marginTop="130dp"
+	        android:onClick="cambiarContrasena"
+	        android:text="@string/label_cambio_contrasena" />
+	    
+	    <LinearLayout
+	        android:id="@+id/linearLayout2"
+	        android:layout_width="fill_parent"
+	        android:layout_height="50dp"
+	        android:layout_alignParentBottom="true"
+	        android:layout_marginBottom="50dp"
+	        android:orientation="vertical"
+	        android:weightSum="1" />
+	    
+	    <LinearLayout
+		    android:id="@+id/linearLayout3"
+		    android:layout_width="fill_parent"
+		    android:layout_height="50dp"
+		    android:layout_alignParentBottom="true"
+		    android:orientation="vertical"
+		    android:weightSum="1" />
+	    
+	</RelativeLayout>
+	
+</FrameLayout>

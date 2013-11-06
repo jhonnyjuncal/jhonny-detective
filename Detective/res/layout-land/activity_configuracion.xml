@@ -1,63 +1,79 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ConfiguracionActivity" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/label_dist_minima_act"
-        android:textSize="15sp" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/variable_progreso"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_fondo3" />
 
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:entries="@array/lista_distancias"
-        android:prompt="@string/label_selecciona_dist" />
+	<RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/spinner1"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/label_tmpo_minimo_act"
-        android:textSize="15sp" />
-
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:entries="@array/lista_tiempos"
-        android:prompt="@string/label_selecciona_tmpo" />
-    	
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:weightSum="1" />
-    	
-    <LinearLayout
-	    android:id="@+id/linearLayout3"
-	    android:layout_width="fill_parent"
-	    android:layout_height="50dp"
-	    android:layout_alignParentBottom="true"
-	    android:orientation="vertical"
-	    android:weightSum="1" />
-</RelativeLayout>
+	    <TextView
+	        android:id="@+id/textView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginTop="15dp"
+	        android:text="@string/label_dist_minima_act"
+	        android:textSize="15sp"
+	        android:textColor="@color/blanco" />
+	
+	    <Spinner
+	        android:id="@+id/spinner1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/textView1"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginRight="15dp"
+	        android:entries="@array/lista_distancias"
+	        android:prompt="@string/label_selecciona_dist" />
+	
+	    <TextView
+	        android:id="@+id/textView2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/spinner1"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginTop="30dp"
+	        android:text="@string/label_tmpo_minimo_act"
+	        android:textSize="15sp"
+	        android:textColor="@color/blanco" />
+	
+	    <Spinner
+	        android:id="@+id/spinner2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/textView2"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginRight="15dp"
+	        android:entries="@array/lista_tiempos"
+	        android:prompt="@string/label_selecciona_tmpo" />
+	    	
+	    <LinearLayout
+	        android:id="@+id/linearLayout2"
+	        android:layout_width="fill_parent"
+	        android:layout_height="50dp"
+	        android:layout_alignParentBottom="true"
+	        android:orientation="vertical"
+	        android:weightSum="1" />
+	    	
+	    <LinearLayout
+		    android:id="@+id/linearLayout3"
+		    android:layout_width="fill_parent"
+		    android:layout_height="50dp"
+		    android:layout_alignParentBottom="true"
+		    android:orientation="vertical"
+		    android:weightSum="1" />
+	    
+	</RelativeLayout>
+	
+</FrameLayout>

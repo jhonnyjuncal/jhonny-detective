@@ -5,57 +5,80 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import android.location.LocationManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class PrincipalActivity extends FragmentActivity {
+public class PrincipalActivity extends SherlockActivity {
 	
+	private static final long serialVersionUID = -7155207696891363901L;
 	protected static String PASS;
 	protected static float DISTANCIA_MINIMA_PARA_ACTUALIZACIONES;
 	protected static long TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES;
 	protected static Integer TIPO_CUENTA;
 	protected static final String FICHERO_CONFIGURACION = "config.properties";
 	
-	AdView adView = null;
-	static List<ObjetoPosicion> listaPosiciones = null;
+	private AdView adView = null;
+	public static List<ObjetoPosicion> listaPosiciones = null;
 	public static View viewPrincipal = null;
 	public static Resources resourcesPrincipal = null;
+	private ActionBar actionBar;
+	private int contSalida = 0;
+	private SlidingMenu menu;
+	private View view;
 	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	try{
-    		super.onCreate(savedInstanceState);
-    		setContentView(R.layout.activity_principal);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_principal);
+		contSalida = 0;
+    		
+		try{
+    		menu = new SlidingMenu(this);
+	        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+	        menu.setShadowWidthRes(R.dimen.shadow_width);
+	        menu.setShadowDrawable(R.drawable.ext_sombra);
+	        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+	        menu.setFadeDegree(0.35f);
+	        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+	        menu.setMenu(R.layout.activity_opciones);
+	        
+	        actionBar = getSupportActionBar();
+	        if(actionBar != null){
+	        	actionBar.setDisplayShowCustomEnabled(true);
+	        	
+	        	// boton < de la action bar
+	        	actionBar.setDisplayHomeAsUpEnabled(false);
+	        	actionBar.setHomeButtonEnabled(true);
+	        }
     		
     		// se inicia el servicio de actualizacion de coordenadas
     		iniciaServicio();
     		
     		FileUtil.setWifiManager((WifiManager)getSystemService(Context.WIFI_SERVICE));
     		
-    		// se crea la vista
+    		// publicidad
     		adView = new AdView(this, AdSize.BANNER, "a1513f4a3b63be1");
-    		// se obtiene el layout para el banner
     		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
-    		// se añade la vista
     		layout.addView(adView);
-    		// se inicia la solicitud para cargar el anuncio
     		adView.loadAd(new AdRequest());
     		
     		// carga los datos de la configuracion
@@ -77,56 +100,16 @@ public class PrincipalActivity extends FragmentActivity {
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-    	try{
-	        getMenuInflater().inflate(R.menu.activity_principal, menu);
-    	}catch(Exception ex){
-    		ex.printStackTrace();
-    	}
+    	MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.menu_principal, menu);
     	return true;
-    }
-    
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-    	Intent intent;
-    	
-    	try{
-	    	switch(item.getItemId()){
-	    		case R.id.ppal_menu_settings1:
-	    			// Configuracion
-	    			intent = new Intent(this, ConfiguracionActivity.class);
-					startActivity(intent);
-	    			return true;
-	    		case R.id.ppal_menu_settings2:
-	    			// Cambiar contraseña
-	    			intent = new Intent(this, ContrasenaActivity.class);
-					startActivity(intent);
-	    			return true;
-	    		case R.id.ppal_menu_settings3:
-	    			// Borrar posiciones almacenadas
-	    			FileUtil.borraFicheroActualDePosiciones(this);
-	    			FileUtil.cargaPosicionesAlmacenadas((Context)this, getWindow().getDecorView());
-	    			Toast.makeText(this, getResources().getString(R.string.txt_coordenadas_borradas_ok)
-	    					, Toast.LENGTH_LONG).show();
-	    			return true;
-	    		case R.id.ppal_menu_settings4:
-	    			// Acerca de...
-	    			intent = new Intent(this, AcercaActivity.class);
-					startActivity(intent);
-	    			return true;
-	    		default:
-	    			return super.onOptionsItemSelected(item);
-	        }
-    	}catch(Exception ex){
-    		ex.printStackTrace();
-    	}
-    	return false;
     }
     
     
     @Override
     public void onDestroy(){
     	try{
+    		contSalida = 0;
     		Map<String, String> valores = new HashMap<String, String>();
     		
     		valores.put(Constantes.PROP_PASSWORD, PASS);
@@ -140,6 +123,14 @@ public class PrincipalActivity extends FragmentActivity {
     	}catch(Exception ex){
     		ex.printStackTrace();
     	}
+    }
+    
+    
+    @Override
+    public void onResume(){
+    	super.onResume();
+    	contSalida = 0;
+    	reiniciarFondoOpciones();
     }
     
     
@@ -277,15 +268,21 @@ public class PrincipalActivity extends FragmentActivity {
     
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-      if(keyCode == KeyEvent.KEYCODE_BACK) {
-    	  Intent intent = new Intent(Intent.ACTION_MAIN);
-    	  intent.addCategory(Intent.CATEGORY_HOME);
-    	  intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    	  startActivity(intent);
-      }
-      
-      //para las demas cosas, se reenvia el evento al listener habitual
-      return super.onKeyDown(keyCode, event);
+    	if(keyCode == KeyEvent.KEYCODE_BACK) {
+    		if(contSalida == 0){
+    			contSalida++;
+    			Toast.makeText(this, getResources().getString(R.string.txt_salir_1_aviso), Toast.LENGTH_SHORT).show();
+    			return true;
+    		}else{
+    			contSalida = 0;
+    			Intent intent = new Intent();
+    			intent.setAction(Intent.ACTION_MAIN);
+    			intent.addCategory(Intent.CATEGORY_HOME);
+    			startActivity(intent);
+    		}
+    	}
+    	//para las demas cosas, se reenvia el evento al listener habitual
+    	return super.onKeyDown(keyCode, event);
     }
     
     
@@ -300,6 +297,121 @@ public class PrincipalActivity extends FragmentActivity {
     		ex.printStackTrace();
     	}
     }
+    
+    
+    public void muestraHome(View view){
+		try{
+			this.view = view;
+			
+			LinearLayout layout_inicio = (LinearLayout)findViewById(R.id.opc_layout_inicio);
+			layout_inicio.setBackgroundResource(R.color.gris_oscuro);
+			view.buildDrawingCache(true);
+			
+			Intent intent = new Intent(this, PrincipalActivity.class);
+			startActivity(intent);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}finally{
+			menu.toggle();
+		}
+	}
+	
+	
+	public void muestraConfiguracion(View view){
+		try{
+			this.view = view;
+			
+			LinearLayout layout_inicio = (LinearLayout)findViewById(R.id.opc_layout_conf);
+			layout_inicio.setBackgroundResource(R.color.gris_oscuro);
+			view.buildDrawingCache(true);
+			
+			Intent intent = new Intent(this, ConfiguracionActivity.class);
+			startActivity(intent);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}finally{
+			menu.toggle();
+		}
+	}
+	
+	
+	public void muestraPassword(View view){
+		try{
+			this.view = view;
+			
+			LinearLayout layout_inicio = (LinearLayout)findViewById(R.id.opc_layout_pass);
+			layout_inicio.setBackgroundResource(R.color.gris_oscuro);
+			view.buildDrawingCache(true);
+			
+			Intent intent = new Intent(this, ContrasenaActivity.class);
+			startActivity(intent);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}finally{
+			menu.toggle();
+		}
+	}
+	
+	
+	public void muestraBorrar(View view){
+		try{
+			this.view = view;
+			
+			LinearLayout layout_inicio = (LinearLayout)findViewById(R.id.opc_layout_borra);
+			layout_inicio.setBackgroundResource(R.color.gris_oscuro);
+			view.buildDrawingCache(true);
+			
+			Intent intent = new Intent(this, BorrarPosicionesActivity.class);
+			startActivity(intent);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}finally{
+			menu.toggle();
+		}
+	}
+
+
+	public void muestraAcerca(View view){
+		try{
+			this.view = view;
+			
+			LinearLayout layout_inicio = (LinearLayout)findViewById(R.id.opc_layout_about);
+			layout_inicio.setBackgroundResource(R.color.gris_oscuro);
+			view.buildDrawingCache(true);
+			
+			Intent intent = new Intent(this, AcercaActivity.class);
+			startActivity(intent);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}finally{
+			menu.toggle();
+		}
+	}
+	
+	
+	private void reiniciarFondoOpciones(){
+		try{
+			LinearLayout layout_inicio = (LinearLayout)findViewById(R.id.opc_layout_inicio);
+			layout_inicio.setBackgroundResource(R.color.gris_claro);
+			
+			LinearLayout layout_redes = (LinearLayout)findViewById(R.id.opc_layout_conf);
+			layout_redes.setBackgroundResource(R.color.gris_claro);
+			
+			LinearLayout layout_conf = (LinearLayout)findViewById(R.id.opc_layout_pass);
+			layout_conf.setBackgroundResource(R.color.gris_claro);
+			
+			LinearLayout layout_acerca = (LinearLayout)findViewById(R.id.opc_layout_borra);
+			layout_acerca.setBackgroundResource(R.color.gris_claro);
+			
+			LinearLayout layout_terminos = (LinearLayout)findViewById(R.id.opc_layout_about);
+			layout_terminos.setBackgroundResource(R.color.gris_claro);
+			
+			if(this.view != null)
+				this.view.buildDrawingCache(true);
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
 }
 
 

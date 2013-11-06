@@ -103,6 +103,10 @@ public class FileUtil implements Serializable{
 								// tipo de cuenta
 								properties.put(Constantes.PROP_TIPO_CUENTA, linea);
 								break;
+							case 5:
+								// fondo de pantalla
+								properties.put(Constantes.PROP_FONDO_PANTALLA, linea);
+								break;
 						}
 						contador++;
 						linea = buffreader.readLine();
@@ -383,9 +387,10 @@ public class FileUtil implements Serializable{
 	 */
 	public static void guardaDatosConfiguracion(Map<String, String> valores, Context ctx){
 		OutputStreamWriter out = null;
-		String distMinActualizaciones;
-		String tmpoMinActualizaciones;
-		String tipoCuenta;
+		String distMinActualizaciones = null;
+		String tmpoMinActualizaciones = null;
+		String tipoCuenta = null;
+		String fondoPan = null;
 		
 		try{
 			if(valores != null){
@@ -412,6 +417,12 @@ public class FileUtil implements Serializable{
 					if(tipoCuenta == null)
 						tipoCuenta = Constantes.DEFECTO_TIPO_CUENTA;
 					out.write(tipoCuenta + "\r\n");
+				}
+				if(valores.containsKey(Constantes.PROP_FONDO_PANTALLA)){
+					fondoPan = valores.get(Constantes.PROP_FONDO_PANTALLA);
+					if(fondoPan == null)
+						fondoPan = Constantes.DEFECTO_FONDO;
+					out.write(fondoPan + "\r\n");
 				}
 			}
 		}catch(Exception ex){
@@ -449,6 +460,13 @@ public class FileUtil implements Serializable{
 						if(!Constantes.mapaTmpo.isEmpty()){
 							key = (String)prop.get(Constantes.PROP_TIEMPO_MINIMO_ACTUALIZACIONES);
 							resultado = Constantes.mapaTmpo.get(key).intValue();
+						}
+						break;
+					case 3:
+						// Fondo de pantalla seleccionado
+						if(!Constantes.mapaFondo.isEmpty()){
+							key = (String)prop.get(Constantes.PROP_FONDO_PANTALLA);
+							resultado = Constantes.mapaFondo.get(key).intValue();
 						}
 						break;
 				}

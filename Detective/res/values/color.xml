@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="gris_claro">#b2b2b2</color>
+	<color name="gris_oscuro">#666666</color>
+	<color name="blanco">#FFFFFF</color>
+</resources>

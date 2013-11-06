@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="slidingmenu_offset">60dp</dimen>
+	<dimen name="list_padding">10dp</dimen>
+	<dimen name="shadow_width">15dp</dimen>
+	<integer name="num_cols">1</integer>
+	<dimen name="activity_horizontal_margin">16dp</dimen>
+	<dimen name="activity_vertical_margin">16dp</dimen>
+	<dimen name="tamano_fuente">16sp</dimen>
+	<dimen name="tamano_fuente_grande">18sp</dimen>
+	<dimen name="tamano_fuente_peque">13sp</dimen>
+	<dimen name="padding_arriba">1dp</dimen>
+	<dimen name="padding_abajo">1dp</dimen>
+	<dimen name="padding_izquierda">7dp</dimen>
+	<dimen name="padding_derecha">7dp</dimen>
+</resources>

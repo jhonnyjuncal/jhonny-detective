@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Detective</string>
+    <string name="menu_settings0">Home</string>
     <string name="menu_settings1">Settings</string>
     <string name="menu_settings2">Change password</string>
 	<string name="menu_settings3">Delete locations</string>
@@ -12,9 +14,10 @@
     <string name="label_pendientes">To upload:</string>
     <string name="label_tipo_cuenta">Account type:</string>
     <string name="variable_progreso">progress...</string>
-    <string name="label_creador">Jhonny Juncal Gonzalez</string>
+    <string name="label_creador"><a href="https://plus.google.com/u/0/115840161297230406504/posts">Jhonny Juncal Gonzalez</a></string>
     <string name="label_desarrollado_por">Developed by:</string>
     <string name="title_activity_posiciones">Locations</string>
+    <string name="title_activity_opciones">Options</string>
     <string name="label_usuario">User:</string>
     <string name="label_contrasena">Password:</string>
     <string name="label_acceso_aplicacion">Access</string>
@@ -65,4 +68,10 @@
 	<string name="label_selecciona_tmpo">Select time:</string>
 	<string name="label_latitud">Latitude:</string>
 	<string name="label_longitud">Longitude:</string>
+	<string name="label_datos_coordenadas">Actual data of positions</string>
+	<string name="title_activity_borrar_posiciones">Delete positions</string>
+	<string name="label_cantidad_coord">Number of positions:</string>
+	<string name="txt_advertencia_borrar">Warning. No information may recover after being deleted</string>
+	<string name="txt_salir_1_aviso">Press again to exit</string>
+	<string name="label_fondo_pantalla">Background</string>
 </resources>
