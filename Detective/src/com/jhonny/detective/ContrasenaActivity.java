@@ -3,20 +3,24 @@ package com.jhonny.detective;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
+import com.actionbarsherlock.view.MenuItem;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 
@@ -29,6 +33,7 @@ public class ContrasenaActivity extends SherlockActivity {
 	private int contSalida = 0;
 	private SlidingMenu menu;
 	private View view;
+	private Context context;
 	
 	
 	@Override
@@ -38,7 +43,11 @@ public class ContrasenaActivity extends SherlockActivity {
 		contSalida = 0;
 		
 		try{
+			this.context = this;
+			this.view = getWindow().getDecorView();
+			
 			menu = new SlidingMenu(this);
+			menu.setMode(SlidingMenu.LEFT);
 	        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 	        menu.setShadowWidthRes(R.dimen.shadow_width);
 	        menu.setShadowDrawable(R.drawable.ext_sombra);
@@ -56,17 +65,23 @@ public class ContrasenaActivity extends SherlockActivity {
 	        	actionBar.setHomeButtonEnabled(true);
 	        }
 	        
-			// publicidad 1
-			adView1 = new AdView(this, AdSize.BANNER, "a1513f4a3b63be1");
-			LinearLayout layout1 = (LinearLayout)findViewById(R.id.linearLayout2);
-			layout1.addView(adView1);
-			adView1.loadAd(new AdRequest());
+	     // PUBLICIDAD
+    		adView1 = new AdView(this);
+    		adView1.setAdUnitId("a1513f4a3b63be1");
+    		adView1.setAdSize(AdSize.BANNER);
+    		LinearLayout layout1 = (LinearLayout)findViewById(R.id.linearLayout2);
+    		layout1.addView(adView1);
+    		AdRequest adRequest1 = new AdRequest.Builder().build();
+    		adView1.loadAd(adRequest1);
 		
-			// publicidad 2
-			adView2 = new AdView(this, AdSize.BANNER, "a1513f4a3b63be1");
-			LinearLayout layout2 = (LinearLayout)findViewById(R.id.linearLayout3);
-			layout2.addView(adView2);
-			adView2.loadAd(new AdRequest());
+    		// PUBLICIDAD
+    		adView2 = new AdView(this);
+    		adView2.setAdUnitId("a1513f4a3b63be1");
+    		adView2.setAdSize(AdSize.BANNER);
+    		LinearLayout layout2 = (LinearLayout)findViewById(R.id.linearLayout3);
+    		layout2.addView(adView2);
+    		AdRequest adRequest2 = new AdRequest.Builder().build();
+    		adView2.loadAd(adRequest2);
 			
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -87,6 +102,7 @@ public class ContrasenaActivity extends SherlockActivity {
 		super.onResume();
 		contSalida = 0;
 		reiniciarFondoOpciones();
+		cargaConfiguracionGlobal();
 	}
 	
 	
@@ -277,5 +293,30 @@ public class ContrasenaActivity extends SherlockActivity {
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
+	}
+	
+	
+	private void cargaConfiguracionGlobal(){
+		try{
+			if(this.view != null){
+				String imagen = FileUtil.getFondoPantallaAlmacenado(this.context);
+				int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
+						imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
+				Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
+				ImageView imageView = (ImageView)findViewById(R.id.fondo_contrasena);
+				imageView.setImageDrawable(image);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			menu.toggle();
+		}
+		return true;
 	}
 }

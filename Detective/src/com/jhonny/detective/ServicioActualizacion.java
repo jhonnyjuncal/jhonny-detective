@@ -70,9 +70,9 @@ public class ServicioActualizacion extends Service{
 			if(!primeraEjecucion){
 				ServicioActualizacion.ACTIVIDAD.runOnUiThread(new Runnable(){
 					public void run(){
-						if(!FileUtil.getLocationManager().isProviderEnabled(LocationManager.GPS_PROVIDER)){
-							for(String prov : FileUtil.getLocationManager().getAllProviders()){
-								Location location = FileUtil.getLocationManager().getLastKnownLocation(prov);
+						if(!FileUtil.getLocationManagerGps().isProviderEnabled(LocationManager.GPS_PROVIDER)){
+							for(String prov : FileUtil.getLocationManagerGps().getAllProviders()){
+								Location location = FileUtil.getLocationManagerGps().getLastKnownLocation(prov);
 								
 								if(location != null){
 									ObjetoPosicion pos = new ObjetoPosicion();

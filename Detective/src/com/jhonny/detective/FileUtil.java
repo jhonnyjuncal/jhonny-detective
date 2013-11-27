@@ -29,18 +29,29 @@ import android.widget.TextView;
 public class FileUtil implements Serializable{
 	
 	private static final long serialVersionUID = -3721769765641235234L;
-	private static LocationManager locationManager;
+	private static LocationManager locationManagerGps;
+	private static LocationManager locationManagerInternet;
 	private static Localizador localizador;
 	private static WifiManager wifi = null;
 	
 	
-	public static LocationManager getLocationManager(){
-		return locationManager;
+	public static LocationManager getLocationManagerGps(){
+		return locationManagerGps;
 	}
 	
 	
-	public static void setLocationManager(LocationManager locationManager){
-		FileUtil.locationManager = locationManager;
+	public static void setLocationManagerGps(LocationManager locationManagerGps){
+		FileUtil.locationManagerGps = locationManagerGps;
+	}
+	
+	
+	public static LocationManager getLocationManagerInternet(){
+		return locationManagerInternet;
+	}
+	
+	
+	public static void setLocationManagerInternet(LocationManager locationManagerInternet){
+		FileUtil.locationManagerInternet = locationManagerInternet;
 	}
 	
 	
@@ -438,7 +449,6 @@ public class FileUtil implements Serializable{
 	}
 	
 	
-	
 	public static int getPosicionSpinnerSeleccionada(int variable, Context ctx){
 		int resultado = 0;
 		String key = null;
@@ -456,19 +466,28 @@ public class FileUtil implements Serializable{
 						}
 						break;
 					case 2:
-						// Tiempo minima de actualizacion
+						// Tiempo minimo de actualizacion
 						if(!Constantes.mapaTmpo.isEmpty()){
 							key = (String)prop.get(Constantes.PROP_TIEMPO_MINIMO_ACTUALIZACIONES);
 							resultado = Constantes.mapaTmpo.get(key).intValue();
 						}
 						break;
 					case 3:
-						// Fondo de pantalla seleccionado
+						// Fondo de pantalla de aplicacion
 						if(!Constantes.mapaFondo.isEmpty()){
-							key = (String)prop.get(Constantes.PROP_FONDO_PANTALLA);
-							resultado = Constantes.mapaFondo.get(key).intValue();
+							String fondo = getFondoPantallaAlmacenado(ctx);
+							int cont = 0;
+							for(String valor : Constantes.mapaFondo.values()){
+								if(valor.equals(fondo.toString())){
+									resultado = cont;
+									break;
+								}
+								cont++;
+							}
 						}
 						break;
+					default:
+						return 0;
 				}
 			}
 		}catch(Exception ex){
@@ -477,6 +496,25 @@ public class FileUtil implements Serializable{
 		return resultado;
 	}
 	
+	
+	public static String getFondoPantallaAlmacenado(Context context){
+		String resultado = null;
+		try{
+			// Fondo de pantalla seleccionado
+			Properties prop = null;
+			if(!Constantes.mapaFondo.isEmpty()){
+				prop = FileUtil.getFicheroAssetConfiguracion(context);
+				if(prop != null && prop.contains(Constantes.PROP_FONDO_PANTALLA)){
+					String key = (String)prop.get(Constantes.PROP_FONDO_PANTALLA);
+					Integer opcion = Integer.parseInt(key);
+					resultado = (String)Constantes.mapaFondo.get(opcion);
+				}
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return resultado;
+	}
 	
 	
 	public static void cargaPosicionesAlmacenadas(Context ctx, View view){

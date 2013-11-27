@@ -6,13 +6,16 @@ import java.util.Properties;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -27,6 +30,7 @@ public class InicioActivity extends SherlockActivity {
 	private int contSalida = 0;
 	private SlidingMenu menu;
 	private View view;
+	private Context context;
 	
 	
     @Override
@@ -34,6 +38,8 @@ public class InicioActivity extends SherlockActivity {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.activity_inicio);
     	contSalida = 0;
+    	this.context = this;
+    	this.view = getWindow().getDecorView();
     }
     
     
@@ -55,6 +61,7 @@ public class InicioActivity extends SherlockActivity {
         	et.setText("");
         	
         	reiniciarFondoOpciones();
+        	cargaConfiguracionGlobal();
         }catch(Exception ex){
         	ex.printStackTrace();
         }
@@ -232,24 +239,53 @@ public class InicioActivity extends SherlockActivity {
 	private void reiniciarFondoOpciones(){
 		try{
 			LinearLayout layout_inicio = (LinearLayout)findViewById(R.id.opc_layout_inicio);
-			layout_inicio.setBackgroundResource(R.color.gris_claro);
-			
-			LinearLayout layout_redes = (LinearLayout)findViewById(R.id.opc_layout_conf);
-			layout_redes.setBackgroundResource(R.color.gris_claro);
-			
-			LinearLayout layout_conf = (LinearLayout)findViewById(R.id.opc_layout_pass);
-			layout_conf.setBackgroundResource(R.color.gris_claro);
-			
-			LinearLayout layout_acerca = (LinearLayout)findViewById(R.id.opc_layout_borra);
-			layout_acerca.setBackgroundResource(R.color.gris_claro);
-			
-			LinearLayout layout_terminos = (LinearLayout)findViewById(R.id.opc_layout_about);
-			layout_terminos.setBackgroundResource(R.color.gris_claro);
-			
-			if(this.view != null)
-				this.view.buildDrawingCache(true);
+			if(layout_inicio != null){
+				layout_inicio.setBackgroundResource(R.color.gris_claro);
+				
+				LinearLayout layout_redes = (LinearLayout)findViewById(R.id.opc_layout_conf);
+				layout_redes.setBackgroundResource(R.color.gris_claro);
+				
+				LinearLayout layout_conf = (LinearLayout)findViewById(R.id.opc_layout_pass);
+				layout_conf.setBackgroundResource(R.color.gris_claro);
+				
+				LinearLayout layout_acerca = (LinearLayout)findViewById(R.id.opc_layout_borra);
+				layout_acerca.setBackgroundResource(R.color.gris_claro);
+				
+				LinearLayout layout_terminos = (LinearLayout)findViewById(R.id.opc_layout_about);
+				layout_terminos.setBackgroundResource(R.color.gris_claro);
+				
+				if(this.view != null)
+					this.view.buildDrawingCache(true);
+			}
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
+	}
+	
+	
+	private void cargaConfiguracionGlobal(){
+		try{
+			if(this.view != null){
+				String imagen = FileUtil.getFondoPantallaAlmacenado(this.context);
+				if(imagen != null){
+					int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
+							imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
+					Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
+					ImageView imageView = (ImageView)findViewById(R.id.fondo_inicio);
+					imageView.setImageDrawable(image);
+				}
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			menu.toggle();
+		}
+		return true;
 	}
 }

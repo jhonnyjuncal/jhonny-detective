@@ -55,5 +55,6 @@ public class Localizador implements LocationListener {
 	@Override
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
 		/* CUANDO EL ESTADO DEL GPS CAMBIA */
+		System.out.println("ha cambiado el estado");
 	}
 }

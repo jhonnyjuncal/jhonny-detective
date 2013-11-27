@@ -29,10 +29,10 @@ public class Constantes implements Serializable{
 	public static final String DEFECTO_TIPO_CUENTA = "1";
 	public static final int DEFECTO_POS_DISTANCIA = 0;
 	public static final int DEFECTO_POS_TIEMPO = 0;
-	public static final String DEFECTO_FONDO = "fondo1";
+	public static final String DEFECTO_FONDO = "ic_fondo1";
 	public static final Map<String, Integer> mapaDist = new HashMap<String, Integer>();
 	public static final Map<String, Integer> mapaTmpo = new HashMap<String, Integer>();
-	public static final Map<String, Integer> mapaFondo = new HashMap<String, Integer>();
+	public static final Map<Integer, String> mapaFondo = new HashMap<Integer, String>();
 	
 	static{
 		mapaDist.put("5000.0", 0);
@@ -44,5 +44,9 @@ public class Constantes implements Serializable{
 		mapaTmpo.put("180000", 1);
 		mapaTmpo.put("2700000", 2);
 		mapaTmpo.put("3600000", 3);
+		
+		mapaFondo.put(1, "ic_fondo1");
+		mapaFondo.put(2, "ic_fondo2");
+		mapaFondo.put(3, "ic_fondo3");
 	}
 }

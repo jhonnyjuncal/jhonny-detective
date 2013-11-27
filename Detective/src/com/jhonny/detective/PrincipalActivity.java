@@ -9,18 +9,24 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
+import com.actionbarsherlock.view.MenuItem;
+//import com.google.ads.AdSize;
+//import com.google.ads.AdView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +49,7 @@ public class PrincipalActivity extends SherlockActivity {
 	private int contSalida = 0;
 	private SlidingMenu menu;
 	private View view;
+	private Context context;
 	
 	
     @Override
@@ -52,7 +59,11 @@ public class PrincipalActivity extends SherlockActivity {
 		contSalida = 0;
     		
 		try{
+			this.context = this;
+			this.view = getWindow().getDecorView();
+			
     		menu = new SlidingMenu(this);
+    		menu.setMode(SlidingMenu.LEFT);
 	        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 	        menu.setShadowWidthRes(R.dimen.shadow_width);
 	        menu.setShadowDrawable(R.drawable.ext_sombra);
@@ -76,10 +87,13 @@ public class PrincipalActivity extends SherlockActivity {
     		FileUtil.setWifiManager((WifiManager)getSystemService(Context.WIFI_SERVICE));
     		
     		// publicidad
-    		adView = new AdView(this, AdSize.BANNER, "a1513f4a3b63be1");
+    		adView = new AdView(this);
+    		adView.setAdUnitId("a1513f4a3b63be1");
+    		adView.setAdSize(AdSize.BANNER);
     		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
     		layout.addView(adView);
-    		adView.loadAd(new AdRequest());
+    		AdRequest adRequest = new AdRequest.Builder().build();
+    		adView.loadAd(adRequest);
     		
     		// carga los datos de la configuracion
     		cargaDatosConfiguracion();
@@ -131,17 +145,18 @@ public class PrincipalActivity extends SherlockActivity {
     	super.onResume();
     	contSalida = 0;
     	reiniciarFondoOpciones();
+    	cargaConfiguracionGlobal();
     }
     
     
     public void muestraMapa(View view){
     	try{
     		if(R.id.button1 == view.getId()){
-    			if(listaPosiciones != null && listaPosiciones.size() > 0){
+//    			if(listaPosiciones != null && listaPosiciones.size() > 0){
     				Intent intent = new Intent(this, MapaActivity.class);
     				startActivity(intent);
-    			}else
-    				Toast.makeText(this, getResources().getString(R.string.txt_sin_posiciones), Toast.LENGTH_LONG).show();
+//    			}else
+//    				Toast.makeText(this, getResources().getString(R.string.txt_sin_posiciones), Toast.LENGTH_LONG).show();
 	    	}
     	}catch(Exception ex){
     		ex.printStackTrace();
@@ -152,11 +167,11 @@ public class PrincipalActivity extends SherlockActivity {
     public void muestraPosiciones(View view){
     	try{
     		if(R.id.button2 == view.getId()){
-    			if(listaPosiciones != null && listaPosiciones.size() > 0){
+//    			if(listaPosiciones != null && listaPosiciones.size() > 0){
     				Intent intent = new Intent(this, PosicionesActivity.class);
     				startActivity(intent);
-    			}else
-    				Toast.makeText(this, getResources().getString(R.string.txt_sin_posiciones), Toast.LENGTH_LONG).show();
+//    			}else
+//    				Toast.makeText(this, getResources().getString(R.string.txt_sin_posiciones), Toast.LENGTH_LONG).show();
 	    	}
     	}catch(Exception ex){
     		ex.printStackTrace();
@@ -168,33 +183,13 @@ public class PrincipalActivity extends SherlockActivity {
      * muestra el estado actual del GPS
      */
     private void informaEstadoActualGPS(){
-    	Localizador localizador = null;
-    	boolean enabled = false;
-    	
     	try{
-    		// listener del GPS
-    		LocationManager locationManager = FileUtil.getLocationManager();
+    		seleccionarOrigenDeLocalizacion();
+    		boolean enabled = false;
     		
-    		if(locationManager == null){
-    			localizador = FileUtil.getLocalizador();
-    			
-    			if(localizador == null){
-    				localizador = new Localizador();
-    				localizador.view = getWindow().getDecorView();
-    				localizador.contexto = (Context)this;
-    				
-    				FileUtil.setLocalizador(localizador);
-    			}
-    			
-    			locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-    			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-    					TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES, DISTANCIA_MINIMA_PARA_ACTUALIZACIONES, 
-    					localizador);
-    			FileUtil.setLocationManager(locationManager);
-    		}
-    		
-    		if(locationManager != null)
-    			enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    		LocationManager loc = FileUtil.getLocationManagerGps();
+    		if(loc != null)
+    			enabled = loc.isProviderEnabled(LocationManager.GPS_PROVIDER);
     		
     		TextView textoStatus = (TextView) findViewById(R.id.textView2);
     		if(enabled == false)
@@ -202,6 +197,90 @@ public class PrincipalActivity extends SherlockActivity {
     		else
     			textoStatus.setText(getResources().getString(R.string.txt_encendida));
     		
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    	}
+    }
+    
+    
+    private void seleccionarOrigenDeLocalizacion(){
+    	Localizador localizador = null;
+    	
+    	try{
+    		// listener del GPS
+    		LocationManager locationGps = FileUtil.getLocationManagerGps();
+    		LocationManager locationInternet = FileUtil.getLocationManagerInternet();
+    		
+    		if(locationGps == null){
+    			localizador = FileUtil.getLocalizador();
+    			if(localizador == null){
+    				localizador = new Localizador();
+    				localizador.view = getWindow().getDecorView();
+    				localizador.contexto = (Context)this;
+    				FileUtil.setLocalizador(localizador);
+    			}
+    			locationGps = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+    		}
+    		if(locationInternet == null){
+    			localizador = FileUtil.getLocalizador();
+    			if(localizador == null){
+    				localizador = new Localizador();
+    				localizador.view = getWindow().getDecorView();
+    				localizador.contexto = (Context)this;
+    				FileUtil.setLocalizador(localizador);
+    			}
+    			locationInternet = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+    		}
+    		
+    		if(locationGps != null){
+    			LocationProvider loc = locationGps.getProvider(LocationManager.GPS_PROVIDER);
+    			int precision = loc.getAccuracy();
+    			String nombre = loc.getName();
+    			int power = loc.getPowerRequirement();
+    			boolean altitud = loc.supportsAltitude();
+    			boolean velocidad = loc.supportsSpeed();
+    			boolean bearing = loc.supportsBearing();
+    			
+    			System.out.println("----------------------------------------");
+    			System.out.println("precision: " + precision);
+    			System.out.println("nombre: " + nombre);
+    			System.out.println("power: " + power);
+    			System.out.println("altitud: " + altitud);
+    			System.out.println("velocidad: " + velocidad);
+    			System.out.println("bearing: " + bearing);
+    			
+    			if(locationGps.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+	    			locationGps.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+							TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES, DISTANCIA_MINIMA_PARA_ACTUALIZACIONES, 
+							localizador);
+    			}
+    			FileUtil.setLocationManagerGps(locationGps);
+    		}
+    		
+    		if(locationInternet != null){
+    			LocationProvider loc = locationInternet.getProvider(LocationManager.NETWORK_PROVIDER);
+    			int precision = loc.getAccuracy();
+    			String nombre = loc.getName();
+    			int power = loc.getPowerRequirement();
+    			boolean altitud = loc.supportsAltitude();
+    			boolean velocidad = loc.supportsSpeed();
+    			boolean bearing = loc.supportsBearing();
+    			
+    			System.out.println("----------------------------------------");
+    			System.out.println("precision: " + precision);
+    			System.out.println("nombre: " + nombre);
+    			System.out.println("power: " + power);
+    			System.out.println("altitud: " + altitud);
+    			System.out.println("velocidad: " + velocidad);
+    			System.out.println("bearing: " + bearing);
+    			
+    			if(locationInternet.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+	    			locationInternet.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+							TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES, DISTANCIA_MINIMA_PARA_ACTUALIZACIONES, 
+							localizador);
+    			}
+    			FileUtil.setLocationManagerGps(locationGps);
+    		}
     	}catch(Exception ex){
     		ex.printStackTrace();
     	}
@@ -411,6 +490,31 @@ public class PrincipalActivity extends SherlockActivity {
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
+	}
+	
+	
+	private void cargaConfiguracionGlobal(){
+		try{
+			if(this.view != null){
+				String imagen = FileUtil.getFondoPantallaAlmacenado(this.context);
+				int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
+						imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
+				Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
+				ImageView imageView = (ImageView)findViewById(R.id.fondo_principal);
+				imageView.setImageDrawable(image);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			menu.toggle();
+		}
+		return true;
 	}
 }
 

@@ -74,4 +74,6 @@
 	<string name="txt_advertencia_borrar">Advertencia. No se podra recuperar la información después de ser borrada</string>
 	<string name="txt_salir_1_aviso">Pulse de nuevo para salir</string>
 	<string name="label_fondo_pantalla">Fondo de pantalla</string>
+	<string name="menu_comp_facebook">Compartir en Facebook</string>
+	<string name="menu_comp_twitter">Compartir en Twitter</string>
 </resources>
