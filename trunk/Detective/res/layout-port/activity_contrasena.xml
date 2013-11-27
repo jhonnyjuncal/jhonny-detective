@@ -5,6 +5,7 @@
     tools:context=".ContrasenaActivity" >
 
     <ImageView
+        android:id="@+id/fondo_contrasena"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/variable_progreso"

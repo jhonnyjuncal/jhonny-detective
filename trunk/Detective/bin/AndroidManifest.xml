@@ -74,7 +74,7 @@
             android:launchMode="singleInstance" >
         </activity>
         <activity
-            android:name="com.google.ads.AdActivity"
+            android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" >
         </activity>
         <activity
@@ -99,7 +99,8 @@
         </activity>
         <activity
             android:name="com.jhonny.detective.BorrarPosicionesActivity"
-            android:label="@string/title_activity_borrar_posiciones" >
+            android:label="@string/title_activity_borrar_posiciones"
+            android:launchMode="singleInstance" >
         </activity>
 		
         <receiver android:name="com.jhonny.detective.WifiListener" >

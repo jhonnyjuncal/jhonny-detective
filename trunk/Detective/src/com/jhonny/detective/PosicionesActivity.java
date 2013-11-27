@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Properties;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -23,9 +25,10 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
+import com.actionbarsherlock.view.MenuItem;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 
@@ -39,6 +42,7 @@ public class PosicionesActivity extends SherlockActivity implements OnItemClickL
 	private int contSalida = 0;
 	private SlidingMenu menu;
 	private View view;
+	private Context context;
 	
 	
 	@Override
@@ -48,7 +52,11 @@ public class PosicionesActivity extends SherlockActivity implements OnItemClickL
 		contSalida = 0;
 		
 		try{
+			this.context = this;
+			this.view = getWindow().getDecorView();
+			
 			menu = new SlidingMenu(this);
+			menu.setMode(SlidingMenu.LEFT);
 	        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 	        menu.setShadowWidthRes(R.dimen.shadow_width);
 	        menu.setShadowDrawable(R.drawable.ext_sombra);
@@ -66,11 +74,14 @@ public class PosicionesActivity extends SherlockActivity implements OnItemClickL
 	        	actionBar.setHomeButtonEnabled(true);
 	        }
 	        
-			// se crea la vista
-			adView = new AdView(this, AdSize.BANNER, "a1513f4a3b63be1");
-			LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
-			layout.addView(adView);
-			adView.loadAd(new AdRequest());
+	        // PUBLICIDAD
+    		adView = new AdView(this);
+    		adView.setAdUnitId("a1513f4a3b63be1");
+    		adView.setAdSize(AdSize.BANNER);
+    		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
+    		layout.addView(adView);
+    		AdRequest adRequest = new AdRequest.Builder().build();
+    		adView.loadAd(adRequest);
 			
 			cargaPosicionesAlmacenadas();
 			
@@ -108,6 +119,7 @@ public class PosicionesActivity extends SherlockActivity implements OnItemClickL
 		super.onResume();
 		contSalida = 0;
 		reiniciarFondoOpciones();
+		cargaConfiguracionGlobal();
 	}
 	
 	
@@ -304,5 +316,30 @@ public class PosicionesActivity extends SherlockActivity implements OnItemClickL
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
+	}
+	
+	
+	private void cargaConfiguracionGlobal(){
+		try{
+			if(this.view != null){
+				String imagen = FileUtil.getFondoPantallaAlmacenado(this.context);
+				int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
+						imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
+				Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
+				ImageView imageView = (ImageView)findViewById(R.id.fondo_posiciones);
+				imageView.setImageDrawable(image);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			menu.toggle();
+		}
+		return true;
 	}
 }

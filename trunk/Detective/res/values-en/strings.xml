@@ -74,4 +74,6 @@
 	<string name="txt_advertencia_borrar">Warning. No information may recover after being deleted</string>
 	<string name="txt_salir_1_aviso">Press again to exit</string>
 	<string name="label_fondo_pantalla">Background</string>
+	<string name="menu_comp_facebook">Share in Facebook</string>
+	<string name="menu_comp_twitter">Share in Twitter</string>
 </resources>

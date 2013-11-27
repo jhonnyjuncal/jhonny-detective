@@ -2,5 +2,10 @@
 	<item android:id="@+id/menuMapa_legal"
 		android:title="@string/menu_legalnotices"
 		android:orderInCategory="100" />
-	
+	<item android:id="@+id/menu_mapa_facebook"
+		android:title="@string/menu_comp_facebook"
+		android:orderInCategory="101" />
+	<item android:id="@+id/menu_mapa_twitter"
+		android:title="@string/menu_comp_twitter"
+		android:orderInCategory="102" />
 </menu>

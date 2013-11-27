@@ -6,14 +6,17 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
+import com.actionbarsherlock.view.MenuItem;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import android.net.Uri;
 import android.os.Bundle;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.graphics.drawable.Drawable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +34,7 @@ public class AcercaActivity extends SherlockActivity {
 	private int contSalida = 0;
 	private SlidingMenu menu;
 	private View view;
+	private Context context;
 	
 	
 	@Override
@@ -40,7 +44,11 @@ public class AcercaActivity extends SherlockActivity {
 		contSalida = 0;
 		
 		try{
+			this.context = this;
+			this.view = getWindow().getDecorView();
+			
 			menu = new SlidingMenu(this);
+			menu.setMode(SlidingMenu.LEFT);
 	        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 	        menu.setShadowWidthRes(R.dimen.shadow_width);
 	        menu.setShadowDrawable(R.drawable.ext_sombra);
@@ -52,9 +60,8 @@ public class AcercaActivity extends SherlockActivity {
 	        actionBar = getSupportActionBar();
 	        if(actionBar != null){
 	        	actionBar.setDisplayShowCustomEnabled(true);
-	        	
 	        	// boton < de la action bar
-	        	actionBar.setDisplayHomeAsUpEnabled(false);
+	        	actionBar.setDisplayHomeAsUpEnabled(true);
 	        	actionBar.setHomeButtonEnabled(true);
 	        }
 			
@@ -72,7 +79,6 @@ public class AcercaActivity extends SherlockActivity {
 			// link de facebook
 			ImageView imgFacebook = (ImageView)findViewById(R.id.acer_imageView2);
 			imgFacebook.setOnClickListener(new OnClickListener() {
-				
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent();
@@ -83,11 +89,14 @@ public class AcercaActivity extends SherlockActivity {
 				}
 			});
 			
-			// publicidad
-    		adView = new AdView(this, AdSize.BANNER, "a1513f4a3b63be1");
+			// PUBLICIDAD
+    		adView = new AdView(this);
+    		adView.setAdUnitId("a1513f4a3b63be1");
+    		adView.setAdSize(AdSize.BANNER);
     		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
     		layout.addView(adView);
-    		adView.loadAd(new AdRequest());
+    		AdRequest adRequest = new AdRequest.Builder().build();
+    		adView.loadAd(adRequest);
     		
 		}catch(Exception ex){
 			ex.printStackTrace();
@@ -107,7 +116,9 @@ public class AcercaActivity extends SherlockActivity {
 	public void onResume(){
 		super.onResume();
 		contSalida = 0;
+		this.context = this;
 		reiniciarFondoOpciones();
+		cargaConfiguracionGlobal();
 	}
 	
 	
@@ -243,5 +254,30 @@ public class AcercaActivity extends SherlockActivity {
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
+	}
+	
+	
+	private void cargaConfiguracionGlobal(){
+		try{
+			if(this.view != null){
+				String imagen = FileUtil.getFondoPantallaAlmacenado(this.context);
+				int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
+						imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
+				Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
+				ImageView imageView = (ImageView)findViewById(R.id.fondo_acerca);
+				imageView.setImageDrawable(image);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			menu.toggle();
+		}
+		return true;
 	}
 }

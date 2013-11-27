@@ -128,26 +128,6 @@ public class MapaActivity extends FragmentActivity {
 	}
 	
 	
-	@Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-    	if(keyCode == KeyEvent.KEYCODE_BACK) {
-    		if(contSalida == 0){
-    			contSalida++;
-    			Toast.makeText(this, getResources().getString(R.string.txt_salir_1_aviso), Toast.LENGTH_SHORT).show();
-    			return true;
-    		}else{
-    			contSalida = 0;
-    			Intent intent = new Intent();
-    			intent.setAction(Intent.ACTION_MAIN);
-    			intent.addCategory(Intent.CATEGORY_HOME);
-    			startActivity(intent);
-    		}
-    	}
-    	//para las demas cosas, se reenvia el evento al listener habitual
-    	return super.onKeyDown(keyCode, event);
-    }
-	
-	
 	private void agregarMarcador(double latitud, double longitud, Date fecha){
 		try{
 			if(mapa != null){
@@ -186,11 +166,7 @@ public class MapaActivity extends FragmentActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		try{
-	        getMenuInflater().inflate(R.menu.menu_mapa, menu);
-		}catch(Exception ex){
-    		ex.printStackTrace();
-		}
+		getMenuInflater().inflate(R.menu.menu_mapa, menu);
 		return true;
 	}
 	

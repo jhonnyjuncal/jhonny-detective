@@ -5,6 +5,7 @@
     tools:context=".PosicionesActivity" >
 
     <ImageView
+        android:id="@+id/fondo_posiciones"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/variable_progreso"
@@ -107,14 +108,14 @@
 		    android:layout_alignParentTop="true"
 		    android:layout_marginBottom="50dp"
 		    android:layout_marginTop="70dp"
-		    android:background="#D1C8C8"
+		    android:background="@color/gris_claro"
 		    android:clickable="true"
 		    android:dividerHeight="1dp"
 		    android:fadingEdge="vertical|horizontal"
 		    android:fadingEdgeLength="1dp"
 		    android:minHeight="10dp"
 		    android:paddingBottom="0dp"
-		    android:paddingTop="0dp" />
+		    android:paddingLeft="@dimen/padding_izquierda" />
 	    
 	    <LinearLayout
 	        android:id="@+id/linearLayout2"
