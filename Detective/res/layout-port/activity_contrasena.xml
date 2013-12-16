@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/variable_progreso"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_fondo3" />
+        android:src="@drawable/ic_fondo1" />
     
     <RelativeLayout
         android:layout_width="match_parent"
@@ -130,11 +130,12 @@
 		    
 			<com.adfonic.android.AdfonicView
 				xmlns:adfonic="http://schemas.android.com/apk/lib/com.adfonic.android"
-       			android:layout_width="wrap_content"
-       			android:layout_height="wrap_content"
        			adfonic:adfonic_adslot_id="246115db-3ca7-4d62-816f-8dff6ee7cc69"
        			adfonic:language="es"
        			adfonic:refresh_ad="true"
+       			adfonic:test_mode="false"
+       			android:layout_width="wrap_content"
+       			android:layout_height="wrap_content"
        			adfonic:refresh_time="30" />
 			
 		</LinearLayout>
