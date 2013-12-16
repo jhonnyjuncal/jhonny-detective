@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/variable_progreso"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_fondo3" />
+        android:src="@drawable/ic_fondo1" />
     
     <RelativeLayout
         android:layout_width="match_parent"
