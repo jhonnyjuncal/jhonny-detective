@@ -122,12 +122,23 @@
 	        android:paddingLeft="@dimen/padding_izquierda" />
 	    
 	    <LinearLayout
-	        android:id="@+id/linearLayout2"
-	        android:layout_width="fill_parent"
-	        android:layout_height="50dp"
-	        android:layout_alignParentBottom="true"
-	        android:orientation="vertical"
-	        android:weightSum="1" />
+		    android:id="@+id/linearLayout2"
+		    android:layout_width="fill_parent"
+		    android:layout_height="50dp"
+		    android:layout_alignParentBottom="true"
+		    android:orientation="vertical"
+		    android:weightSum="1">
+		    
+			<com.adfonic.android.AdfonicView
+				xmlns:adfonic="http://schemas.android.com/apk/lib/com.adfonic.android"
+       			android:layout_width="wrap_content"
+       			android:layout_height="wrap_content"
+       			adfonic:adfonic_adslot_id="246115db-3ca7-4d62-816f-8dff6ee7cc69"
+       			adfonic:language="es"
+       			adfonic:refresh_ad="true"
+       			adfonic:refresh_time="30" />
+			
+		</LinearLayout>
 	    
 	</RelativeLayout>
 	

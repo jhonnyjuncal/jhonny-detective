@@ -10,14 +10,8 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-//import com.google.ads.AdSize;
-//import com.google.ads.AdView;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.content.Context;
@@ -41,7 +35,6 @@ public class PrincipalActivity extends SherlockActivity {
 	protected static Integer TIPO_CUENTA;
 	protected static final String FICHERO_CONFIGURACION = "config.properties";
 	
-	private AdView adView = null;
 	public static List<ObjetoPosicion> listaPosiciones = null;
 	public static View viewPrincipal = null;
 	public static Resources resourcesPrincipal = null;
@@ -57,7 +50,7 @@ public class PrincipalActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_principal);
 		contSalida = 0;
-    		
+    	
 		try{
 			this.context = this;
 			this.view = getWindow().getDecorView();
@@ -85,15 +78,6 @@ public class PrincipalActivity extends SherlockActivity {
     		iniciaServicio();
     		
     		FileUtil.setWifiManager((WifiManager)getSystemService(Context.WIFI_SERVICE));
-    		
-    		// publicidad
-    		adView = new AdView(this);
-    		adView.setAdUnitId("a1513f4a3b63be1");
-    		adView.setAdSize(AdSize.BANNER);
-    		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
-    		layout.addView(adView);
-    		AdRequest adRequest = new AdRequest.Builder().build();
-    		adView.loadAd(adRequest);
     		
     		// carga los datos de la configuracion
     		cargaDatosConfiguracion();
@@ -132,7 +116,6 @@ public class PrincipalActivity extends SherlockActivity {
     		valores.put(Constantes.PROP_TIPO_CUENTA, String.valueOf(TIPO_CUENTA));
     		
     		FileUtil.guardaDatosConfiguracion(valores, (Context)this);
-    		adView.destroy();
     		super.onDestroy();
     	}catch(Exception ex){
     		ex.printStackTrace();
@@ -144,19 +127,22 @@ public class PrincipalActivity extends SherlockActivity {
     public void onResume(){
     	super.onResume();
     	contSalida = 0;
-    	reiniciarFondoOpciones();
-    	cargaConfiguracionGlobal();
+    	
+    	try{
+	    	reiniciarFondoOpciones();
+	    	cargaConfiguracionGlobal();
+			FileUtil.cargaPosicionesAlmacenadas((Context)this, getWindow().getDecorView());
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    	}
     }
     
     
     public void muestraMapa(View view){
     	try{
     		if(R.id.button1 == view.getId()){
-//    			if(listaPosiciones != null && listaPosiciones.size() > 0){
-    				Intent intent = new Intent(this, MapaActivity.class);
-    				startActivity(intent);
-//    			}else
-//    				Toast.makeText(this, getResources().getString(R.string.txt_sin_posiciones), Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(this, MapaActivity.class);
+				startActivity(intent);
 	    	}
     	}catch(Exception ex){
     		ex.printStackTrace();
@@ -167,11 +153,8 @@ public class PrincipalActivity extends SherlockActivity {
     public void muestraPosiciones(View view){
     	try{
     		if(R.id.button2 == view.getId()){
-//    			if(listaPosiciones != null && listaPosiciones.size() > 0){
-    				Intent intent = new Intent(this, PosicionesActivity.class);
-    				startActivity(intent);
-//    			}else
-//    				Toast.makeText(this, getResources().getString(R.string.txt_sin_posiciones), Toast.LENGTH_LONG).show();
+    			Intent intent = new Intent(this, PosicionesActivity.class);
+    			startActivity(intent);
 	    	}
     	}catch(Exception ex){
     		ex.printStackTrace();
@@ -233,22 +216,6 @@ public class PrincipalActivity extends SherlockActivity {
     		}
     		
     		if(locationGps != null){
-    			LocationProvider loc = locationGps.getProvider(LocationManager.GPS_PROVIDER);
-    			int precision = loc.getAccuracy();
-    			String nombre = loc.getName();
-    			int power = loc.getPowerRequirement();
-    			boolean altitud = loc.supportsAltitude();
-    			boolean velocidad = loc.supportsSpeed();
-    			boolean bearing = loc.supportsBearing();
-    			
-    			System.out.println("----------------------------------------");
-    			System.out.println("precision: " + precision);
-    			System.out.println("nombre: " + nombre);
-    			System.out.println("power: " + power);
-    			System.out.println("altitud: " + altitud);
-    			System.out.println("velocidad: " + velocidad);
-    			System.out.println("bearing: " + bearing);
-    			
     			if(locationGps.isProviderEnabled(LocationManager.GPS_PROVIDER)){
 	    			locationGps.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 							TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES, DISTANCIA_MINIMA_PARA_ACTUALIZACIONES, 
@@ -258,22 +225,6 @@ public class PrincipalActivity extends SherlockActivity {
     		}
     		
     		if(locationInternet != null){
-    			LocationProvider loc = locationInternet.getProvider(LocationManager.NETWORK_PROVIDER);
-    			int precision = loc.getAccuracy();
-    			String nombre = loc.getName();
-    			int power = loc.getPowerRequirement();
-    			boolean altitud = loc.supportsAltitude();
-    			boolean velocidad = loc.supportsSpeed();
-    			boolean bearing = loc.supportsBearing();
-    			
-    			System.out.println("----------------------------------------");
-    			System.out.println("precision: " + precision);
-    			System.out.println("nombre: " + nombre);
-    			System.out.println("power: " + power);
-    			System.out.println("altitud: " + altitud);
-    			System.out.println("velocidad: " + velocidad);
-    			System.out.println("bearing: " + bearing);
-    			
     			if(locationInternet.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
 	    			locationInternet.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
 							TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES, DISTANCIA_MINIMA_PARA_ACTUALIZACIONES, 
@@ -497,11 +448,13 @@ public class PrincipalActivity extends SherlockActivity {
 		try{
 			if(this.view != null){
 				String imagen = FileUtil.getFondoPantallaAlmacenado(this.context);
-				int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
-						imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
-				Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
-				ImageView imageView = (ImageView)findViewById(R.id.fondo_principal);
-				imageView.setImageDrawable(image);
+				if(imagen != null){
+					int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
+							imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
+					Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
+					ImageView imageView = (ImageView)findViewById(R.id.fondo_principal);
+					imageView.setImageDrawable(image);
+				}
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();

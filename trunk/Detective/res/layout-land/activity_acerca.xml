@@ -26,7 +26,7 @@
 	        android:src="@drawable/private_detective_icon" />
 			
 	    <TextView
-	        android:id="@+id/textView1"
+	        android:id="@+id/acer_textView1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="50dp"
@@ -38,7 +38,7 @@
 	        android:textColor="@color/blanco" />
 			
 	    <TextView
-	        android:id="@+id/textView2"
+	        android:id="@+id/acer_textView2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="40dp"
@@ -49,18 +49,18 @@
 	        android:textColor="@color/blanco" />
 			
 	    <TextView
-	        android:id="@+id/textView3"
+	        android:id="@+id/acer_textView3"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="5dp"
 	        android:layout_marginTop="55dp"
-	        android:layout_toRightOf="@id/textView2"
+	        android:layout_toRightOf="@id/acer_textView2"
 	        android:text="@string/variable_progreso"
-	        android:textSize="15sp"
-	        android:textColor="@color/blanco" />
+	        android:textColor="@color/blanco"
+	        android:textSize="15sp" />
 			
 	    <TextView
-	        android:id="@+id/textView4"
+	        android:id="@+id/acer_textView4"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="40dp"
@@ -71,18 +71,18 @@
 	        android:textColor="@color/blanco" />
 			
 	    <TextView
-	        android:id="@+id/textView5"
+	        android:id="@+id/acer_textView5"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="5dp"
 	        android:layout_marginTop="75dp"
-	        android:layout_toRightOf="@id/textView4"
+	        android:layout_toRightOf="@id/acer_textView4"
 	        android:text="@string/variable_progreso"
-	        android:textSize="15sp"
-	        android:textColor="@color/blanco" />
+	        android:textColor="@color/blanco"
+	        android:textSize="15sp" />
 	    
 	    <TextView
-	        android:id="@+id/textView8"
+	        android:id="@+id/acer_textView8"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="40dp"
@@ -93,18 +93,18 @@
 	        android:textColor="@color/blanco" />
 			
 	    <TextView
-	        android:id="@+id/textView9"
+	        android:id="@+id/acer_textView9"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="5dp"
 	        android:layout_marginTop="95dp"
-	        android:layout_toRightOf="@id/textView8"
+	        android:layout_toRightOf="@id/acer_textView8"
 	        android:text="@string/pais"
-	        android:textSize="15sp"
-	        android:textColor="@color/blanco" />
+	        android:textColor="@color/blanco"
+	        android:textSize="15sp" />
 	
 	    <TextView
-	        android:id="@+id/textView6"
+	        android:id="@+id/acer_textView6"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentLeft="true"
@@ -116,15 +116,15 @@
 	        android:textColor="@color/blanco" />
 	    	
 	    <TextView
-	        android:id="@+id/textView7"
+	        android:id="@+id/acer_textView7"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/textView6"
+	        android:layout_below="@+id/acer_textView6"
 	        android:layout_marginLeft="30dp"
 	        android:text="@string/label_creador"
+	        android:textColor="@color/blanco"
 	        android:textSize="15sp"
-	        android:textStyle="bold"
-	        android:textColor="@color/blanco" />
+	        android:textStyle="bold" />
 	    
 	    <LinearLayout
 		    android:id="@+id/linearLayout2"
@@ -132,7 +132,18 @@
 		    android:layout_height="50dp"
 		    android:layout_alignParentBottom="true"
 		    android:orientation="vertical"
-		    android:weightSum="1" />
+		    android:weightSum="1">
+		    
+			<com.adfonic.android.AdfonicView
+				xmlns:adfonic="http://schemas.android.com/apk/lib/com.adfonic.android"
+       			android:layout_width="wrap_content"
+       			android:layout_height="wrap_content"
+       			adfonic:adfonic_adslot_id="246115db-3ca7-4d62-816f-8dff6ee7cc69"
+       			adfonic:language="es"
+       			adfonic:refresh_ad="true"
+       			adfonic:refresh_time="30" />
+			
+		</LinearLayout>
 	
 	    <ImageView
 	        android:id="@+id/acer_imageView2"
