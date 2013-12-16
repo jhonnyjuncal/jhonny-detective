@@ -7,9 +7,6 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
+import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,7 +28,6 @@ public class AcercaActivity extends SherlockActivity {
 	
 	private static final long serialVersionUID = -8472332516242132867L;
 	private ActionBar actionBar;
-	private AdView adView = null;
 	private int contSalida = 0;
 	private SlidingMenu menu;
 	private View view;
@@ -67,14 +64,18 @@ public class AcercaActivity extends SherlockActivity {
 			
 			// version de la aplicacion
 			PackageInfo pInfo = getApplicationContext().getPackageManager().getPackageInfo(getPackageName(), 0);
-			TextView textoVersion = (TextView)findViewById(R.id.textView3);
+			TextView textoVersion = (TextView)findViewById(R.id.acer_textView3);
 			textoVersion.setText(pInfo.versionName);
 			
 			// fecha de creacion
-			TextView textoFecha = (TextView)findViewById(R.id.textView5);
+			TextView textoFecha = (TextView)findViewById(R.id.acer_textView5);
 			DateTime fecha = new DateTime("2013-11-04");
 			Locale locale = getResources().getConfiguration().locale;
 			textoFecha.setText(FileUtil.getFechaFormateada(fecha.toDate(), locale));
+			
+			// link de mi perfil en google+
+			TextView link = (TextView)findViewById(R.id.acer_textView7);
+			link.setMovementMethod(LinkMovementMethod.getInstance());
 			
 			// link de facebook
 			ImageView imgFacebook = (ImageView)findViewById(R.id.acer_imageView2);
@@ -88,16 +89,6 @@ public class AcercaActivity extends SherlockActivity {
 			        startActivity(intent);
 				}
 			});
-			
-			// PUBLICIDAD
-    		adView = new AdView(this);
-    		adView.setAdUnitId("a1513f4a3b63be1");
-    		adView.setAdSize(AdSize.BANNER);
-    		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
-    		layout.addView(adView);
-    		AdRequest adRequest = new AdRequest.Builder().build();
-    		adView.loadAd(adRequest);
-    		
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -261,11 +252,13 @@ public class AcercaActivity extends SherlockActivity {
 		try{
 			if(this.view != null){
 				String imagen = FileUtil.getFondoPantallaAlmacenado(this.context);
-				int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
-						imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
-				Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
-				ImageView imageView = (ImageView)findViewById(R.id.fondo_acerca);
-				imageView.setImageDrawable(image);
+				if(imagen != null){
+					int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
+							imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
+					Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
+					ImageView imageView = (ImageView)findViewById(R.id.fondo_acerca);
+					imageView.setImageDrawable(image);
+				}
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();

@@ -476,13 +476,17 @@ public class FileUtil implements Serializable{
 						// Fondo de pantalla de aplicacion
 						if(!Constantes.mapaFondo.isEmpty()){
 							String fondo = getFondoPantallaAlmacenado(ctx);
-							int cont = 0;
-							for(String valor : Constantes.mapaFondo.values()){
-								if(valor.equals(fondo.toString())){
-									resultado = cont;
-									break;
+							if(fondo == null){
+								resultado = 0;
+							}else{
+								int cont = 0;
+								for(String valor : Constantes.mapaFondo.values()){
+									if(valor.equals(fondo.toString())){
+										resultado = cont;
+										break;
+									}
+									cont++;
 								}
-								cont++;
 							}
 						}
 						break;
@@ -504,7 +508,7 @@ public class FileUtil implements Serializable{
 			Properties prop = null;
 			if(!Constantes.mapaFondo.isEmpty()){
 				prop = FileUtil.getFicheroAssetConfiguracion(context);
-				if(prop != null && prop.contains(Constantes.PROP_FONDO_PANTALLA)){
+				if(prop != null && prop.containsKey(Constantes.PROP_FONDO_PANTALLA.toString())){
 					String key = (String)prop.get(Constantes.PROP_FONDO_PANTALLA);
 					Integer opcion = Integer.parseInt(key);
 					resultado = (String)Constantes.mapaFondo.get(opcion);
@@ -528,13 +532,22 @@ public class FileUtil implements Serializable{
     		
     		List<ObjetoPosicion> lista = FileUtil.getListaAssetPosiciones(ctx, Integer.parseInt(tipoCuenta));
     		
-			if(lista != null && lista.size() > 0)
+			if(lista != null){
 				contador = lista.size();
+			}else{
+				contador = 0;
+			}
 			
 			TextView textoPosiciones = (TextView)view.findViewById(R.id.textView4);
-			textoPosiciones.setText(String.valueOf(contador));
+			if(textoPosiciones != null){
+				textoPosiciones.setText(String.valueOf(contador));
+			}
 			
-			PrincipalActivity.listaPosiciones = lista;
+			if(lista != null){
+				PrincipalActivity.listaPosiciones = lista;
+			}else{
+				PrincipalActivity.listaPosiciones = new ArrayList<ObjetoPosicion>();
+			}
 		}catch(IOException e){
 			e.printStackTrace();
 		}catch(Exception ex){

@@ -5,9 +5,6 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +22,6 @@ public class BorrarPosicionesActivity extends SherlockActivity {
 	
 	private static final long serialVersionUID = -8286290309306880287L;
 	private ActionBar actionBar;
-	private AdView adView = null;
 	private int contSalida = 0;
 	private SlidingMenu menu;
 	private View view;
@@ -61,21 +57,21 @@ public class BorrarPosicionesActivity extends SherlockActivity {
 	        	actionBar.setHomeButtonEnabled(true);
 	        }
 	        
-	        TextView tNumero = (TextView)findViewById(R.id.textView3);
-	        if(PrincipalActivity.listaPosiciones == null)
+	        actualizaCantidadDeCoordenadas();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
+	
+	private void actualizaCantidadDeCoordenadas(){
+		try{
+			TextView tNumero = (TextView)findViewById(R.id.borr_textView3);
+	        if(PrincipalActivity.listaPosiciones == null){
 	        	tNumero.setText("0");
-	        else
-	        	tNumero.setText(PrincipalActivity.listaPosiciones.size());
-	        
-	        // PUBLICIDAD
-    		adView = new AdView(this);
-    		adView.setAdUnitId("a1513f4a3b63be1");
-    		adView.setAdSize(AdSize.BANNER);
-    		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
-    		layout.addView(adView);
-    		AdRequest adRequest = new AdRequest.Builder().build();
-    		adView.loadAd(adRequest);
-    		
+	        }else{
+	        	tNumero.setText(String.valueOf(PrincipalActivity.listaPosiciones.size()));
+	        }
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -123,8 +119,9 @@ public class BorrarPosicionesActivity extends SherlockActivity {
 		try{
 			FileUtil.borraFicheroActualDePosiciones(this);
 			FileUtil.cargaPosicionesAlmacenadas((Context)this, getWindow().getDecorView());
-			Toast.makeText(this, getResources().getString(R.string.txt_coordenadas_borradas_ok)
-					, Toast.LENGTH_LONG).show();
+			Toast.makeText(this, getResources().getString(R.string.txt_coordenadas_borradas_ok), Toast.LENGTH_LONG).show();
+			
+			actualizaCantidadDeCoordenadas();
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -250,11 +247,13 @@ public class BorrarPosicionesActivity extends SherlockActivity {
 		try{
 			if(this.view != null){
 				String imagen = FileUtil.getFondoPantallaAlmacenado(this.context);
-				int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
-						imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
-				Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
-				ImageView imageView = (ImageView)findViewById(R.id.fondo_borrar);
-				imageView.setImageDrawable(image);
+				if(imagen != null){
+					int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
+							imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
+					Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
+					ImageView imageView = (ImageView)findViewById(R.id.fondo_borrar);
+					imageView.setImageDrawable(image);
+				}
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();

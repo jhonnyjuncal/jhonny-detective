@@ -26,16 +26,12 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 
 public class PosicionesActivity extends SherlockActivity implements OnItemClickListener {
 	
 	private static final long serialVersionUID = -2463519562261937140L;
-	private AdView adView = null;
 	private List<ObjetoPosicion> listaPosiciones = null;
 	private ListView listView = null;
 	private ActionBar actionBar;
@@ -73,15 +69,6 @@ public class PosicionesActivity extends SherlockActivity implements OnItemClickL
 	        	actionBar.setDisplayHomeAsUpEnabled(false);
 	        	actionBar.setHomeButtonEnabled(true);
 	        }
-	        
-	        // PUBLICIDAD
-    		adView = new AdView(this);
-    		adView.setAdUnitId("a1513f4a3b63be1");
-    		adView.setAdSize(AdSize.BANNER);
-    		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
-    		layout.addView(adView);
-    		AdRequest adRequest = new AdRequest.Builder().build();
-    		adView.loadAd(adRequest);
 			
 			cargaPosicionesAlmacenadas();
 			
@@ -323,11 +310,13 @@ public class PosicionesActivity extends SherlockActivity implements OnItemClickL
 		try{
 			if(this.view != null){
 				String imagen = FileUtil.getFondoPantallaAlmacenado(this.context);
-				int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
-						imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
-				Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
-				ImageView imageView = (ImageView)findViewById(R.id.fondo_posiciones);
-				imageView.setImageDrawable(image);
+				if(imagen != null){
+					int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
+							imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
+					Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
+					ImageView imageView = (ImageView)findViewById(R.id.fondo_posiciones);
+					imageView.setImageDrawable(image);
+				}
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();

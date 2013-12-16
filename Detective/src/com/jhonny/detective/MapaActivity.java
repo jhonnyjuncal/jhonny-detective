@@ -6,12 +6,10 @@ import java.util.Locale;
 import java.util.Properties;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +35,6 @@ import com.google.android.gms.maps.Projection;
 public class MapaActivity extends FragmentActivity {
 	
 	private GoogleMap mapa = null;
-	private int contSalida = 0;
 	private View view;
 	
 	
@@ -45,7 +42,6 @@ public class MapaActivity extends FragmentActivity {
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mapa);
-		contSalida = 0;
 		
 		Properties prefs = new Properties();
 		Context ctx = this;
@@ -123,7 +119,6 @@ public class MapaActivity extends FragmentActivity {
 	@Override
 	public void onResume(){
 		super.onResume();
-		contSalida = 0;
 		reiniciarFondoOpciones();
 	}
 	

@@ -17,7 +17,7 @@
 	    android:layout_height="match_parent" >
 
 		<TextView
-		    android:id="@+id/textView1"
+		    android:id="@+id/borr_textView1"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_marginLeft="10dp"
@@ -44,7 +44,7 @@
 		        android:orientation="horizontal" >
 
 				<TextView
-				    android:id="@+id/textView2"
+				    android:id="@+id/borr_textView2"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:layout_marginLeft="10dp"
@@ -54,7 +54,7 @@
 				    android:textSize="@dimen/tamano_fuente" />
 	
 				<TextView
-				    android:id="@+id/textView3"
+				    android:id="@+id/borr_textView3"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:layout_marginLeft="5dp"
@@ -72,7 +72,7 @@
 		        android:orientation="horizontal" >
 
 		        <TextView
-		            android:id="@+id/textView4"
+		            android:id="@+id/borr_textView4"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:layout_marginLeft="10dp"
@@ -87,7 +87,7 @@
 		</LinearLayout>
 	
 		<Button
-		    android:id="@+id/button1"
+		    android:id="@+id/borr_button1"
 		    android:layout_width="wrap_content"
 		    android:layout_height="40dp"
 		    android:layout_centerHorizontal="true"
@@ -103,7 +103,18 @@
 		    android:layout_height="50dp"
 		    android:layout_alignParentBottom="true"
 		    android:orientation="vertical"
-		    android:weightSum="1" />
+		    android:weightSum="1">
+		    
+			<com.adfonic.android.AdfonicView
+				xmlns:adfonic="http://schemas.android.com/apk/lib/com.adfonic.android"
+       			android:layout_width="wrap_content"
+       			android:layout_height="wrap_content"
+       			adfonic:adfonic_adslot_id="246115db-3ca7-4d62-816f-8dff6ee7cc69"
+       			adfonic:language="es"
+       			adfonic:refresh_ad="true"
+       			adfonic:refresh_time="30" />
+			
+		</LinearLayout>
 
 	</RelativeLayout>
 	    

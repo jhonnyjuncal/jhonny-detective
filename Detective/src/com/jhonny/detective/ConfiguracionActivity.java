@@ -10,9 +10,6 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import android.content.Context;
 import android.content.Intent;
@@ -33,7 +30,6 @@ import android.widget.Toast;
 public class ConfiguracionActivity extends SherlockActivity implements OnItemSelectedListener {
 	
 	private static final long serialVersionUID = 362472463923801596L;
-	private AdView adView;
 	private Spinner spDistancia;
 	private Spinner spTiempo;
 	private Spinner spFondo;
@@ -82,15 +78,6 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 	        	actionBar.setDisplayHomeAsUpEnabled(false);
 	        	actionBar.setHomeButtonEnabled(true);
 	        }
-			
-			// PUBLICIDAD
-    		adView = new AdView(this);
-    		adView.setAdUnitId("a1513f4a3b63be1");
-    		adView.setAdSize(AdSize.BANNER);
-    		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
-    		layout.addView(adView);
-    		AdRequest adRequest = new AdRequest.Builder().build();
-    		adView.loadAd(adRequest);
 			
 			// se cargan los datos de la configuracion almacenada
 			spDistancia = (Spinner) findViewById(R.id.spinner1);
@@ -389,12 +376,14 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 		try{
 			if(this.view != null){
 				String imagen = FileUtil.getFondoPantallaAlmacenado(this.context);
-				int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
-						imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
-				Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
-				ImageView imageView = (ImageView)findViewById(R.id.fondo_configuracion);
-				imageView.setImageDrawable(image);
-				this.view.buildDrawingCache(false);
+				if(imagen != null){
+					int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
+							imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
+					Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
+					ImageView imageView = (ImageView)findViewById(R.id.fondo_configuracion);
+					imageView.setImageDrawable(image);
+					this.view.buildDrawingCache(false);
+				}
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();
