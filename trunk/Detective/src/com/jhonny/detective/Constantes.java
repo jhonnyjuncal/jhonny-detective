@@ -29,7 +29,7 @@ public class Constantes implements Serializable{
 	public static final String DEFECTO_TIPO_CUENTA = "1";
 	public static final int DEFECTO_POS_DISTANCIA = 0;
 	public static final int DEFECTO_POS_TIEMPO = 0;
-	public static final String DEFECTO_FONDO = "ic_fondo1";
+	public static final String DEFECTO_FONDO = "1";
 	public static final Map<String, Integer> mapaDist = new HashMap<String, Integer>();
 	public static final Map<String, Integer> mapaTmpo = new HashMap<String, Integer>();
 	public static final Map<Integer, String> mapaFondo = new HashMap<Integer, String>();

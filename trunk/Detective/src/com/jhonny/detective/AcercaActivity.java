@@ -8,6 +8,10 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.millennialmedia.android.MMAdView;
+import com.millennialmedia.android.MMRequest;
+import com.millennialmedia.android.MMSDK;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Context;
@@ -15,6 +19,8 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 import android.text.method.LinkMovementMethod;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,6 +38,13 @@ public class AcercaActivity extends SherlockActivity {
 	private SlidingMenu menu;
 	private View view;
 	private Context context;
+	
+	//Constants for tablet sized ads (728x90)
+	private static final int IAB_LEADERBOARD_WIDTH = 728;
+	private static final int MED_BANNER_WIDTH = 480;
+	//Constants for phone sized ads (320x50)
+	private static final int BANNER_AD_WIDTH = 320;
+	private static final int BANNER_AD_HEIGHT = 50;
 	
 	
 	@Override
@@ -89,11 +102,30 @@ public class AcercaActivity extends SherlockActivity {
 			        startActivity(intent);
 				}
 			});
+			
+			int placementWidth = BANNER_AD_WIDTH;
+
+			//Finds an ad that best fits a users device.
+			if(canFit(IAB_LEADERBOARD_WIDTH)) {
+			    placementWidth = IAB_LEADERBOARD_WIDTH;
+			}else if(canFit(MED_BANNER_WIDTH)) {
+			    placementWidth = MED_BANNER_WIDTH;
+			}
+			
+			MMAdView adView = new MMAdView(this);
+			adView.setApid("148574");
+			MMRequest request = new MMRequest();
+			adView.setMMRequest(request);
+			adView.setId(MMSDK.getDefaultAdId());
+			adView.setWidth(placementWidth);
+			adView.setHeight(BANNER_AD_HEIGHT);
+
+			LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
+			layout.addView(adView);
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
 	}
-	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -101,7 +133,6 @@ public class AcercaActivity extends SherlockActivity {
 		inflater.inflate(R.menu.menu_acerca, menu);
 		return true;
 	}
-	
 	
 	@Override
 	public void onResume(){
@@ -111,7 +142,6 @@ public class AcercaActivity extends SherlockActivity {
 		reiniciarFondoOpciones();
 		cargaConfiguracionGlobal();
 	}
-	
 	
 	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -132,7 +162,6 @@ public class AcercaActivity extends SherlockActivity {
     	return super.onKeyDown(keyCode, event);
     }
 	
-	
 	public void muestraHome(View view){
 		try{
 			this.view = view;
@@ -149,7 +178,6 @@ public class AcercaActivity extends SherlockActivity {
 			menu.toggle();
 		}
 	}
-	
 	
 	public void muestraConfiguracion(View view){
 		try{
@@ -168,7 +196,6 @@ public class AcercaActivity extends SherlockActivity {
 		}
 	}
 	
-	
 	public void muestraPassword(View view){
 		try{
 			this.view = view;
@@ -185,7 +212,6 @@ public class AcercaActivity extends SherlockActivity {
 			menu.toggle();
 		}
 	}
-	
 	
 	public void muestraBorrar(View view){
 		try{
@@ -204,7 +230,6 @@ public class AcercaActivity extends SherlockActivity {
 		}
 	}
 
-
 	public void muestraAcerca(View view){
 		try{
 			this.view = view;
@@ -221,7 +246,6 @@ public class AcercaActivity extends SherlockActivity {
 			menu.toggle();
 		}
 	}
-	
 	
 	private void reiniciarFondoOpciones(){
 		try{
@@ -247,12 +271,12 @@ public class AcercaActivity extends SherlockActivity {
 		}
 	}
 	
-	
 	private void cargaConfiguracionGlobal(){
 		try{
 			if(this.view != null){
-				String imagen = FileUtil.getFondoPantallaAlmacenado(this.context);
-				if(imagen != null){
+				String fondo = FileUtil.getFondoPantallaAlmacenado(this.context);
+				if(fondo != null){
+					String imagen = Constantes.mapaFondo.get(Integer.parseInt(fondo));
 					int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
 							imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
 					Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
@@ -264,7 +288,6 @@ public class AcercaActivity extends SherlockActivity {
 			ex.printStackTrace();
 		}
 	}
-
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -272,5 +295,11 @@ public class AcercaActivity extends SherlockActivity {
 			menu.toggle();
 		}
 		return true;
+	}
+	
+	protected boolean canFit(int adWidth) {
+		int adWidthPx = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, adWidth, getResources().getDisplayMetrics());
+		DisplayMetrics metrics = this.getResources().getDisplayMetrics();
+		return metrics.widthPixels >= adWidthPx;
 	}
 }

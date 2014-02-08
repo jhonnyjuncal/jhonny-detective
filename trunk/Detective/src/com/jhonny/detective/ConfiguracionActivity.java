@@ -11,11 +11,17 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.millennialmedia.android.MMAdView;
+import com.millennialmedia.android.MMRequest;
+import com.millennialmedia.android.MMSDK;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -44,6 +50,13 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 	private static String TIPO_CUENTA;
 	private static String FONDO_PANTALLA;
 	private int contSalida = 0;
+	
+	//Constants for tablet sized ads (728x90)
+	private static final int IAB_LEADERBOARD_WIDTH = 728;
+	private static final int MED_BANNER_WIDTH = 480;
+	//Constants for phone sized ads (320x50)
+	private static final int BANNER_AD_WIDTH = 320;
+	private static final int BANNER_AD_HEIGHT = 50;
 	
 	
 	@Override
@@ -97,11 +110,31 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 			spDistancia.setOnItemSelectedListener(this);
 			spTiempo.setOnItemSelectedListener(this);
 			spFondo.setOnItemSelectedListener(this);
+			
+			int placementWidth = BANNER_AD_WIDTH;
+
+			//Finds an ad that best fits a users device.
+			if(canFit(IAB_LEADERBOARD_WIDTH)) {
+			    placementWidth = IAB_LEADERBOARD_WIDTH;
+			}else if(canFit(MED_BANNER_WIDTH)) {
+			    placementWidth = MED_BANNER_WIDTH;
+			}
+			
+			MMAdView adView = new MMAdView(this);
+			adView.setApid("148574");
+			MMRequest request = new MMRequest();
+			adView.setMMRequest(request);
+			adView.setId(MMSDK.getDefaultAdId());
+			adView.setWidth(placementWidth);
+			adView.setHeight(BANNER_AD_HEIGHT);
+
+			LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
+			//Add the adView to the layout. The layout is assumed to be a RelativeLayout.
+			layout.addView(adView);
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
 	}
-	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,7 +143,6 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 		return true;
 	}
 	
-	
 	@Override
 	public void onResume(){
 		super.onResume();
@@ -118,7 +150,6 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 		reiniciarFondoOpciones();
 		cargaConfiguracionGlobal();
 	}
-	
 	
 	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -138,7 +169,6 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
     	//para las demas cosas, se reenvia el evento al listener habitual
     	return super.onKeyDown(keyCode, event);
     }
-	
 	
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -233,12 +263,10 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 		}
 	}
 
-
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
 		
 	}
-	
 	
 	public void muestraHome(View view){
 		try{
@@ -257,7 +285,6 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 		}
 	}
 	
-	
 	public void muestraConfiguracion(View view){
 		try{
 			this.view = view;
@@ -274,7 +301,6 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 			menu.toggle();
 		}
 	}
-	
 	
 	public void muestraPassword(View view){
 		try{
@@ -293,7 +319,6 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 		}
 	}
 	
-	
 	public void muestraBorrar(View view){
 		try{
 			this.view = view;
@@ -311,7 +336,6 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 		}
 	}
 
-
 	public void muestraAcerca(View view){
 		try{
 			this.view = view;
@@ -328,7 +352,6 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 			menu.toggle();
 		}
 	}
-	
 	
 	private void reiniciarFondoOpciones(){
 		try{
@@ -354,7 +377,6 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 		}
 	}
 	
-	
 	private void cargarSpinnerFondoPantallas(){
 		try{
 			List<String> list = new ArrayList<String>();
@@ -371,25 +393,23 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 		}
 	}
 	
-	
 	private void cargaConfiguracionGlobal(){
 		try{
 			if(this.view != null){
-				String imagen = FileUtil.getFondoPantallaAlmacenado(this.context);
-				if(imagen != null){
+				String fondo = FileUtil.getFondoPantallaAlmacenado(this.context);
+				if(fondo != null){
+					String imagen = Constantes.mapaFondo.get(Integer.parseInt(fondo));
 					int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
 							imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
 					Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
 					ImageView imageView = (ImageView)findViewById(R.id.fondo_configuracion);
 					imageView.setImageDrawable(image);
-					this.view.buildDrawingCache(false);
 				}
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
 	}
-
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -397,5 +417,11 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 			menu.toggle();
 		}
 		return true;
+	}
+	
+	protected boolean canFit(int adWidth) {
+		int adWidthPx = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, adWidth, getResources().getDisplayMetrics());
+		DisplayMetrics metrics = this.getResources().getDisplayMetrics();
+		return metrics.widthPixels >= adWidthPx;
 	}
 }

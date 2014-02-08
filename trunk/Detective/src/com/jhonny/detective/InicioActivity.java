@@ -266,8 +266,9 @@ public class InicioActivity extends SherlockActivity {
 	private void cargaConfiguracionGlobal(){
 		try{
 			if(this.view != null){
-				String imagen = FileUtil.getFondoPantallaAlmacenado(this.context);
-				if(imagen != null){
+				String fondo = FileUtil.getFondoPantallaAlmacenado(this.context);
+				if(fondo != null){
+					String imagen = Constantes.mapaFondo.get(Integer.parseInt(fondo));
 					int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
 							imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
 					Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);

@@ -105,7 +105,6 @@ public class MapaActivity extends FragmentActivity {
 					.tilt(70)			//Bajamos el punto de vista de la cámara 70 grados
 					.build();
 					
-//					CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(ubicacion, 15);
 					CameraUpdate cu = CameraUpdateFactory.newCameraPosition(camPos);
 					mapa.animateCamera(cu);
 				}
