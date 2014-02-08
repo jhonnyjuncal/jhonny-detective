@@ -502,22 +502,18 @@ public class FileUtil implements Serializable{
 	
 	
 	public static String getFondoPantallaAlmacenado(Context context){
-		String resultado = null;
 		try{
-			// Fondo de pantalla seleccionado
 			Properties prop = null;
 			if(!Constantes.mapaFondo.isEmpty()){
 				prop = FileUtil.getFicheroAssetConfiguracion(context);
 				if(prop != null && prop.containsKey(Constantes.PROP_FONDO_PANTALLA.toString())){
-					String key = (String)prop.get(Constantes.PROP_FONDO_PANTALLA);
-					Integer opcion = Integer.parseInt(key);
-					resultado = (String)Constantes.mapaFondo.get(opcion);
+					return (String)prop.get(Constantes.PROP_FONDO_PANTALLA);
 				}
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
-		return resultado;
+		return null;
 	}
 	
 	

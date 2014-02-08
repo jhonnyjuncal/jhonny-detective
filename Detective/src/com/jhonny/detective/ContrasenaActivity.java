@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -19,6 +21,9 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.millennialmedia.android.MMAdView;
+import com.millennialmedia.android.MMRequest;
+import com.millennialmedia.android.MMSDK;
 
 
 public class ContrasenaActivity extends SherlockActivity {
@@ -29,6 +34,13 @@ public class ContrasenaActivity extends SherlockActivity {
 	private SlidingMenu menu;
 	private View view;
 	private Context context;
+	
+	//Constants for tablet sized ads (728x90)
+	private static final int IAB_LEADERBOARD_WIDTH = 728;
+	private static final int MED_BANNER_WIDTH = 480;
+	//Constants for phone sized ads (320x50)
+	private static final int BANNER_AD_WIDTH = 320;
+	private static final int BANNER_AD_HEIGHT = 50;
 	
 	
 	@Override
@@ -59,11 +71,32 @@ public class ContrasenaActivity extends SherlockActivity {
 	        	actionBar.setDisplayHomeAsUpEnabled(false);
 	        	actionBar.setHomeButtonEnabled(true);
 	        }
+	        
+	        int placementWidth = BANNER_AD_WIDTH;
+
+			//Finds an ad that best fits a users device.
+			if(canFit(IAB_LEADERBOARD_WIDTH)) {
+			    placementWidth = IAB_LEADERBOARD_WIDTH;
+			}else if(canFit(MED_BANNER_WIDTH)) {
+			    placementWidth = MED_BANNER_WIDTH;
+			}
+			
+			MMAdView adView = new MMAdView(this);
+			adView.setApid("148574");
+			MMRequest request = new MMRequest();
+			adView.setMMRequest(request);
+			adView.setId(MMSDK.getDefaultAdId());
+			adView.setWidth(placementWidth);
+			adView.setHeight(BANNER_AD_HEIGHT);
+
+			LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
+			//Add the adView to the layout. The layout is assumed to be a RelativeLayout.
+			layout.addView(adView);
+			
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
 	}
-	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -72,7 +105,6 @@ public class ContrasenaActivity extends SherlockActivity {
 		return true;
 	}
 	
-	
 	@Override
     protected void onResume(){
 		super.onResume();
@@ -80,7 +112,6 @@ public class ContrasenaActivity extends SherlockActivity {
 		reiniciarFondoOpciones();
 		cargaConfiguracionGlobal();
 	}
-	
 	
 	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -100,7 +131,6 @@ public class ContrasenaActivity extends SherlockActivity {
     	//para las demas cosas, se reenvia el evento al listener habitual
     	return super.onKeyDown(keyCode, event);
     }
-	
 	
 	public void cambiarContrasena(View view){
 		String passAlmacenado;
@@ -156,7 +186,6 @@ public class ContrasenaActivity extends SherlockActivity {
 		}
 	}
 	
-	
 	public void muestraHome(View view){
 		try{
 			this.view = view;
@@ -173,7 +202,6 @@ public class ContrasenaActivity extends SherlockActivity {
 			menu.toggle();
 		}
 	}
-	
 	
 	public void muestraConfiguracion(View view){
 		try{
@@ -192,7 +220,6 @@ public class ContrasenaActivity extends SherlockActivity {
 		}
 	}
 	
-	
 	public void muestraPassword(View view){
 		try{
 			this.view = view;
@@ -209,7 +236,6 @@ public class ContrasenaActivity extends SherlockActivity {
 			menu.toggle();
 		}
 	}
-	
 	
 	public void muestraBorrar(View view){
 		try{
@@ -228,7 +254,6 @@ public class ContrasenaActivity extends SherlockActivity {
 		}
 	}
 
-
 	public void muestraAcerca(View view){
 		try{
 			this.view = view;
@@ -245,7 +270,6 @@ public class ContrasenaActivity extends SherlockActivity {
 			menu.toggle();
 		}
 	}
-	
 	
 	private void reiniciarFondoOpciones(){
 		try{
@@ -271,12 +295,12 @@ public class ContrasenaActivity extends SherlockActivity {
 		}
 	}
 	
-	
 	private void cargaConfiguracionGlobal(){
 		try{
 			if(this.view != null){
-				String imagen = FileUtil.getFondoPantallaAlmacenado(this.context);
-				if(imagen != null){
+				String fondo = FileUtil.getFondoPantallaAlmacenado(this.context);
+				if(fondo != null){
+					String imagen = Constantes.mapaFondo.get(Integer.parseInt(fondo));
 					int imageResource1 = this.view.getContext().getApplicationContext().getResources().getIdentifier(
 							imagen, "drawable", this.view.getContext().getApplicationContext().getPackageName());
 					Drawable image = this.view.getContext().getResources().getDrawable(imageResource1);
@@ -288,7 +312,6 @@ public class ContrasenaActivity extends SherlockActivity {
 			ex.printStackTrace();
 		}
 	}
-
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -296,5 +319,11 @@ public class ContrasenaActivity extends SherlockActivity {
 			menu.toggle();
 		}
 		return true;
+	}
+	
+	protected boolean canFit(int adWidth) {
+		int adWidthPx = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, adWidth, getResources().getDisplayMetrics());
+		DisplayMetrics metrics = this.getResources().getDisplayMetrics();
+		return metrics.widthPixels >= adWidthPx;
 	}
 }
