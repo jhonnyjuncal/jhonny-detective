@@ -43,7 +43,7 @@
 	        android:saveEnabled="false" />
 	
 	    <Button
-	        android:id="@+id/button1"
+	        android:id="@+id/btnEnviar"
 	        android:layout_width="120dp"
 	        android:layout_height="35dp"
 	        android:layout_alignParentTop="true"

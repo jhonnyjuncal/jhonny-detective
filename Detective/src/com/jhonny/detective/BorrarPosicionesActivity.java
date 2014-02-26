@@ -47,6 +47,7 @@ public class BorrarPosicionesActivity extends SherlockActivity {
 		contSalida = 0;
 		
 		try{
+			MMSDK.setLogLevel(MMSDK.LOG_LEVEL_DEBUG);
 			this.context = this;
 			this.view = getWindow().getDecorView();
 			
@@ -91,6 +92,7 @@ public class BorrarPosicionesActivity extends SherlockActivity {
 			LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
 			//Add the adView to the layout. The layout is assumed to be a RelativeLayout.
 			layout.addView(adView);
+			adView.getAd();
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -122,6 +124,7 @@ public class BorrarPosicionesActivity extends SherlockActivity {
 		contSalida = 0;
 		reiniciarFondoOpciones();
 		cargaConfiguracionGlobal();
+		cargaPublicidad();
 	}
 	
 	@Override
@@ -294,5 +297,28 @@ public class BorrarPosicionesActivity extends SherlockActivity {
 		int adWidthPx = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, adWidth, getResources().getDisplayMetrics());
 		DisplayMetrics metrics = this.getResources().getDisplayMetrics();
 		return metrics.widthPixels >= adWidthPx;
+	}
+	
+	private void cargaPublicidad(){
+		int placementWidth = BANNER_AD_WIDTH;
+		
+		//Finds an ad that best fits a users device.
+		if(canFit(IAB_LEADERBOARD_WIDTH)) {
+		    placementWidth = IAB_LEADERBOARD_WIDTH;
+		}else if(canFit(MED_BANNER_WIDTH)) {
+		    placementWidth = MED_BANNER_WIDTH;
+		}
+		
+		MMAdView adView = new MMAdView(this);
+		adView.setApid("148574");
+		MMRequest request = new MMRequest();
+		adView.setMMRequest(request);
+		adView.setId(MMSDK.getDefaultAdId());
+		adView.setWidth(placementWidth);
+		adView.setHeight(BANNER_AD_HEIGHT);
+		
+		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
+		layout.addView(adView);
+		adView.getAd();
 	}
 }

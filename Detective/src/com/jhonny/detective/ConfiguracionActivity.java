@@ -49,6 +49,7 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 	private static long TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES;
 	private static String TIPO_CUENTA;
 	private static String FONDO_PANTALLA;
+	private static String EMAIL;
 	private int contSalida = 0;
 	
 	//Constants for tablet sized ads (728x90)
@@ -70,6 +71,7 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 		int pos3 = 0;
 		
 		try{
+			MMSDK.setLogLevel(MMSDK.LOG_LEVEL_DEBUG);
 			this.context = this;
 			this.view = getWindow().getDecorView();
 			
@@ -131,6 +133,7 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 			LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
 			//Add the adView to the layout. The layout is assumed to be a RelativeLayout.
 			layout.addView(adView);
+			adView.getAd();
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -149,6 +152,7 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 		contSalida = 0;
 		reiniciarFondoOpciones();
 		cargaConfiguracionGlobal();
+		cargaPublicidad();
 	}
 	
 	@Override
@@ -178,6 +182,7 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 			if(prop != null){
 				PASS = (String)prop.get(Constantes.PROP_PASSWORD);
 				TIPO_CUENTA = (String)prop.get(Constantes.PROP_TIPO_CUENTA);
+				EMAIL = (String)prop.get(Constantes.PROP_EMAIL);
 				
 				switch((int)spDistancia.getSelectedItemId()){
 					case 0:
@@ -235,6 +240,7 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 				valores.put(Constantes.PROP_TIEMPO_MINIMO_ACTUALIZACIONES, String.valueOf(TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES));
 				valores.put(Constantes.PROP_TIPO_CUENTA, TIPO_CUENTA);
 				valores.put(Constantes.PROP_FONDO_PANTALLA, FONDO_PANTALLA);
+				valores.put(Constantes.PROP_EMAIL, EMAIL);
 				
 				LocationManager locationManagerGps = FileUtil.getLocationManagerGps();
 				LocationManager locationManagerInternet = FileUtil.getLocationManagerInternet();
@@ -423,5 +429,28 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 		int adWidthPx = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, adWidth, getResources().getDisplayMetrics());
 		DisplayMetrics metrics = this.getResources().getDisplayMetrics();
 		return metrics.widthPixels >= adWidthPx;
+	}
+	
+	private void cargaPublicidad(){
+		int placementWidth = BANNER_AD_WIDTH;
+		
+		//Finds an ad that best fits a users device.
+		if(canFit(IAB_LEADERBOARD_WIDTH)) {
+		    placementWidth = IAB_LEADERBOARD_WIDTH;
+		}else if(canFit(MED_BANNER_WIDTH)) {
+		    placementWidth = MED_BANNER_WIDTH;
+		}
+		
+		MMAdView adView = new MMAdView(this);
+		adView.setApid("148574");
+		MMRequest request = new MMRequest();
+		adView.setMMRequest(request);
+		adView.setId(MMSDK.getDefaultAdId());
+		adView.setWidth(placementWidth);
+		adView.setHeight(BANNER_AD_HEIGHT);
+		
+		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
+		layout.addView(adView);
+		adView.getAd();
 	}
 }

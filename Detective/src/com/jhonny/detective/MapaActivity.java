@@ -12,8 +12,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
@@ -35,7 +33,6 @@ import com.google.android.gms.maps.Projection;
 public class MapaActivity extends FragmentActivity {
 	
 	private GoogleMap mapa = null;
-	private View view;
 	
 	
 	@Override
@@ -118,7 +115,6 @@ public class MapaActivity extends FragmentActivity {
 	@Override
 	public void onResume(){
 		super.onResume();
-		reiniciarFondoOpciones();
 	}
 	
 	
@@ -177,30 +173,5 @@ public class MapaActivity extends FragmentActivity {
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-	
-	
-	private void reiniciarFondoOpciones(){
-		try{
-			LinearLayout layout_inicio = (LinearLayout)findViewById(R.id.opc_layout_inicio);
-			layout_inicio.setBackgroundResource(R.color.gris_claro);
-			
-			LinearLayout layout_redes = (LinearLayout)findViewById(R.id.opc_layout_conf);
-			layout_redes.setBackgroundResource(R.color.gris_claro);
-			
-			LinearLayout layout_conf = (LinearLayout)findViewById(R.id.opc_layout_pass);
-			layout_conf.setBackgroundResource(R.color.gris_claro);
-			
-			LinearLayout layout_acerca = (LinearLayout)findViewById(R.id.opc_layout_borra);
-			layout_acerca.setBackgroundResource(R.color.gris_claro);
-			
-			LinearLayout layout_terminos = (LinearLayout)findViewById(R.id.opc_layout_about);
-			layout_terminos.setBackgroundResource(R.color.gris_claro);
-			
-			if(this.view != null)
-				this.view.buildDrawingCache(true);
-		}catch(Exception ex){
-			ex.printStackTrace();
-		}
 	}
 }

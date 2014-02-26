@@ -20,7 +20,9 @@ import java.util.Properties;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import android.content.Context;
+import android.content.Intent;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.view.View;
 import android.widget.TextView;
@@ -117,6 +119,10 @@ public class FileUtil implements Serializable{
 							case 5:
 								// fondo de pantalla
 								properties.put(Constantes.PROP_FONDO_PANTALLA, linea);
+								break;
+							case 6:
+								// direccion de correo electronico
+								properties.put(Constantes.PROP_EMAIL, linea);
 								break;
 						}
 						contador++;
@@ -402,6 +408,7 @@ public class FileUtil implements Serializable{
 		String tmpoMinActualizaciones = null;
 		String tipoCuenta = null;
 		String fondoPan = null;
+		String email = null;
 		
 		try{
 			if(valores != null){
@@ -434,6 +441,12 @@ public class FileUtil implements Serializable{
 					if(fondoPan == null)
 						fondoPan = Constantes.DEFECTO_FONDO;
 					out.write(fondoPan + "\r\n");
+				}
+				if(valores.containsKey(Constantes.PROP_EMAIL)){
+					email = valores.get(Constantes.PROP_EMAIL);
+					if(email == null)
+						fondoPan = Constantes.DEFECTO_EMAIL;
+					out.write(email + "\r\n");
 				}
 			}
 		}catch(Exception ex){

@@ -91,7 +91,7 @@
 	        android:textSize="12sp" />
 	    
 	    <Button
-	        android:id="@+id/button1"
+	        android:id="@+id/btnEnviar"
 	        android:layout_width="300dp"
 	        android:layout_height="45dp"
 	        android:layout_alignParentTop="true"

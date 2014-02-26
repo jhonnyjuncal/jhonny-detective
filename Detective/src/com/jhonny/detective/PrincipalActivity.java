@@ -1,9 +1,7 @@
 package com.jhonny.detective;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -14,10 +12,10 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.millennialmedia.android.MMAdView;
 import com.millennialmedia.android.MMRequest;
 import com.millennialmedia.android.MMSDK;
-
 import android.location.LocationManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -26,6 +24,11 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,6 +52,9 @@ public class PrincipalActivity extends SherlockActivity {
 	private SlidingMenu menu;
 	private View view;
 	private Context context;
+	private Dialog dialogo;
+	private EditText email;
+	private CheckBox check;
 	
 	//Constants for tablet sized ads (728x90)
 	private static final int IAB_LEADERBOARD_WIDTH = 728;
@@ -65,6 +71,7 @@ public class PrincipalActivity extends SherlockActivity {
 		contSalida = 0;
     	
 		try{
+			MMSDK.setLogLevel(MMSDK.LOG_LEVEL_DEBUG);
 			this.context = this;
 			this.view = getWindow().getDecorView();
 			
@@ -104,26 +111,6 @@ public class PrincipalActivity extends SherlockActivity {
     		// informa estado de la wifi/3G
     		informaEstadoActualInternet();
     		
-    		int placementWidth = BANNER_AD_WIDTH;
-
-			//Finds an ad that best fits a users device.
-			if(canFit(IAB_LEADERBOARD_WIDTH)) {
-			    placementWidth = IAB_LEADERBOARD_WIDTH;
-			}else if(canFit(MED_BANNER_WIDTH)) {
-			    placementWidth = MED_BANNER_WIDTH;
-			}
-			
-			MMAdView adView = new MMAdView(this);
-			adView.setApid("148574");
-			MMRequest request = new MMRequest();
-			adView.setMMRequest(request);
-			adView.setId(MMSDK.getDefaultAdId());
-			adView.setWidth(placementWidth);
-			adView.setHeight(BANNER_AD_HEIGHT);
-
-			LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
-			//Add the adView to the layout. The layout is assumed to be a RelativeLayout.
-			layout.addView(adView);
     	}catch(Exception ex){
     		ex.printStackTrace();
     	}
@@ -142,14 +129,6 @@ public class PrincipalActivity extends SherlockActivity {
     public void onDestroy(){
     	try{
     		contSalida = 0;
-    		Map<String, String> valores = new HashMap<String, String>();
-    		
-    		valores.put(Constantes.PROP_PASSWORD, PASS);
-    		valores.put(Constantes.PROP_TIEMPO_MINIMO_ACTUALIZACIONES, String.valueOf(TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES));
-    		valores.put(Constantes.PROP_DISTANCIA_MINIMA_ACTUALIZACIONES, String.valueOf(DISTANCIA_MINIMA_PARA_ACTUALIZACIONES));
-    		valores.put(Constantes.PROP_TIPO_CUENTA, String.valueOf(TIPO_CUENTA));
-    		
-    		FileUtil.guardaDatosConfiguracion(valores, (Context)this);
     		super.onDestroy();
     	}catch(Exception ex){
     		ex.printStackTrace();
@@ -166,6 +145,7 @@ public class PrincipalActivity extends SherlockActivity {
 	    	reiniciarFondoOpciones();
 	    	cargaConfiguracionGlobal();
 			FileUtil.cargaPosicionesAlmacenadas((Context)this, getWindow().getDecorView());
+			cargaPublicidad();
     	}catch(Exception ex){
     		ex.printStackTrace();
     	}
@@ -173,23 +153,49 @@ public class PrincipalActivity extends SherlockActivity {
     
     
     public void muestraMapa(View view){
-    	try{
-    		if(R.id.button1 == view.getId()){
-				Intent intent = new Intent(this, MapaActivity.class);
-				startActivity(intent);
-	    	}
-    	}catch(Exception ex){
-    		ex.printStackTrace();
-    	}
+		Intent intent = new Intent(this, MapaActivity.class);
+		startActivity(intent);
     }
     
     
     public void muestraPosiciones(View view){
+    	Intent intent = new Intent(this, PosicionesActivity.class);
+		startActivity(intent);
+    }
+    
+    
+    public void enviarPosicionesPorMail(View view){
     	try{
-    		if(R.id.button2 == view.getId()){
-    			Intent intent = new Intent(this, PosicionesActivity.class);
-    			startActivity(intent);
-	    	}
+    		dialogo = new Dialog(this, R.style.Theme_Dialog_Translucent);
+    		dialogo.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    		dialogo.setContentView(R.layout.alert_email);
+    		
+    		Button boton_enviar = (Button)dialogo.findViewById(R.id.btnEnviar);
+    		Button boton_cancelar = (Button)dialogo.findViewById(R.id.btnCancelar);
+    		email = (EditText)dialogo.findViewById(R.id.alert_editText1);
+    		check = (CheckBox)dialogo.findViewById(R.id.alert_checkBox1);
+    		
+    		boton_enviar.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if(check.isChecked()){
+						// guardar la direccion de email en el fichero de propiedades
+					}
+					
+					String direccion = email.getText().toString();
+					Email.enviarPosicionesPorMail(PrincipalActivity.this, direccion, context);
+					dialogo.cancel();
+				}
+			});
+			
+			boton_cancelar.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					dialogo.cancel();
+				}
+			});
+    		
+    		dialogo.show();
     	}catch(Exception ex){
     		ex.printStackTrace();
     	}
@@ -509,6 +515,29 @@ public class PrincipalActivity extends SherlockActivity {
 		int adWidthPx = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, adWidth, getResources().getDisplayMetrics());
 		DisplayMetrics metrics = this.getResources().getDisplayMetrics();
 		return metrics.widthPixels >= adWidthPx;
+	}
+	
+	private void cargaPublicidad(){
+		int placementWidth = BANNER_AD_WIDTH;
+		
+		//Finds an ad that best fits a users device.
+		if(canFit(IAB_LEADERBOARD_WIDTH)) {
+		    placementWidth = IAB_LEADERBOARD_WIDTH;
+		}else if(canFit(MED_BANNER_WIDTH)) {
+		    placementWidth = MED_BANNER_WIDTH;
+		}
+		
+		MMAdView adView = new MMAdView(this);
+		adView.setApid("148574");
+		MMRequest request = new MMRequest();
+		adView.setMMRequest(request);
+		adView.setId(MMSDK.getDefaultAdId());
+		adView.setWidth(placementWidth);
+		adView.setHeight(BANNER_AD_HEIGHT);
+		
+		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
+		layout.addView(adView);
+		adView.getAd();
 	}
 }
 
