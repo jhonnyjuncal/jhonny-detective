@@ -93,7 +93,7 @@
 	        android:textSize="12sp" />
 	    
 	    <Button
-	        android:id="@+id/button1"
+	        android:id="@+id/btnEnviar"
 	        android:layout_width="330dp"
 	        android:layout_height="50dp"
 	        android:layout_below="@+id/editText3"

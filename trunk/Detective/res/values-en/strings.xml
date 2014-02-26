@@ -23,8 +23,9 @@
     <string name="label_acceso_aplicacion">Access</string>
     <string name="label_registro_nuevo">New user</string>
     <string name="label_recordar_pass">forget password</string>
-    <string name="label_mostrar_mapa">Show positions in map</string>
-    <string name="label_mostrar_posiciones">Show positions in list</string>
+    <string name="label_mostrar_mapa">Positions in map</string>
+    <string name="label_mostrar_posiciones">Positions in list</string>
+    <string name="label_enviar_email">Send positions by e-mail</string>
     <string name="title_activity_mapa">Map</string>
 	<string name="txt_encendida">On</string>
 	<string name="txt_apagada">Off</string>
@@ -76,4 +77,16 @@
 	<string name="label_fondo_pantalla">Background</string>
 	<string name="menu_comp_facebook">Share in Facebook</string>
 	<string name="menu_comp_twitter">Share in Twitter</string>
+	<string name="label_introducir_mail">Enter the email address you want to send the current positions</string>
+	<string name="label_guardar_correo">Save email address</string>
+	<string name="label_enviar">Send</string>
+	<string name="label_cancelar">Cancel</string>
+	<string name="error_mal_email">You must enter a valid email address</string>
+	<string name="email_enviado">Email sent successfully</string>
+	<string name="email_asunto">Detective - Positions Request</string>
+	<string name="txt_preparandose">Getting ready...</string>
+	<string name="txt_procesando">Processing input...</string>
+	<string name="txt_preparando_msg">Preparing mail message...</string>
+	<string name="txt_enviando_mail">Sending email...</string>
+	<string name="txt_mail_enviado">Email Sent</string>
 </resources>

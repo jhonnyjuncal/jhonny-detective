@@ -92,7 +92,7 @@
 	        android:visibility="invisible" />
 	
 	    <Button
-	        android:id="@+id/button1"
+	        android:id="@+id/btnEnviar"
 	        android:layout_width="wrap_content"
 	        android:layout_height="35dp"
 	        android:layout_alignParentLeft="true"
@@ -103,21 +103,23 @@
 	        android:layout_marginRight="105dp"
 	        android:layout_marginTop="110dp"
 	        android:onClick="muestraMapa"
-	        android:text="@string/label_mostrar_mapa" />
+	        android:text="@string/label_mostrar_mapa"
+	        style="@style/gradienteSimple" />
 	    
 	    <Button
-	        android:id="@+id/button2"
+	        android:id="@+id/btnCancelar"
 	        android:layout_width="wrap_content"
 	        android:layout_height="35dp"
 	        android:layout_alignParentLeft="true"
 	        android:layout_alignParentRight="true"
 	        android:layout_alignParentTop="true"
-	        android:layout_below="@+id/button1"
+	        android:layout_below="@+id/btnEnviar"
 	        android:layout_marginLeft="105dp"
 	        android:layout_marginRight="105dp"
 	        android:layout_marginTop="150dp"
 	        android:onClick="muestraPosiciones"
-	        android:text="@string/label_mostrar_posiciones" />
+	        android:text="@string/label_mostrar_posiciones"
+	        style="@style/gradienteSimple" />
 		
 		<LinearLayout
 		    android:id="@+id/linearLayout2"

@@ -3,4 +3,16 @@
 	<color name="gris_claro">#b2b2b2</color>
 	<color name="gris_oscuro">#666666</color>
 	<color name="blanco">#FFFFFF</color>
+	<color name="pressed_start">#822300</color>
+	<color name="pressed_end">#D7530F</color>
+	<color name="pressed_border">#EDBAB0</color>
+	<color name="pressed_text">#FFFFFF</color>
+	<color name="focused_start">#944224</color>
+	<color name="focused_end">#D8703B</color>
+	<color name="focused_border">#862501</color>
+	<color name="focused_text">#000000</color>
+	<color name="normal_start">#DF5A20</color>
+	<color name="normal_end">#904321</color>
+	<color name="normal_border">#EDB9AF</color>
+	<color name="normal_text">#000000</color>
 </resources>

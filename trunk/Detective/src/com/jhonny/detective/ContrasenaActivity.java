@@ -50,6 +50,7 @@ public class ContrasenaActivity extends SherlockActivity {
 		contSalida = 0;
 		
 		try{
+			MMSDK.setLogLevel(MMSDK.LOG_LEVEL_DEBUG);
 			this.context = this;
 			this.view = getWindow().getDecorView();
 			
@@ -71,28 +72,6 @@ public class ContrasenaActivity extends SherlockActivity {
 	        	actionBar.setDisplayHomeAsUpEnabled(false);
 	        	actionBar.setHomeButtonEnabled(true);
 	        }
-	        
-	        int placementWidth = BANNER_AD_WIDTH;
-
-			//Finds an ad that best fits a users device.
-			if(canFit(IAB_LEADERBOARD_WIDTH)) {
-			    placementWidth = IAB_LEADERBOARD_WIDTH;
-			}else if(canFit(MED_BANNER_WIDTH)) {
-			    placementWidth = MED_BANNER_WIDTH;
-			}
-			
-			MMAdView adView = new MMAdView(this);
-			adView.setApid("148574");
-			MMRequest request = new MMRequest();
-			adView.setMMRequest(request);
-			adView.setId(MMSDK.getDefaultAdId());
-			adView.setWidth(placementWidth);
-			adView.setHeight(BANNER_AD_HEIGHT);
-
-			LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
-			//Add the adView to the layout. The layout is assumed to be a RelativeLayout.
-			layout.addView(adView);
-			
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -111,6 +90,7 @@ public class ContrasenaActivity extends SherlockActivity {
 		contSalida = 0;
 		reiniciarFondoOpciones();
 		cargaConfiguracionGlobal();
+		cargaPublicidad();
 	}
 	
 	@Override
@@ -166,6 +146,8 @@ public class ContrasenaActivity extends SherlockActivity {
 						valores.put(Constantes.PROP_DISTANCIA_MINIMA_ACTUALIZACIONES, (String)prop.get(Constantes.PROP_DISTANCIA_MINIMA_ACTUALIZACIONES));
 						valores.put(Constantes.PROP_TIEMPO_MINIMO_ACTUALIZACIONES, (String)prop.get(Constantes.PROP_TIEMPO_MINIMO_ACTUALIZACIONES));
 						valores.put(Constantes.PROP_TIPO_CUENTA, (String)prop.get(Constantes.PROP_TIPO_CUENTA));
+						valores.put(Constantes.PROP_FONDO_PANTALLA, (String)prop.get(Constantes.PROP_FONDO_PANTALLA));
+						valores.put(Constantes.PROP_EMAIL, (String)prop.get(Constantes.PROP_EMAIL));
 						
 						FileUtil.guardaDatosConfiguracion(valores, this);
 						
@@ -325,5 +307,40 @@ public class ContrasenaActivity extends SherlockActivity {
 		int adWidthPx = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, adWidth, getResources().getDisplayMetrics());
 		DisplayMetrics metrics = this.getResources().getDisplayMetrics();
 		return metrics.widthPixels >= adWidthPx;
+	}
+	
+	private void cargaPublicidad(){
+		int placementWidth = BANNER_AD_WIDTH;
+
+		//Finds an ad that best fits a users device.
+		if(canFit(IAB_LEADERBOARD_WIDTH)) {
+		    placementWidth = IAB_LEADERBOARD_WIDTH;
+		}else if(canFit(MED_BANNER_WIDTH)) {
+		    placementWidth = MED_BANNER_WIDTH;
+		}
+		
+		MMAdView adView1 = new MMAdView(this);
+		adView1.setApid("148574");
+		MMRequest request1 = new MMRequest();
+		adView1.setMMRequest(request1);
+		adView1.setId(MMSDK.getDefaultAdId());
+		adView1.setWidth(placementWidth);
+		adView1.setHeight(BANNER_AD_HEIGHT);
+
+		LinearLayout layout2 = (LinearLayout)findViewById(R.id.linearLayout2);
+		layout2.addView(adView1);
+		adView1.getAd();
+		
+		MMAdView adView2 = new MMAdView(this);
+		adView2.setApid("148574");
+		MMRequest request = new MMRequest();
+		adView2.setMMRequest(request);
+		adView2.setId(MMSDK.getDefaultAdId());
+		adView2.setWidth(placementWidth);
+		adView2.setHeight(BANNER_AD_HEIGHT);
+
+		LinearLayout layout3 = (LinearLayout)findViewById(R.id.linearLayout3);
+		layout3.addView(adView2);
+		adView2.getAd();
 	}
 }

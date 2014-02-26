@@ -23,8 +23,9 @@
     <string name="label_acceso_aplicacion">Acceso</string>
     <string name="label_registro_nuevo">Usuario nuevo</string>
     <string name="label_recordar_pass">Recordar contraseña</string>
-    <string name="label_mostrar_mapa">Mostrar posiciones en mapa</string>
-    <string name="label_mostrar_posiciones">Mostrar posiciones en lista</string>
+    <string name="label_mostrar_mapa">Posiciones en mapa</string>
+    <string name="label_mostrar_posiciones">Posiciones en lista</string>
+    <string name="label_enviar_email">Enviar posiciones por correo</string>
     <string name="title_activity_mapa">Mapa</string>
 	<string name="txt_encendida">Encendida</string>
 	<string name="txt_apagada">Apagada</string>
@@ -76,4 +77,16 @@
 	<string name="label_fondo_pantalla">Fondo de pantalla</string>
 	<string name="menu_comp_facebook">Compartir en Facebook</string>
 	<string name="menu_comp_twitter">Compartir en Twitter</string>
+	<string name="label_introducir_mail">Introducir el correo electrónico al que desea enviar las posiciones actuales</string>
+	<string name="label_guardar_correo">Guardar dirección de correo</string>
+	<string name="label_enviar">Enviar</string>
+	<string name="label_cancelar">Cancelar</string>
+	<string name="error_mal_email">Debe introducir una dirección de correo eletrónico válida</string>
+	<string name="email_enviado">Correo electrónico enviado correctamente</string>
+	<string name="email_asunto">Detective - Solicitud de posiciones</string>
+	<string name="txt_preparandose">Preparándose...</string>
+	<string name="txt_procesando">Procesando datos...</string>
+	<string name="txt_preparando_msg">Preparando mensage...</string>
+	<string name="txt_enviando_mail">Enviando e-mail...</string>
+	<string name="txt_mail_enviado">E-mail enviado</string>
 </resources>

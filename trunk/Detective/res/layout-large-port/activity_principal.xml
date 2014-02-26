@@ -107,7 +107,7 @@
 	        android:visibility="invisible" />
 	
 	    <Button
-	        android:id="@+id/button1"
+	        android:id="@+id/btnEnviar"
 	        android:layout_width="400dp"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@+id/textView8"
@@ -118,10 +118,10 @@
 	        android:textSize="25sp" />
 	    
 	    <Button
-	        android:id="@+id/button2"
+	        android:id="@+id/btnCancelar"
 	        android:layout_width="400dp"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/button1"
+	        android:layout_below="@+id/btnEnviar"
 	        android:layout_centerHorizontal="true"
 	        android:layout_marginTop="30dp"
 	        android:onClick="muestraPosiciones"
