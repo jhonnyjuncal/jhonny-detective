@@ -328,6 +328,7 @@ public class ContrasenaActivity extends SherlockActivity {
 		adView1.setHeight(BANNER_AD_HEIGHT);
 
 		LinearLayout layout2 = (LinearLayout)findViewById(R.id.linearLayout2);
+		layout2.removeAllViews();
 		layout2.addView(adView1);
 		adView1.getAd();
 		
@@ -340,6 +341,7 @@ public class ContrasenaActivity extends SherlockActivity {
 		adView2.setHeight(BANNER_AD_HEIGHT);
 
 		LinearLayout layout3 = (LinearLayout)findViewById(R.id.linearLayout3);
+		layout3.removeAllViews();
 		layout3.addView(adView2);
 		adView2.getAd();
 	}
