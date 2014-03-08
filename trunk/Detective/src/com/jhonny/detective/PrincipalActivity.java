@@ -56,10 +56,8 @@ public class PrincipalActivity extends SherlockActivity {
 	private EditText email;
 	private CheckBox check;
 	
-	//Constants for tablet sized ads (728x90)
 	private static final int IAB_LEADERBOARD_WIDTH = 728;
 	private static final int MED_BANNER_WIDTH = 480;
-	//Constants for phone sized ads (320x50)
 	private static final int BANNER_AD_WIDTH = 320;
 	private static final int BANNER_AD_HEIGHT = 50;
 	
@@ -71,7 +69,7 @@ public class PrincipalActivity extends SherlockActivity {
 		contSalida = 0;
     	
 		try{
-			MMSDK.setLogLevel(MMSDK.LOG_LEVEL_DEBUG);
+			//MMSDK.setLogLevel(MMSDK.LOG_LEVEL_DEBUG);
 			this.context = this;
 			this.view = getWindow().getDecorView();
 			
@@ -310,8 +308,8 @@ public class PrincipalActivity extends SherlockActivity {
     			String tipoCuenta = (String) prefs.get(Constantes.PROP_TIPO_CUENTA);
     			if(tipoCuenta != null && tipoCuenta.length() > 0){
     				TIPO_CUENTA = Integer.parseInt(tipoCuenta);
-    				TextView textoCuenta = (TextView) findViewById(R.id.textView8);
-    				textoCuenta.setText(tipoCuenta);
+    				//TextView textoCuenta = (TextView) findViewById(R.id.textView8);
+    				//textoCuenta.setText(tipoCuenta);
     			}
     		}
     	}catch(Exception ex){
@@ -536,6 +534,7 @@ public class PrincipalActivity extends SherlockActivity {
 		adView.setHeight(BANNER_AD_HEIGHT);
 		
 		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
+		layout.removeAllViews();
 		layout.addView(adView);
 		adView.getAd();
 	}

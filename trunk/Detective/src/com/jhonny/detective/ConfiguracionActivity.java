@@ -450,6 +450,7 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 		adView.setHeight(BANNER_AD_HEIGHT);
 		
 		LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
+		layout.removeAllViews();
 		layout.addView(adView);
 		adView.getAd();
 	}
