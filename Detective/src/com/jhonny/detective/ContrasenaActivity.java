@@ -148,6 +148,8 @@ public class ContrasenaActivity extends SherlockActivity {
 						valores.put(Constantes.PROP_TIPO_CUENTA, (String)prop.get(Constantes.PROP_TIPO_CUENTA));
 						valores.put(Constantes.PROP_FONDO_PANTALLA, (String)prop.get(Constantes.PROP_FONDO_PANTALLA));
 						valores.put(Constantes.PROP_EMAIL, (String)prop.get(Constantes.PROP_EMAIL));
+						valores.put(Constantes.PROP_EMAIL_ENVIO, (String)prop.get(Constantes.PROP_EMAIL_ENVIO));
+						valores.put(Constantes.PROP_EMAIL_CHECK, (String)prop.get(Constantes.PROP_EMAIL_CHECK));
 						
 						FileUtil.guardaDatosConfiguracion(valores, this);
 						

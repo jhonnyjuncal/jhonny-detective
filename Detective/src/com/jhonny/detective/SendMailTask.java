@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 
 public class SendMailTask extends AsyncTask<Object, Object, Object> {
@@ -13,11 +15,13 @@ public class SendMailTask extends AsyncTask<Object, Object, Object> {
 	private ProgressDialog statusDialog;
 	private Activity sendMailActivity;
 	private Resources resources;
+	private Context context;
 	
 	
-	public SendMailTask(Activity activity, Resources resources) {
+	public SendMailTask(Activity activity, Resources resources, Context context) {
 		this.sendMailActivity = activity;
 		this.resources = resources;
+		this.context = context;
 	}
 	
 	protected void onPreExecute() {
@@ -52,6 +56,8 @@ public class SendMailTask extends AsyncTask<Object, Object, Object> {
 	    	androidEmail.sendEmail();
 	    	
 	    	publishProgress(this.resources.getString(R.string.txt_mail_enviado));
+	    	Toast.makeText(context, R.string.email_enviado, Toast.LENGTH_SHORT).show();
+	    	
 	    }catch(Exception e){
 	    	publishProgress(e.getMessage());
 	    }

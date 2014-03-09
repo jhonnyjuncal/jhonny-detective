@@ -50,6 +50,8 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 	private static String TIPO_CUENTA;
 	private static String FONDO_PANTALLA;
 	private static String EMAIL;
+	private static String EMAIL_ENVIO;
+	private static String EMAIL_CHECK;
 	private int contSalida = 0;
 	
 	//Constants for tablet sized ads (728x90)
@@ -241,6 +243,8 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 				valores.put(Constantes.PROP_TIPO_CUENTA, TIPO_CUENTA);
 				valores.put(Constantes.PROP_FONDO_PANTALLA, FONDO_PANTALLA);
 				valores.put(Constantes.PROP_EMAIL, EMAIL);
+				valores.put(Constantes.PROP_EMAIL_ENVIO, (String)prop.get(Constantes.PROP_EMAIL_ENVIO));
+				valores.put(Constantes.PROP_EMAIL_CHECK, (String)prop.get(Constantes.PROP_EMAIL_CHECK));
 				
 				LocationManager locationManagerGps = FileUtil.getLocationManagerGps();
 				LocationManager locationManagerInternet = FileUtil.getLocationManagerInternet();

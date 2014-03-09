@@ -1,7 +1,9 @@
 package com.jhonny.detective;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -25,7 +27,6 @@ import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -55,6 +56,7 @@ public class PrincipalActivity extends SherlockActivity {
 	private Dialog dialogo;
 	private EditText email;
 	private CheckBox check;
+	private Properties prop;
 	
 	private static final int IAB_LEADERBOARD_WIDTH = 728;
 	private static final int MED_BANNER_WIDTH = 480;
@@ -165,7 +167,7 @@ public class PrincipalActivity extends SherlockActivity {
     public void enviarPosicionesPorMail(View view){
     	try{
     		dialogo = new Dialog(this, R.style.Theme_Dialog_Translucent);
-    		dialogo.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    		dialogo.setTitle(R.string.titulo_envio_email);
     		dialogo.setContentView(R.layout.alert_email);
     		
     		Button boton_enviar = (Button)dialogo.findViewById(R.id.btnEnviar);
@@ -173,16 +175,51 @@ public class PrincipalActivity extends SherlockActivity {
     		email = (EditText)dialogo.findViewById(R.id.alert_editText1);
     		check = (CheckBox)dialogo.findViewById(R.id.alert_checkBox1);
     		
+    		try{
+				prop = FileUtil.getFicheroAssetConfiguracion(context);
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+			
+			if(prop != null){
+				String valor_check = (String)prop.get(Constantes.PROP_EMAIL_CHECK);
+				if(valor_check != null && valor_check.equals("true")){
+					this.check.setChecked(true);
+					String email_envio = (String)prop.get(Constantes.PROP_EMAIL_ENVIO);
+					if(email_envio != null)
+						this.email.setText(email_envio);
+				}else
+					this.check.setChecked(false);
+			}
+    		
     		boton_enviar.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					String direccion = email.getText().toString();
+					
+					Map<String, String> valores = new HashMap<String, String>();
+					
+					valores.put(Constantes.PROP_PASSWORD, (String)prop.get(Constantes.PROP_PASSWORD));
+					valores.put(Constantes.PROP_DISTANCIA_MINIMA_ACTUALIZACIONES, (String)prop.get(Constantes.PROP_DISTANCIA_MINIMA_ACTUALIZACIONES));
+					valores.put(Constantes.PROP_TIEMPO_MINIMO_ACTUALIZACIONES, (String)prop.get(Constantes.PROP_TIEMPO_MINIMO_ACTUALIZACIONES));
+					valores.put(Constantes.PROP_TIPO_CUENTA, (String)prop.get(Constantes.PROP_TIPO_CUENTA));
+					valores.put(Constantes.PROP_FONDO_PANTALLA, (String)prop.get(Constantes.PROP_FONDO_PANTALLA));
+					valores.put(Constantes.PROP_EMAIL, (String)prop.get(Constantes.PROP_EMAIL));
+					
 					if(check.isChecked()){
 						// guardar la direccion de email en el fichero de propiedades
+						valores.put(Constantes.PROP_EMAIL_ENVIO, direccion);
+						valores.put(Constantes.PROP_EMAIL_CHECK, "true");
+					}else{
+						// guardar la direccion de email en el fichero de propiedades
+						valores.put(Constantes.PROP_EMAIL_ENVIO, "");
+						valores.put(Constantes.PROP_EMAIL_CHECK, "false");
 					}
 					
-					String direccion = email.getText().toString();
+					FileUtil.guardaDatosConfiguracion(valores, context);
+					
 					Email.enviarPosicionesPorMail(PrincipalActivity.this, direccion, context);
-					dialogo.cancel();
+					dialogo.dismiss();
 				}
 			});
 			
