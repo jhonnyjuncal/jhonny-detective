@@ -89,4 +89,5 @@
 	<string name="txt_preparando_msg">Preparing mail message...</string>
 	<string name="txt_enviando_mail">Sending email...</string>
 	<string name="txt_mail_enviado">Email Sent</string>
+	<string name="titulo_envio_email">Send positions</string>
 </resources>

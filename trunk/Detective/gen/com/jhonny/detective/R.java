@@ -1322,7 +1322,7 @@ containing a value of this type.
         public static final int borr_textView2=0x7f05004a;
         public static final int borr_textView3=0x7f05004b;
         public static final int borr_textView4=0x7f05004c;
-        public static final int btnCancelar=0x7f050078;
+        public static final int btnCancelar=0x7f05007e;
         public static final int btnEnviar=0x7f050059;
         public static final int dialog_textView1=0x7f05007f;
         public static final int disableHome=0x7f05000d;
@@ -1341,9 +1341,9 @@ containing a value of this type.
         public static final int fullscreen=0x7f050017;
         public static final int homeAsUp=0x7f05000a;
         public static final int hybrid=0x7f050004;
-        public static final int imageButton1=0x7f050079;
-        public static final int imageButton2=0x7f05007a;
-        public static final int imageButton3=0x7f05007b;
+        public static final int imageButton1=0x7f050078;
+        public static final int imageButton2=0x7f050079;
+        public static final int imageButton3=0x7f05007a;
         public static final int left=0x7f050014;
         public static final int linearLayout2=0x7f050046;
         public static final int linearLayout3=0x7f05005a;
@@ -1354,7 +1354,6 @@ containing a value of this type.
         public static final int menuMapa_legal=0x7f050083;
         public static final int menu_mapa_facebook=0x7f050084;
         public static final int menu_mapa_twitter=0x7f050085;
-        public static final int menu_settings=0x7f050086;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
         public static final int opc_imageView1=0x7f050061;
@@ -1388,8 +1387,8 @@ containing a value of this type.
         public static final int tabMode=0x7f050007;
         public static final int terrain=0x7f050003;
         public static final int textView1=0x7f05004f;
-        public static final int textView10=0x7f05007d;
-        public static final int textView11=0x7f05007e;
+        public static final int textView10=0x7f05007c;
+        public static final int textView11=0x7f05007d;
         public static final int textView2=0x7f050051;
         public static final int textView3=0x7f050053;
         public static final int textView4=0x7f050070;
@@ -1397,7 +1396,7 @@ containing a value of this type.
         public static final int textView6=0x7f050075;
         public static final int textView7=0x7f050076;
         public static final int textView8=0x7f050077;
-        public static final int textView9=0x7f05007c;
+        public static final int textView9=0x7f05007b;
         public static final int useLogo=0x7f050008;
         public static final int wrap_content=0x7f050005;
     }
@@ -1645,6 +1644,7 @@ containing a value of this type.
         public static final int title_activity_mapa=0x7f060041;
         public static final int title_activity_opciones=0x7f060037;
         public static final int title_activity_posiciones=0x7f060038;
+        public static final int titulo_envio_email=0x7f060074;
         public static final int txt_advertencia_borrar=0x7f060063;
         public static final int txt_apagada=0x7f060043;
         public static final int txt_cambio_pass_ok=0x7f06004f;

@@ -20,9 +20,7 @@ import java.util.Properties;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import android.content.Context;
-import android.content.Intent;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.view.View;
 import android.widget.TextView;
@@ -123,6 +121,14 @@ public class FileUtil implements Serializable{
 							case 6:
 								// direccion de correo electronico
 								properties.put(Constantes.PROP_EMAIL, linea);
+								break;
+							case 7:
+								// direccion de correo electronico
+								properties.put(Constantes.PROP_EMAIL_ENVIO, linea);
+								break;
+							case 8:
+								// direccion de correo electronico
+								properties.put(Constantes.PROP_EMAIL_CHECK, linea);
 								break;
 						}
 						contador++;
@@ -409,6 +415,8 @@ public class FileUtil implements Serializable{
 		String tipoCuenta = null;
 		String fondoPan = null;
 		String email = null;
+		String email_envio = null;
+		String email_check = null;
 		
 		try{
 			if(valores != null){
@@ -447,6 +455,18 @@ public class FileUtil implements Serializable{
 					if(email == null)
 						fondoPan = Constantes.DEFECTO_EMAIL;
 					out.write(email + "\r\n");
+				}
+				if(valores.containsKey(Constantes.PROP_EMAIL_ENVIO)){
+					email_envio = valores.get(Constantes.PROP_EMAIL_ENVIO);
+					if(email_envio == null)
+						email_envio = Constantes.DEFECTO_EMAIL_ENVIO;
+					out.write(email_envio + "\r\n");
+				}
+				if(valores.containsKey(Constantes.PROP_EMAIL_CHECK)){
+					email_check = valores.get(Constantes.PROP_EMAIL_CHECK);
+					if(email_check == null)
+						email_check = Constantes.DEFECTO_EMAIL_CHECK;
+					out.write(email_check + "\r\n");
 				}
 			}
 		}catch(Exception ex){

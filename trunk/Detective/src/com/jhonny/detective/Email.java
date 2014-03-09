@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
+import javax.mail.AuthenticationFailedException;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -81,6 +83,9 @@ public class Email implements Serializable {
 			
 			transport.sendMessage(emailMessage, emailMessage.getAllRecipients());
 			transport.close();
+			
+		}catch(AuthenticationFailedException afe){
+			afe.printStackTrace();
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -94,20 +99,73 @@ public class Email implements Serializable {
 			List<String> listaDirecciones = new ArrayList<String>();
 			listaDirecciones.add(direccion);
 			
-			String pass = new String("#@jho11nny#@");
-			
-			// mensaje de correo
-			String mensaje = new String("Este es el mansaje del correo\ndeberia ser\ntodo html");
+			String cuenta = new String("detective.android.app@gmail.com");
+			String pass = new String("#@jho11nny#@"); 
 			
 			// asunto del correo segun el adioma
 			String asunto = context.getResources().getString(R.string.email_asunto);
 			
-			SendMailTask sendMailTask = new SendMailTask(activity, context.getResources());
-			sendMailTask.execute(direccion, pass, listaDirecciones, asunto, mensaje);
+			// tabla con las posiciones
+			String tabla = crearTablaCoordenadas(context);
+			
+			// cuerpo del mensaje
+			String mensaje = new String("Hola,<br>" +
+					"Estas son las coordenadas almacenadas en su dispositivo movil:<br>" +
+					"<br>" +
+					"tabla" +
+					"<br>" +
+					"<br>" +
+					"Le agradezco la confianza depositida en el uso de la aplicacion DETECTIVE<br>" +
+					"reciba un cordial saludo<br>" +
+					"<br>" +
+					"Atentamente<br>" +
+					"JHONNY JUNCAL GONZALEZ<br>" +
+					"Programador y creador de DETECTIVE<br>");
+			mensaje = mensaje.replace("tabla", tabla);
+			
+			SendMailTask sendMailTask = new SendMailTask(activity, context.getResources(), context);
+			sendMailTask.execute(cuenta, pass, listaDirecciones, asunto, mensaje);
 		}catch(Exception ex){
 			ex.printStackTrace();
 			resultado = false;
 		}
 		return resultado;
+	}
+	
+	/**
+	 * Crea la tabla que contiene las coordenadas a enviar en el correo
+	 * @param context
+	 * @return String
+	 */
+	private static String crearTablaCoordenadas(Context context){
+		String tabla = new String();
+		Locale locale = context.getResources().getConfiguration().locale;
+		
+		try{
+			String cabecera = new String("<table border=\"1\">" +
+					"<tr>" +
+					"<td align=\"center\" font-style=\"bold\">Fecha</td>" +
+					"<td align=\"center\" font-style=\"bold\">Hora</td>" +
+					"<td align=\"center\" font-style=\"bold\">Latitud</td>" +
+					"<td align=\"center\" font-style=\"bold\">Longitud</td>" +
+					"<td align=\"center\" font-style=\"bold\">Ver en Mapa</td>" +
+					"</tr>");
+			String cuerpo = new String();
+			for(ObjetoPosicion op : FileUtil.getListaAssetPosiciones(context, 1)){
+				cuerpo += "<tr>" +
+						"<td>" + FileUtil.getFechaFormateada(op.getFecha(), locale) + "</td>" +
+						"<td>" + FileUtil.getHoraFormateada(op.getFecha(), locale) + "</td>" +
+						"<td>" + op.getLongitud() + "</td>" +
+						"<td>" + op.getLongitud() + "</td>" +
+						"<td><a href=\"https://www.google.es\">ver</a></td>" +
+						"</tr>";
+			}
+			String cierreTabla = new String("</table>");
+			
+			tabla = cabecera + cuerpo + cierreTabla;
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return tabla;
 	}
 }

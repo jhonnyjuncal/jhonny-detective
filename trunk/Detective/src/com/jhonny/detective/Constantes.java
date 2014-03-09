@@ -22,6 +22,8 @@ public class Constantes implements Serializable{
 	public static final String PROP_TIPO_CUENTA = "tipoCuenta";
 	public static final String PROP_FONDO_PANTALLA = "fondoSeleccionado";
 	public static final String PROP_EMAIL = "email";
+	public static final String PROP_EMAIL_ENVIO = "email_envio";
+	public static final String PROP_EMAIL_CHECK = "check_email";
 	
 	
 	/* VALORES POR DEFECTO DE CONFIGURACION */
@@ -32,6 +34,8 @@ public class Constantes implements Serializable{
 	public static final int DEFECTO_POS_TIEMPO = 0;
 	public static final String DEFECTO_FONDO = "1";
 	public static final String DEFECTO_EMAIL = "null";
+	public static final String DEFECTO_EMAIL_ENVIO = "null";
+	public static final String DEFECTO_EMAIL_CHECK = "false";
 	public static final Map<String, Integer> mapaDist = new HashMap<String, Integer>();
 	public static final Map<String, Integer> mapaTmpo = new HashMap<String, Integer>();
 	public static final Map<Integer, String> mapaFondo = new HashMap<Integer, String>();

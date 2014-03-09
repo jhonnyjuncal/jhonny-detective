@@ -28,6 +28,8 @@ public class InicioActivity extends SherlockActivity {
 	private String TIPO_CUENTA;
 	private String FONDO_PANTALLA;
 	private String EMAIL;
+	private String EMAIL_ENVIO;
+	private String EMAIL_CHECK;
 	private int contSalida = 0;
 	private SlidingMenu menu;
 	private View view;
@@ -111,6 +113,10 @@ public class InicioActivity extends SherlockActivity {
     				FONDO_PANTALLA = (String)prop.get(Constantes.PROP_FONDO_PANTALLA);
     			if(prop.containsKey(Constantes.PROP_EMAIL))
     				EMAIL = (String)prop.get(Constantes.PROP_EMAIL);
+    			if(prop.containsKey(Constantes.PROP_EMAIL_ENVIO))
+    				EMAIL_ENVIO = (String)prop.get(Constantes.PROP_EMAIL_ENVIO);
+    			if(prop.containsKey(Constantes.PROP_EMAIL_CHECK))
+    				EMAIL_CHECK = (String)prop.get(Constantes.PROP_EMAIL_CHECK);
     		}
     		
     		if(passUsuario == null || passUsuario.length() <= 0){
@@ -129,6 +135,8 @@ public class InicioActivity extends SherlockActivity {
 					valores.put(Constantes.PROP_TIPO_CUENTA, TIPO_CUENTA);
 					valores.put(Constantes.PROP_FONDO_PANTALLA, FONDO_PANTALLA);
 					valores.put(Constantes.PROP_EMAIL, EMAIL);
+					valores.put(Constantes.PROP_EMAIL_ENVIO, EMAIL_ENVIO);
+					valores.put(Constantes.PROP_EMAIL_CHECK, EMAIL_CHECK);
 					
 					FileUtil.guardaDatosConfiguracion(valores, InicioActivity.this);
 				}
