@@ -155,9 +155,9 @@ public class Email implements Serializable {
 				cuerpo += "<tr>" +
 						"<td>" + FileUtil.getFechaFormateada(op.getFecha(), locale) + "</td>" +
 						"<td>" + FileUtil.getHoraFormateada(op.getFecha(), locale) + "</td>" +
+						"<td>" + op.getLatitud() + "</td>" +
 						"<td>" + op.getLongitud() + "</td>" +
-						"<td>" + op.getLongitud() + "</td>" +
-						"<td><a href=\"https://www.google.es\">ver</a></td>" +
+						"<td><a href=\"http://maps.google.com/maps?q=" + op.getLatitud() + "," + op.getLongitud() + "\">ver en mapa/see in map</a></td>" +
 						"</tr>";
 			}
 			String cierreTabla = new String("</table>");
