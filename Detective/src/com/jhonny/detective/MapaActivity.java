@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -19,6 +21,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -30,7 +33,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.Projection;
 
 
-public class MapaActivity extends FragmentActivity {
+public class MapaActivity extends Activity {
 	
 	private GoogleMap mapa = null;
 	
@@ -45,7 +48,11 @@ public class MapaActivity extends FragmentActivity {
 		
 		try{
 			// objeto mapa con el que trabajar
-			mapa = ((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+			if(mapa == null)
+				mapa = ((MapFragment)getFragmentManager().findFragmentById(R.id.map)).getMap();
+			
+			if(mapa == null)
+				Toast.makeText(getApplicationContext(), "Imposible crear el mapa", Toast.LENGTH_SHORT).show();
 			
 			// tipo de mapa
 			mapa.setMapType(GoogleMap.MAP_TYPE_HYBRID);
