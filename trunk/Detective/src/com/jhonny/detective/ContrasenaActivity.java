@@ -28,7 +28,6 @@ import com.millennialmedia.android.MMSDK;
 
 public class ContrasenaActivity extends SherlockActivity {
 	
-	private static final long serialVersionUID = 1770771858269363336L;
 	private ActionBar actionBar;
 	private int contSalida = 0;
 	private SlidingMenu menu;
@@ -50,7 +49,6 @@ public class ContrasenaActivity extends SherlockActivity {
 		contSalida = 0;
 		
 		try{
-			MMSDK.setLogLevel(MMSDK.LOG_LEVEL_DEBUG);
 			this.context = this;
 			this.view = getWindow().getDecorView();
 			

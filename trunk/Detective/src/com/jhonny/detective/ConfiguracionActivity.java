@@ -35,7 +35,6 @@ import android.widget.Toast;
 
 public class ConfiguracionActivity extends SherlockActivity implements OnItemSelectedListener {
 	
-	private static final long serialVersionUID = 362472463923801596L;
 	private Spinner spDistancia;
 	private Spinner spTiempo;
 	private Spinner spFondo;
@@ -50,8 +49,6 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 	private static String TIPO_CUENTA;
 	private static String FONDO_PANTALLA;
 	private static String EMAIL;
-	private static String EMAIL_ENVIO;
-	private static String EMAIL_CHECK;
 	private int contSalida = 0;
 	
 	//Constants for tablet sized ads (728x90)
@@ -73,7 +70,6 @@ public class ConfiguracionActivity extends SherlockActivity implements OnItemSel
 		int pos3 = 0;
 		
 		try{
-			MMSDK.setLogLevel(MMSDK.LOG_LEVEL_DEBUG);
 			this.context = this;
 			this.view = getWindow().getDecorView();
 			

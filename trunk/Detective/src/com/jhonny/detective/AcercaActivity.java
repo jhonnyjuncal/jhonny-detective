@@ -11,7 +11,6 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.millennialmedia.android.MMAdView;
 import com.millennialmedia.android.MMRequest;
 import com.millennialmedia.android.MMSDK;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Context;
@@ -32,7 +31,6 @@ import android.widget.Toast;
 
 public class AcercaActivity extends SherlockActivity {
 	
-	private static final long serialVersionUID = -8472332516242132867L;
 	private ActionBar actionBar;
 	private int contSalida = 0;
 	private SlidingMenu menu;
@@ -54,7 +52,6 @@ public class AcercaActivity extends SherlockActivity {
 		contSalida = 0;
 		
 		try{
-			MMSDK.setLogLevel(MMSDK.LOG_LEVEL_DEBUG);
 			this.context = this;
 			this.view = getWindow().getDecorView();
 			
@@ -99,31 +96,23 @@ public class AcercaActivity extends SherlockActivity {
 					Intent intent = new Intent();
 			        intent.setAction(Intent.ACTION_VIEW);
 			        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-			        intent.setData(Uri.parse("https://www.facebook.com/androiddetective"));
+			        intent.setData(Uri.parse("https://www.face book.com/androiddetective"));
 			        startActivity(intent);
 				}
 			});
 			
-			int placementWidth = BANNER_AD_WIDTH;
-
-			//Finds an ad that best fits a users device.
-			if(canFit(IAB_LEADERBOARD_WIDTH)) {
-			    placementWidth = IAB_LEADERBOARD_WIDTH;
-			}else if(canFit(MED_BANNER_WIDTH)) {
-			    placementWidth = MED_BANNER_WIDTH;
-			}
-			
-			MMAdView adView = new MMAdView(this);
-			adView.setApid("148574");
-			MMRequest request = new MMRequest();
-			adView.setMMRequest(request);
-			adView.setId(MMSDK.getDefaultAdId());
-			adView.setWidth(placementWidth);
-			adView.setHeight(BANNER_AD_HEIGHT);
-
-			LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayout2);
-			layout.addView(adView);
-			adView.getAd();
+			// link de google plus
+			ImageView imgGoogle = (ImageView)findViewById(R.id.acer_imageView3);
+			imgGoogle.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent();
+			        intent.setAction(Intent.ACTION_VIEW);
+			        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+			        intent.setData(Uri.parse("https://plus.google.com/103927277529482513436"));
+			        startActivity(intent);
+				}
+			});
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}

@@ -46,7 +46,9 @@ public class MapaActivity extends FragmentActivity {
 		try{
 			// objeto mapa con el que trabajar
 			mapa = ((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-    		
+			
+			// tipo de mapa
+			mapa.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 			
 			// lectura del fichero de configuracion
 			prefs = FileUtil.getFicheroAssetConfiguracion(ctx);

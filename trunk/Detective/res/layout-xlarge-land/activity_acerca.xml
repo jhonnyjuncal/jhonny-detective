@@ -135,15 +135,28 @@
 		    android:weightSum="1">
 			
 		</LinearLayout>
-	
+	    
 	    <ImageView
 	        android:id="@+id/acer_imageView2"
 	        android:layout_width="140dp"
 	        android:layout_height="140dp"
-	        android:layout_marginLeft="75dp"
-	        android:layout_marginTop="400dp"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@id/acer_textView7"
+	        android:layout_marginLeft="300dp"
+	        android:layout_marginTop="100dp"
 	        android:contentDescription="@string/app_name"
 	        android:src="@drawable/ic_facebook" />
+        
+        <ImageView
+            android:id="@+id/acer_imageView3"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/acer_textView7"
+            android:layout_marginRight="300dp"
+            android:layout_marginTop="110dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_google_plus" />
 	
 	</RelativeLayout>
 	

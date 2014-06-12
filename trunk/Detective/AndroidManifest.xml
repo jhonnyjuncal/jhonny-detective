@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jhonny.detective"
-    android:versionCode="3"
-    android:versionName="1.2" >
+    android:versionCode="4"
+    android:versionName="1.3" >
 
-    <uses-sdk android:minSdkVersion="8" />
+    <uses-sdk android:minSdkVersion="12" />
 
     <supports-screens
         android:anyDensity="false"
@@ -16,7 +16,7 @@
 
     <permission
         android:name="com.jhonny.detective.permission.MAPS_RECEIVE"
-        android:protectionLevel="normal">
+        android:protectionLevel="signature">
     </permission>
 
     <uses-permission android:name="com.jhonny.detective.permission.MAPS_RECEIVE" />
@@ -30,7 +30,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-    <uses-feature
+    <uses-feature 
         android:glEsVersion="0x00020000"
         android:required="true">
     </uses-feature>
@@ -47,10 +47,17 @@
         android:logo="@drawable/private_detective_icon"
         android:theme="@style/Theme.Sherlock.Light" >
         
+        <!-- DEBUG API KEY -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDV7I4vKV1136FDh2NaWyN38nCVo8m-TzQ">
+            android:value="AIzaSyC3CWE0hWAJthc710bzyX8hynDVSi6FRfM">
         </meta-data>
+        
+        <!-- ONLINE API KEY 
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyC3CWE0hWAJthc710bzyX8hynDVSi6FRfM">
+        </meta-data>-->
         
         <meta-data 
             android:name="com.google.android.gms.version" 

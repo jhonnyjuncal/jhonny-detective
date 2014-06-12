@@ -7,10 +7,8 @@ import android.os.Bundle;
 
 
 public class OpcionesActivity extends SherlockActivity {
-
-	private static final long serialVersionUID = -8973211807498790916L;
 	
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
