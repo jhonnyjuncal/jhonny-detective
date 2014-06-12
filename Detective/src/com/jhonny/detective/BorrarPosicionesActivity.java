@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 public class BorrarPosicionesActivity extends SherlockActivity {
 	
-	private static final long serialVersionUID = -8286290309306880287L;
 	private ActionBar actionBar;
 	private int contSalida = 0;
 	private SlidingMenu menu;
@@ -47,7 +46,6 @@ public class BorrarPosicionesActivity extends SherlockActivity {
 		contSalida = 0;
 		
 		try{
-			MMSDK.setLogLevel(MMSDK.LOG_LEVEL_DEBUG);
 			this.context = this;
 			this.view = getWindow().getDecorView();
 			

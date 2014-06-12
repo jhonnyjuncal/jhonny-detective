@@ -140,10 +140,20 @@
 	        android:id="@+id/acer_imageView2"
 	        android:layout_width="70dp"
 	        android:layout_height="70dp"
-	        android:layout_marginLeft="350dp"
+	        android:layout_marginLeft="300dp"
 	        android:layout_marginTop="130dp"
 	        android:contentDescription="@string/app_name"
 	        android:src="@drawable/ic_facebook" />
+	    
+        <ImageView
+            android:id="@+id/acer_imageView3"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="135dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_google_plus" />
 	
 	</RelativeLayout>
 	

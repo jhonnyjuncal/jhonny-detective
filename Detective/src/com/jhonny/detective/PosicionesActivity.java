@@ -36,7 +36,6 @@ import com.millennialmedia.android.MMSDK;
 
 public class PosicionesActivity extends SherlockActivity implements OnItemClickListener {
 	
-	private static final long serialVersionUID = -2463519562261937140L;
 	private List<ObjetoPosicion> listaPosiciones = null;
 	private ListView listView = null;
 	private ActionBar actionBar;
@@ -60,7 +59,6 @@ public class PosicionesActivity extends SherlockActivity implements OnItemClickL
 		contSalida = 0;
 		
 		try{
-			MMSDK.setLogLevel(MMSDK.LOG_LEVEL_DEBUG);
 			this.context = this;
 			this.view = getWindow().getDecorView();
 			

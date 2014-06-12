@@ -38,7 +38,6 @@ import android.widget.Toast;
 
 public class PrincipalActivity extends SherlockActivity {
 	
-	private static final long serialVersionUID = -7155207696891363901L;
 	protected static String PASS;
 	protected static float DISTANCIA_MINIMA_PARA_ACTUALIZACIONES;
 	protected static long TIEMPO_MINIMO_ENTRE_ACTUALIZACIONES;

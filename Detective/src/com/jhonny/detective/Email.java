@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
-
 import javax.mail.AuthenticationFailedException;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -15,7 +14,6 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
 import android.app.Activity;
 import android.content.Context;
 
@@ -100,7 +98,7 @@ public class Email implements Serializable {
 			listaDirecciones.add(direccion);
 			
 			String cuenta = new String("detective.android.app@gmail.com");
-			String pass = new String("#@jho11nny#@"); 
+			String pass = new String("@jho11nny@");
 			
 			// asunto del correo segun el adioma
 			String asunto = context.getResources().getString(R.string.email_asunto);
@@ -109,22 +107,24 @@ public class Email implements Serializable {
 			String tabla = crearTablaCoordenadas(context);
 			
 			// cuerpo del mensaje
-			String mensaje = new String("Hola,<br>" +
-					"Estas son las coordenadas almacenadas en su dispositivo movil:<br>" +
-					"<br>" +
+			String mensaje = new String(
+					"<img src=\"http://i1244.photobucket.com/albums/gg577/jhonnyjuncal/presentacion2_zps36aeea51.png\" border=\"0\" " +
+					"width=\"512\" height=\"256\" /><br>" +
+					"Hola,<br>" +
+					"Estas son las coordenadas almacenadas en su dispositivo movil:<br><br>" +
 					"tabla" +
-					"<br>" +
-					"<br>" +
-					"Le agradezco la confianza depositida en el uso de la aplicacion DETECTIVE<br>" +
-					"reciba un cordial saludo<br>" +
-					"<br>" +
+					"<br><br>" +
+					"Le agradezco la confianza depositida en el uso de la aplicacion " +
+					"<a href=\"https://play.google.com/store/apps/details?id=com.jhonny.detective\">DETECTIVE</a><br>" +
+					"reciba un cordial saludo<br><br>" +
 					"Atentamente<br>" +
-					"JHONNY JUNCAL GONZALEZ<br>" +
-					"Programador y creador de DETECTIVE<br>");
+					"Jhonny Juncal Gonzalez<br>" +
+					"Programador y creador de <a href=\"https://play.google.com/store/apps/details?id=com.jhonny.detective\">DETECTIVE</a><br>");
 			mensaje = mensaje.replace("tabla", tabla);
 			
 			SendMailTask sendMailTask = new SendMailTask(activity, context.getResources(), context);
 			sendMailTask.execute(cuenta, pass, listaDirecciones, asunto, mensaje);
+			
 		}catch(Exception ex){
 			ex.printStackTrace();
 			resultado = false;
