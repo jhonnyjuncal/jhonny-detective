@@ -1,6 +1,5 @@
 # cache for current jar dependency. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
-1393200540115 621451 5896b0a4e377ac4242eb2bc785220c1c4fc052f4 C:\adt-bundle-windows-x86_64-20131030\eclipse\workspace\Detective\libs\android-support-v4.jar
-1393200540115 621451 5896b0a4e377ac4242eb2bc785220c1c4fc052f4 C:\adt-bundle-windows-x86_64-20131030\eclipse\workspace\library\libs\android-support-v4.jar
-1393200540115 621451 5896b0a4e377ac4242eb2bc785220c1c4fc052f4 C:\adt-bundle-windows-x86_64-20131030\eclipse\workspace\actionbarsherlock\libs\android-support-v4.jar
+1414858118500 987314 9b6a9a9078af571732159b904ad423b03b7cc786 C:\nuevo-adt-bund\eclipse\workspace\Detective\libs\android-support-v4.jar
+1414858118500 987314 9b6a9a9078af571732159b904ad423b03b7cc786 C:\Users\Jhonny\Downloads\Android\JakeWharton-ActionBarSherlock-5a15d92\actionbarsherlock\libs\android-support-v4.jar
